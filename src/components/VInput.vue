@@ -32,18 +32,18 @@ input:focus {
 }
 input::-webkit-input-placeholder {
   font-weight: lighter;
-  font-size: 32;
+  font-size: 20;
 }
 input:-moz-placeholder {
   font-weight: lighter;
-  font-size: 32;
+  font-size: 20;
 }
 input::-moz-placeholder {
   font-weight: lighter;
-  font-size: 32;
+  font-size: 20;
 }
 input:-ms-input-placeholder {
   font-weight: lighter;
-  font-size: 32;
+  font-size: 20;
 }
 </style>
