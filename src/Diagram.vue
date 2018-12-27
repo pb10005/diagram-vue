@@ -19,6 +19,7 @@
           :source="findNode(item.source)"
           :destination="findNode(item.destination)"
           :editable="editable"
+          :labels="labels"
           @select="selectLink"
           @updateLocation="updateLinkLocation"
           @remove="removeLink"
@@ -30,6 +31,7 @@
           :key="item.id"
           :createLinkMode="createLinkMode"
           :editable="editable"
+          :labels="labels"
           @editNode="editNode"
           @select="selectNode"
           @updateLocation="updateNodeLocation"
@@ -52,7 +54,8 @@ export default {
     nodes: Array,
     links: Array,
     editable: Boolean,
-    linkColor: String
+    linkColor: String,
+    labels: Object
   },
   components: {
     Node,

@@ -8,7 +8,7 @@
           destination.height / 2}`
       "
       :stroke="color"
-      stroke-width="5"
+      stroke-width="3"
       fill="none"
     />
     <g v-if="editable">
@@ -34,7 +34,7 @@
         ry="10"
         fill="white"
         stroke="#ff7675"
-        stroke-width="3"
+        stroke-width="2"
         class="button"
         @click="select"
         @mousedown="mousedown"
@@ -51,7 +51,7 @@
         v-if="selected"
         class="button"
       >
-        削除
+        {{labels.remove || 'Remove'}}
       </text>
     </g>
   </svg>
@@ -78,7 +78,8 @@ export default {
         x: Number,
         y: Number
       }
-    }
+    },
+    labels: Object
   },
   data() {
     return {

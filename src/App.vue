@@ -1,15 +1,12 @@
 <template>
   <div id="app">
-    <div>
-      <div>
-        <VButton v-if="!editable" @click="editable = true" class="button"
-          >編集モード</VButton
-        >
-        <span v-else>
-          <VButton @click="openModal">追加</VButton>
-          <VButton @click="endEdit" class="button">編集を終了</VButton>
-        </span>
-      </div>
+      <VButton v-if="!editable" @click="editable = true" class="button"
+        >編集を開始</VButton
+      >
+      <span v-else>
+        <VButton @click="openModal">追加</VButton>
+        <VButton @click="endEdit" class="button">編集を終了</VButton>
+      </span>
       <EditNodeModal
         :node="{ content: {} }"
         :isActive="isModalActive"
@@ -29,17 +26,23 @@
         :links="links"
         linkColor="#ffeaa7"
         :editable="editable"
+        :labels="{
+          edit: '編集',
+          remove:'削除',
+          link: 'リンク',
+          select: '選択'
+        }"
         @editNode="openEdit"
         @nodeChanged="nodeChanged"
         @linkChanged="linkChanged"
       >
       </Diagram>
-    </div>
   </div>
 </template>
 
 <script>
-import Diagram from "./Diagram";
+import data from './data'
+import Diagram from './Diagram';
 import EditNodeModal from "@/components/EditNodeModal";
 import VInput from "@/components/VInput";
 import VButton from "@/components/VButton";
@@ -56,8 +59,8 @@ export default {
       name: "",
       url: "",
       color: "",
-      nodes: [],
-      links: [],
+      nodes: data.nodes,
+      links: data.links,
       isModalActive: false,
       isEditModalActive: false,
       editable: false,
@@ -93,7 +96,7 @@ export default {
           url: item.content.url,
           color: item.content.color
         },
-        width: 200,
+        width: 150,
         height: 60,
         point: {
           x: 10,
@@ -131,12 +134,13 @@ export default {
 </script>
 
 <style lang="scss">
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  // text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+body {
+  #app {
+    font-family: "Avenir", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    // text-align: center;
+    color: #2c3e50;
+  }
 }
 </style>

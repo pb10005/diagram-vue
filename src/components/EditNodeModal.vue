@@ -1,13 +1,15 @@
 <template>
   <div>
     <div class="modal" :class="{ 'is-open': isActive }"></div>
-    <div class="form" v-if="isActive">
-      <VInput v-model="newData.text" placeholder="name" /><br />
-      <VInput v-model="newData.url" placeholder="url" /><br />
-      <VInput v-model="newData.color" placeholder="color" /><br />
-      <VButton @click="ok">OK</VButton>
-      <VButton @click="cancel">Cancel</VButton>
-    </div>
+    <transition name="form">
+      <div class="form" v-if="isActive">
+        <VInput v-model="newData.text" placeholder="name" /><br />
+        <VInput v-model="newData.url" placeholder="url" /><br />
+        <VInput v-model="newData.color" placeholder="color" /><br />
+        <VButton @click="ok">OK</VButton>
+        <VButton class="danger" @click="cancel">Cancel</VButton>
+      </div>
+    </transition>
   </div>
 </template>
 <script>
@@ -27,7 +29,7 @@ export default {
         content: {
           text: "none",
           url: "",
-          color: "#dfe6e9"
+          color: "#ecf0f1"
         }
       }
     }
@@ -77,5 +79,14 @@ export default {
   z-index: 101;
   top: calc(50% - 50px / 2);
   left: calc(50% - 50px / 2);
+}
+.form-enter-active {
+  transition: all .5s ease;
+}
+.form-leave-active {
+  transition: all .3s ease;
+}
+.form-enter, .form-leave-to {
+  opacity: 0;
 }
 </style>

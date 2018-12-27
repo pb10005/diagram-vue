@@ -4,69 +4,64 @@
       <text
         :x="x + 5"
         :y="y + height + 22"
-        font-size="20"
         class="button"
         fill="#00b894"
         @click="editCandidate"
       >
-        編集
+        {{labels.edit || 'Edit'}}
       </text>
     </g>
     <g v-if="selected">
       <text
         :x="x + 5"
-        :y="y - 13"
-        font-size="20"
+        :y="y - 10"
         class="button"
         fill="#00b894"
         stroke="none"
         @click="toggleSelect"
       >
-        リンク
+        {{labels.link || 'Link'}}
       </text>
       <text
         :x="x + 65"
         :y="y + height + 22"
-        font-size="20"
         class="button"
         fill="red"
         @click="remove"
       >
-        削除
+        {{labels.remove || 'Remove'}}
       </text>
     </g>
     <g v-if="createLinkMode && !selected">
       <text
         :x="x + 5"
-        :y="y - 13"
-        font-size="20"
+        :y="y - 10"
         class="button"
         fill="red"
         @click="commitDest"
       >
-        選択
+        {{labels.select || 'Select'}}
       </text>
     </g>
-    <g>
-      <rect
+    <svg :x="x" :y="y" :width="width" :height="height">
+      <ellipse
         class="grab"
-        :x="x"
-        :y="y"
-        :width="width"
-        :height="height"
-        rx="10"
-        ry="6"
-        :fill="content.color || '#dfe6e9'"
+        cx="50%"
+        cy="50%"
+        width="100%"
+        height="100%"
+        :rx="width / 2"
+        :ry="height / 2"
+        :fill="content.color || '#ecf0f1'"
         @mousedown="mousedown"
         @mousemove="mousemove"
-        @mouseup="mouseup"
-      />
-      <a target="_blank" :href="content.url">
-        <text :x="x + 5" :y="y + height / 2" fill="#2d3436">
-          {{ content.text }}
-        </text>
+        @mouseup="mouseup" />
+        <a target="_blank" :href="content.url">
+          <text x="50%" y="50%" fill="#34495e" font-family="Meiryo UI, sans-serif" font-size="20" text-anchor="middle">
+            {{ content.text }}
+          </text>
       </a>
-    </g>
+    </svg>
   </svg>
 </template>
 <script>
@@ -91,7 +86,8 @@ export default {
     },
     editable: Boolean,
     createLinkMode: Boolean,
-    selected: Boolean
+    selected: Boolean,
+    labels: Object
   },
   data() {
     return {
