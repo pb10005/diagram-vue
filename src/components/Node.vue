@@ -135,22 +135,22 @@ export default {
         });
       }
     },
-    mouseup(e) {
+    mouseup() {
       this.startPosition = null;
       //イベントの後始末
       document.removeEventListener("mousemove", this.mousemove);
       document.removeEventListener("mouseup", this.mouseup);
     },
-    toggleSelect(e) {
+    toggleSelect() {
       this.$emit("toggleSelect");
     },
-    commitDest(e) {
+    commitDest() {
       this.$emit("commitDest", this.id);
     },
-    remove(e) {
+    remove() {
       this.$emit("remove", this.id);
     },
-    editCandidate(e) {
+    editCandidate() {
       this.$emit("editNode", {
         id: this.id,
         content: this.content

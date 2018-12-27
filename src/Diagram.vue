@@ -46,7 +46,6 @@
 <script>
 import Node from "@/components/Node";
 import Link from "@/components/Link";
-import VInput from "@/components/VInput";
 export default {
   props: {
     width: Number,
@@ -59,8 +58,7 @@ export default {
   },
   components: {
     Node,
-    Link,
-    VInput
+    Link
   },
   computed: {
     nodeList: {

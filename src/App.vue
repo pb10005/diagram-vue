@@ -54,7 +54,6 @@ import data from "./data";
 import Diagram from "./Diagram";
 import EditNodeModal from "@/components/EditNodeModal";
 import InputModal from "@/components/InputModal";
-import VInput from "@/components/VInput";
 import VButton from "@/components/VButton";
 export default {
   name: "app",
@@ -62,7 +61,6 @@ export default {
     Diagram,
     EditNodeModal,
     InputModal,
-    VInput,
     VButton
   },
   data() {
@@ -138,7 +136,7 @@ export default {
       tmp.content.color = item.content.color;
       this.isEditModalActive = false;
     },
-    endEdit(obj) {
+    endEdit() {
       this.editable = false;
     },
     nodeChanged(obj) {

@@ -112,13 +112,13 @@ export default {
         });
       }
     },
-    mouseup(e) {
+    mouseup() {
       this.startPosition = null;
       //イベントの後始末
       document.removeEventListener("mousemove", this.mousemove);
       document.removeEventListener("mouseup", this.mouseup);
     },
-    remove(e) {
+    remove() {
       this.$emit("remove", this.id);
     },
     select() {

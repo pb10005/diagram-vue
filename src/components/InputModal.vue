@@ -9,12 +9,10 @@
 </template>
 <script>
 import Modal from "@/components/Modal";
-import VInput from "@/components/VInput";
 import VButton from "@/components/VButton";
 export default {
   components: {
     Modal,
-    VInput,
     VButton
   },
   props: {

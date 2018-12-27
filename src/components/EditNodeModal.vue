@@ -25,13 +25,15 @@ export default {
     isActive: Boolean,
     node: {
       type: Object,
-      default: {
-        id: "",
-        content: {
-          text: "none",
-          url: "",
-          color: "#ecf0f1"
-        }
+      default() {
+        return {
+          id: "",
+          content: {
+            text: "none",
+            url: "",
+            color: "#ecf0f1"
+          }
+        };
       }
     }
   },
