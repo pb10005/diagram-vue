@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="modal" :class="{ 'is-open': isActive }"></div>
-    <div class="item" v-if="isActive"><slot></slot></div>
+    <div class="item" :class="{'is-open': isActive }"><slot></slot></div>
   </div>
 </template>
 <script>
@@ -34,9 +34,13 @@ export default {
   padding: 10px;
   position: fixed;
   background: white;
+  visibility: hidden;
   opacity: 1;
   z-index: 101;
   top: calc(50% - 50px / 2);
   left: calc(50% - 50px / 2);
+  &.is-open {
+    visibility: visible;
+  }
 }
 </style>
