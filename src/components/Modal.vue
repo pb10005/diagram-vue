@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="modal" :class="{ 'is-open': isActive }"></div>
-    <div class="item"><slot></slot></div>
+    <div class="item" v-if="isActive"><slot></slot></div>
   </div>
 </template>
 <script>

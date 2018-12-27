@@ -1,6 +1,6 @@
 <template>
   <Modal :isActive="isActive">
-    <div v-if="isActive">
+    <div>
       <textarea v-model="tmp" required placeholder="JSON"></textarea><br />
       <VButton @click="ok">OK</VButton>
       <VButton class="danger" @click="cancel">Cancel</VButton>

@@ -1,7 +1,7 @@
 <template>
   <Modal :isActive="isActive">
     <transition name="item">
-      <div class="form" v-if="isActive">
+      <div class="form">
         <VInput v-model="newData.text" placeholder="name" /><br />
         <VInput v-model="newData.url" placeholder="url" /><br />
         <VInput v-model="newData.color" placeholder="color" /><br />
