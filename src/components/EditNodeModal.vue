@@ -1,7 +1,7 @@
 <template>
   <Modal :isActive="isActive">
     <transition name="item">
-      <div class="form">
+      <div class="form" v-if="isActive">
         <VInput v-model="newData.text" placeholder="name" /><br />
         <VInput v-model="newData.url" placeholder="url" /><br />
         <VInput v-model="newData.color" placeholder="color" /><br />
@@ -55,7 +55,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .item-enter-active {
-  transition: all 0.5s ease;
+  transition: all 0.8s ease;
 }
 .item-leave-active {
   transition: all 0.3s ease;

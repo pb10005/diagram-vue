@@ -6,10 +6,10 @@
     <span v-else>
       <VButton @click="openModal">追加</VButton>
       <VButton @click="endEdit" class="button">編集を終了</VButton>
-      <VButton @click="openInputModal" class="button"
-        >インポート/エクスポート</VButton
-      >
     </span>
+    <VButton @click="openInputModal" class="button"
+      >インポート/エクスポート</VButton
+    >
     <EditNodeModal
       :node="{ content: {} }"
       :isActive="isModalActive"

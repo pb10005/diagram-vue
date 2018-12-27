@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="modal" :class="{ 'is-open': isActive }"></div>
-    <div class="item" :class="{'is-open': isActive }"><slot></slot></div>
+    <div class="item" :class="{ 'is-open': isActive }"><slot></slot></div>
   </div>
 </template>
 <script>
