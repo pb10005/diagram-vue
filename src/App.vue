@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import Diagram from "@/components/Diagram";
+import Diagram from "./Diagram";
 import EditNodeModal from "@/components/EditNodeModal";
 import VInput from "@/components/VInput";
 import VButton from "@/components/VButton";

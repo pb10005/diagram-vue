@@ -118,7 +118,7 @@ export default {
         }
       });
     },
-    reset(item) {
+    reset() {
       if (!this.createLinkMode) {
         this.selectedNode = -1;
         this.selectedLink = -1;
