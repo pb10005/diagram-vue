@@ -1,34 +1,39 @@
 <template>
   <div id="app">
     <div>
-        <div>
-          <VButton v-if="!editable" @click="editable=true" class="button">編集モード</VButton>
-          <span v-else>
-            <VButton @click="openModal">追加</VButton>
-            <VButton @click="endEdit" class="button">編集を終了</VButton>
-          </span>
-        </div>
-        <EditNodeModal 
-          :node="{content: {}}"
-          :isActive="isModalActive"
-          @ok="addNode"
-          @cancel="cancel" />
-        <EditNodeModal 
-          :node="tmpNode"
-          :isActive="isEditModalActive"
-          @ok="editNode"
-          @cancel="cancel" />
-        <Diagram
-            :width="2000"
-            :height="1000"
-            :nodes="nodes" 
-            :links="links"
-            linkColor="#ffeaa7"
-            :editable="editable"
-            @editNode="openEdit"
-            @nodeChanged="nodeChanged"
-            @linkChanged="linkChanged">
-        </Diagram>
+      <div>
+        <VButton v-if="!editable" @click="editable = true" class="button"
+          >編集モード</VButton
+        >
+        <span v-else>
+          <VButton @click="openModal">追加</VButton>
+          <VButton @click="endEdit" class="button">編集を終了</VButton>
+        </span>
+      </div>
+      <EditNodeModal
+        :node="{ content: {} }"
+        :isActive="isModalActive"
+        @ok="addNode"
+        @cancel="cancel"
+      />
+      <EditNodeModal
+        :node="tmpNode"
+        :isActive="isEditModalActive"
+        @ok="editNode"
+        @cancel="cancel"
+      />
+      <Diagram
+        :width="2000"
+        :height="1000"
+        :nodes="nodes"
+        :links="links"
+        linkColor="#ffeaa7"
+        :editable="editable"
+        @editNode="openEdit"
+        @nodeChanged="nodeChanged"
+        @linkChanged="linkChanged"
+      >
+      </Diagram>
     </div>
   </div>
 </template>
