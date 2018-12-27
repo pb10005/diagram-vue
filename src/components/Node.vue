@@ -8,7 +8,7 @@
         fill="#00b894"
         @click="editCandidate"
       >
-        {{labels.edit || 'Edit'}}
+        {{ labels.edit || "Edit" }}
       </text>
     </g>
     <g v-if="selected">
@@ -20,7 +20,7 @@
         stroke="none"
         @click="toggleSelect"
       >
-        {{labels.link || 'Link'}}
+        {{ labels.link || "Link" }}
       </text>
       <text
         :x="x + 65"
@@ -29,7 +29,7 @@
         fill="red"
         @click="remove"
       >
-        {{labels.remove || 'Remove'}}
+        {{ labels.remove || "Remove" }}
       </text>
     </g>
     <g v-if="createLinkMode && !selected">
@@ -40,7 +40,7 @@
         fill="red"
         @click="commitDest"
       >
-        {{labels.select || 'Select'}}
+        {{ labels.select || "Select" }}
       </text>
     </g>
     <svg :x="x" :y="y" :width="width" :height="height">
@@ -55,11 +55,19 @@
         :fill="content.color || '#ecf0f1'"
         @mousedown="mousedown"
         @mousemove="mousemove"
-        @mouseup="mouseup" />
-        <a target="_blank" :href="content.url">
-          <text x="50%" y="50%" fill="#34495e" font-family="Meiryo UI, sans-serif" font-size="20" text-anchor="middle">
-            {{ content.text }}
-          </text>
+        @mouseup="mouseup"
+      />
+      <a target="_blank" :href="content.url">
+        <text
+          x="50%"
+          y="50%"
+          fill="#34495e"
+          font-family="Meiryo UI, sans-serif"
+          font-size="20"
+          text-anchor="middle"
+        >
+          {{ content.text }}
+        </text>
       </a>
     </svg>
   </svg>

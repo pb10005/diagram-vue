@@ -51,7 +51,7 @@
         v-if="selected"
         class="button"
       >
-        {{labels.remove || 'Remove'}}
+        {{ labels.remove || "Remove" }}
       </text>
     </g>
   </svg>

@@ -12,17 +12,17 @@ export default {
 </script>
 <style lang="scss" scoped>
 button {
-  background: #FFFFFF;
-  border: 1px solid #EEEEEE;
+  background: #ffffff;
+  border: 1px solid #eeeeee;
   padding: 5px 10px;
   cursor: pointer;
 }
 button:hover {
-  background: #EEEEEE;
+  background: #eeeeee;
   opacity: 0.8;
   &.danger {
-    background: #FF0000;
-    color: #FFFFFF;
+    background: #ff0000;
+    color: #ffffff;
     border: 0;
   }
 }

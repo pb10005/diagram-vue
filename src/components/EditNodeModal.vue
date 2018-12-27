@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <div class="modal" :class="{ 'is-open': isActive }"></div>
-    <transition name="form">
+  <Modal :isActive="isActive">
+    <transition name="item">
       <div class="form" v-if="isActive">
         <VInput v-model="newData.text" placeholder="name" /><br />
         <VInput v-model="newData.url" placeholder="url" /><br />
@@ -10,13 +9,15 @@
         <VButton class="danger" @click="cancel">Cancel</VButton>
       </div>
     </transition>
-  </div>
+  </Modal>
 </template>
 <script>
+import Modal from "@/components/Modal";
 import VInput from "@/components/VInput";
 import VButton from "@/components/VButton";
 export default {
   components: {
+    Modal,
     VInput,
     VButton
   },
@@ -52,41 +53,15 @@ export default {
   }
 };
 </script>
-
 <style lang="scss" scoped>
-.modal {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  overflow-y: auto;
-  visibility: hidden;
-  opacity: 0;
-  z-index: -1;
-  &.is-open {
-    background: gray;
-    visibility: visible;
-    opacity: 0.8;
-    z-index: 100;
-  }
+.item-enter-active {
+  transition: all 0.5s ease;
 }
-.form {
-  padding: 10px;
-  position: fixed;
-  background: white;
-  opacity: 1;
-  z-index: 101;
-  top: calc(50% - 50px / 2);
-  left: calc(50% - 50px / 2);
+.item-leave-active {
+  transition: all 0.3s ease;
 }
-.form-enter-active {
-  transition: all .5s ease;
-}
-.form-leave-active {
-  transition: all .3s ease;
-}
-.form-enter, .form-leave-to {
+.item-enter,
+.item-leave-to {
   opacity: 0;
 }
 </style>

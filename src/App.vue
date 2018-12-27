@@ -1,49 +1,59 @@
 <template>
   <div id="app">
-      <VButton v-if="!editable" @click="editable = true" class="button"
-        >編集を開始</VButton
+    <VButton v-if="!editable" @click="editable = true" class="button"
+      >編集を開始</VButton
+    >
+    <span v-else>
+      <VButton @click="openModal">追加</VButton>
+      <VButton @click="endEdit" class="button">編集を終了</VButton>
+      <VButton @click="openInputModal" class="button"
+        >インポート/エクスポート</VButton
       >
-      <span v-else>
-        <VButton @click="openModal">追加</VButton>
-        <VButton @click="endEdit" class="button">編集を終了</VButton>
-      </span>
-      <EditNodeModal
-        :node="{ content: {} }"
-        :isActive="isModalActive"
-        @ok="addNode"
-        @cancel="cancel"
-      />
-      <EditNodeModal
-        :node="tmpNode"
-        :isActive="isEditModalActive"
-        @ok="editNode"
-        @cancel="cancel"
-      />
-      <Diagram
-        :width="2000"
-        :height="1000"
-        :nodes="nodes"
-        :links="links"
-        linkColor="#ffeaa7"
-        :editable="editable"
-        :labels="{
-          edit: '編集',
-          remove:'削除',
-          link: 'リンク',
-          select: '選択'
-        }"
-        @editNode="openEdit"
-        @nodeChanged="nodeChanged"
-        @linkChanged="linkChanged"
-      >
-      </Diagram>
+    </span>
+    <EditNodeModal
+      :node="{ content: {} }"
+      :isActive="isModalActive"
+      @ok="addNode"
+      @cancel="cancel"
+    />
+    <EditNodeModal
+      :node="tmpNode"
+      :isActive="isEditModalActive"
+      @ok="editNode"
+      @cancel="cancel"
+    />
+    <InputModal
+      :text="json"
+      :isActive="isInputModalActive"
+      @ok="importData"
+      @cancel="cancel"
+    />
+    <Diagram
+      :width="2000"
+      :height="1000"
+      :nodes="nodes"
+      :links="links"
+      linkColor="#ffeaa7"
+      :editable="editable"
+      :labels="{
+        edit: '編集',
+        remove: '削除',
+        link: 'リンク',
+        select: '選択'
+      }"
+      @editNode="openEdit"
+      @nodeChanged="nodeChanged"
+      @linkChanged="linkChanged"
+    >
+    </Diagram>
   </div>
 </template>
 
 <script>
-import data from './data'
-import Diagram from './Diagram';
+import data from "./data";
+import Diagram from "./Diagram";
 import EditNodeModal from "@/components/EditNodeModal";
+import InputModal from "@/components/InputModal";
 import VInput from "@/components/VInput";
 import VButton from "@/components/VButton";
 export default {
@@ -51,6 +61,7 @@ export default {
   components: {
     Diagram,
     EditNodeModal,
+    InputModal,
     VInput,
     VButton
   },
@@ -59,10 +70,12 @@ export default {
       name: "",
       url: "",
       color: "",
-      nodes: data.nodes,
-      links: data.links,
+      json: "",
+      nodes: [],
+      links: [],
       isModalActive: false,
       isEditModalActive: false,
+      isInputModalActive: false,
       editable: false,
       tmpNode: {
         id: "",
@@ -73,6 +86,10 @@ export default {
         }
       }
     };
+  },
+  mounted() {
+    this.nodes = data.nodes;
+    this.links = data.links;
   },
   methods: {
     generateID() {
@@ -87,6 +104,7 @@ export default {
     cancel() {
       this.isModalActive = false;
       this.isEditModalActive = false;
+      this.isInputModalActive = false;
     },
     addNode(item) {
       this.nodes.push({
@@ -128,6 +146,21 @@ export default {
     },
     linkChanged(obj) {
       this.links = obj.links;
+    },
+    openInputModal() {
+      this.isInputModalActive = true;
+      this.json = JSON.stringify({
+        nodes: this.nodes,
+        links: this.links
+      });
+    },
+    importData(value) {
+      const obj = JSON.parse(value.text);
+      if (obj) {
+        this.nodes = obj.nodes;
+        this.links = obj.links;
+        this.isInputModalActive = false;
+      }
     }
   }
 };
