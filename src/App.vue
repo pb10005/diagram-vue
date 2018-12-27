@@ -34,93 +34,95 @@
 </template>
 
 <script>
-import Diagram from '@/components/Diagram'
-import EditNodeModal from '@/components/EditNodeModal'
-import VInput from '@/components/VInput'
-import VButton from '@/components/VButton'
+import Diagram from "@/components/Diagram";
+import EditNodeModal from "@/components/EditNodeModal";
+import VInput from "@/components/VInput";
+import VButton from "@/components/VButton";
 export default {
-    name: "app",
-    components: {
-      Diagram,
-      EditNodeModal,
-      VInput,
-      VButton
-    },
-    data() {
-        return {
-          name: '',
-          url: '',
-          color: '',
-          nodes: [],
-          links: [],
-          isModalActive: false,
-          isEditModalActive: false,
-          editable: false,
-          tmpNode: {
-            id: '',
-            content: {
-              text: '',
-              url: '',
-              color: ''
-            }
-          }
+  name: "app",
+  components: {
+    Diagram,
+    EditNodeModal,
+    VInput,
+    VButton
+  },
+  data() {
+    return {
+      name: "",
+      url: "",
+      color: "",
+      nodes: [],
+      links: [],
+      isModalActive: false,
+      isEditModalActive: false,
+      editable: false,
+      tmpNode: {
+        id: "",
+        content: {
+          text: "",
+          url: "",
+          color: ""
         }
-    },
-    methods: {
-      generateID() {
-          return new Date().getTime().toString(16)
-              + Math.floor(Math.random() * 1000000).toString(16)
-      },
-      openModal() {
-        this.isModalActive = true
-      },
-      cancel() {
-        this.isModalActive = false
-        this.isEditModalActive = false
-      },
-      addNode(item) {
-        this.nodes.push({
-          id: this.generateID(),
-          content: {
-              text: item.content.text,
-              url: item.content.url,
-              color: item.content.color
-          },
-          width: 200,
-          height: 60,
-          point: {
-              x: 10,
-              y: 100 + Math.random() * 100
-          }
-        })
-        this.isModalActive = false
-      },
-      openEdit(item) {
-        this.tmpNode.id = item.id
-        this.tmpNode.content.text = item.content.text
-        this.tmpNode.content.url = item.content.url
-        this.tmpNode.content.color = item.content.color
-        this.isModalActive = false
-        this.isEditModalActive = true
-      },
-      editNode(item) {
-        let tmp = this.nodes.find(x => x.id === item.id)
-        tmp.content.text = item.content.text
-        tmp.content.url = item.content.url
-        tmp.content.color = item.content.color
-        this.isEditModalActive = false
-      },
-      endEdit(obj) {
-        this.editable = false
-      },
-      nodeChanged(obj) {
-        this.nodes = obj.nodes
-      },
-      linkChanged(obj) {
-        this.links = obj.links
       }
+    };
+  },
+  methods: {
+    generateID() {
+      return (
+        new Date().getTime().toString(16) +
+        Math.floor(Math.random() * 1000000).toString(16)
+      );
+    },
+    openModal() {
+      this.isModalActive = true;
+    },
+    cancel() {
+      this.isModalActive = false;
+      this.isEditModalActive = false;
+    },
+    addNode(item) {
+      this.nodes.push({
+        id: this.generateID(),
+        content: {
+          text: item.content.text,
+          url: item.content.url,
+          color: item.content.color
+        },
+        width: 200,
+        height: 60,
+        point: {
+          x: 10,
+          y: 100 + Math.random() * 100
+        }
+      });
+      this.isModalActive = false;
+    },
+    openEdit(item) {
+      this.tmpNode.id = item.id;
+      this.tmpNode.content.text = item.content.text;
+      this.tmpNode.content.url = item.content.url;
+      this.tmpNode.content.color = item.content.color;
+      this.isModalActive = false;
+      this.isEditModalActive = true;
+    },
+    editNode(item) {
+      let tmp = this.nodes.find(x => x.id === item.id);
+      tmp.content.text = item.content.text;
+      tmp.content.url = item.content.url;
+      tmp.content.color = item.content.color;
+      this.isEditModalActive = false;
+    },
+    endEdit(obj) {
+      this.editable = false;
+    },
+    nodeChanged(obj) {
+      this.nodes = obj.nodes;
+    },
+    linkChanged(obj) {
+      this.links = obj.links;
     }
-}
+  }
+};
 </script>
 
 <style lang="scss">
