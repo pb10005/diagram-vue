@@ -7,7 +7,7 @@
           <VInput v-model="newData.url" placeholder="url"/><br>
           <VInput v-model="newData.color" placeholder="color"/><br>
           <VButton @click="ok">OK</VButton>
-          <VButton @click="cancel">キャンセル</VButton>
+          <VButton @click="cancel">Cancel</VButton>
         </div>
     </div>
 </template>
