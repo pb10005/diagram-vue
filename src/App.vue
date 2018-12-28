@@ -1,14 +1,14 @@
 <template>
   <div id="app">
     <VButton v-if="!editable" @click="editable = true" class="button"
-      >編集を開始</VButton
+      >Edit</VButton
     >
     <span v-else>
-      <VButton @click="openModal">追加</VButton>
-      <VButton @click="endEdit" class="button">編集を終了</VButton>
+      <VButton @click="openModal">New Node</VButton>
+      <VButton @click="endEdit" class="button">End</VButton>
     </span>
     <VButton @click="openInputModal" class="button"
-      >インポート/エクスポート</VButton
+      >import/export</VButton
     >
     <EditNodeModal
       :node="{ content: {} }"
@@ -36,10 +36,10 @@
       linkColor="#ffeaa7"
       :editable="editable"
       :labels="{
-        edit: '編集',
-        remove: '削除',
-        link: 'リンク',
-        select: '選択'
+        edit: 'Edit',
+        remove: 'Remove',
+        link: 'New Link',
+        select: 'Select'
       }"
       @editNode="openEdit"
       @nodeChanged="nodeChanged"

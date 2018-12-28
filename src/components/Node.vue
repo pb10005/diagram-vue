@@ -26,7 +26,7 @@
         :x="x + 65"
         :y="y + height + 22"
         class="button"
-        fill="red"
+        fill="#ff7675"
         @click="remove"
       >
         {{ labels.remove || "Remove" }}
@@ -37,7 +37,7 @@
         :x="x + 5"
         :y="y - 10"
         class="button"
-        fill="red"
+        fill="#ff7675"
         @click="commitDest"
       >
         {{ labels.select || "Select" }}
@@ -168,6 +168,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .shadow {
-  filter: drop-shadow(3px 5px 3px rgba(0, 0, 0, 0.3));
+  filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.3));
 }
 </style>
