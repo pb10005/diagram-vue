@@ -1,6 +1,6 @@
 # diagram-vue
+A vue component library of diagrams  
 [Demo](https://diagram.netlify.com/)
-
 ## Usage
 ```html
 <Diagram
