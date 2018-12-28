@@ -44,8 +44,8 @@
   </div>
 </template>
 <script>
-import Node from "@/components/Node";
-import Link from "@/components/Link";
+import Node from "@/lib/Node";
+import Link from "@/lib/Link";
 export default {
   props: {
     width: Number,

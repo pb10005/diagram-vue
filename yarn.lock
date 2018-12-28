@@ -2846,6 +2846,13 @@ detect-node@^2.0.4:
   resolved "https://registry.yarnpkg.com/detect-node/-/detect-node-2.0.4.tgz#014ee8f8f669c5c58023da64b8179c083a28c46c"
   integrity sha512-ZIzRpLJrOj7jjP2miAtgqIfmzbxa4ZOr5jJc601zklsfEx9oTzmmj2nVpIPRpNlRTIh8lc1kyViIY7BWSGNmKw==
 
+diagram-vue@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/diagram-vue/-/diagram-vue-0.0.1.tgz#66483e27b9ad205c028a4c3c6950e094caceb9d2"
+  integrity sha512-5dIjBwpuy2150ad5A8SpKxVrQUfJwYjdrEXLa/iTHXcWNMVLNpkSacMLRarEdRlHaNziyw6NkEQIF+5FQNbS8w==
+  dependencies:
+    vue "^2.5.17"
+
 diff@1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/diff/-/diff-1.4.0.tgz#7f28d2eb9ee7b15a97efd89ce63dcfdaa3ccbabf"
