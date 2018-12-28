@@ -7,9 +7,7 @@
       <VButton @click="openModal">New Node</VButton>
       <VButton @click="endEdit" class="button">End</VButton>
     </span>
-    <VButton @click="openInputModal" class="button"
-      >import/export</VButton
-    >
+    <VButton @click="openInputModal" class="button">import/export</VButton>
     <EditNodeModal
       :node="{ content: {} }"
       :isActive="isModalActive"
