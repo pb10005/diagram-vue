@@ -1,18 +1,18 @@
 <template>
-  <Modal :isActive="isActive">
+  <VModal :isActive="isActive">
     <div>
       <textarea v-model="tmp" required placeholder="JSON"></textarea><br />
       <VButton @click="ok">OK</VButton>
       <VButton class="danger" @click="cancel">Cancel</VButton>
     </div>
-  </Modal>
+  </VModal>
 </template>
 <script>
-import Modal from "@/components/Modal";
+import VModal from "@/components/VModal";
 import VButton from "@/components/VButton";
 export default {
   components: {
-    Modal,
+    VModal,
     VButton
   },
   props: {

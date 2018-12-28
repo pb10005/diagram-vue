@@ -43,7 +43,7 @@
         {{ labels.select || "Select" }}
       </text>
     </g>
-    <svg :x="x" :y="y" :width="width" :height="height">
+    <svg :x="x" :y="y" :width="width" :height="height" class="shadow">
       <ellipse
         class="grab"
         cx="50%"
@@ -53,9 +53,12 @@
         :rx="width / 2"
         :ry="height / 2"
         :fill="content.color || '#ecf0f1'"
+        @touchstart="mousedown"
         @mousedown="mousedown"
         @mousemove="mousemove"
+        @touchmove="mousemove"
         @mouseup="mouseup"
+        @touchend="mouseup"
       />
       <a target="_blank" :href="content.url">
         <text
@@ -73,7 +76,9 @@
   </svg>
 </template>
 <script>
+import mouseEventHandlers from '../mouseEventHandlers'
 export default {
+  mixins: [mouseEventHandlers],
   props: {
     node: {
       width: Number,
@@ -113,34 +118,6 @@ export default {
     };
   },
   methods: {
-    mousedown(e) {
-      if (!this.editable) return;
-      this.$emit("select", this.id);
-
-      this.cursorOffset.x = e.pageX;
-      this.cursorOffset.y = e.pageY;
-      this.startPosition = { x: this.x, y: this.y };
-      //イベントを登録
-      document.addEventListener("mousemove", this.mousemove);
-      document.addEventListener("mouseup", this.mouseup);
-    },
-    mousemove(e) {
-      if (this.startPosition) {
-        this.x = this.startPosition.x + (e.pageX - this.cursorOffset.x);
-        this.y = this.startPosition.y + (e.pageY - this.cursorOffset.y);
-        this.$emit("updateLocation", {
-          id: this.id,
-          x: this.x,
-          y: this.y
-        });
-      }
-    },
-    mouseup() {
-      this.startPosition = null;
-      //イベントの後始末
-      document.removeEventListener("mousemove", this.mousemove);
-      document.removeEventListener("mouseup", this.mouseup);
-    },
     toggleSelect() {
       this.$emit("toggleSelect");
     },
@@ -149,6 +126,36 @@ export default {
     },
     remove() {
       this.$emit("remove", this.id);
+    },
+    mousedown(e) {
+      if (!this.editable) return;
+      this.$emit("select", this.id);
+      const [x,y] = this.getLocation(e)
+      this.cursorOffset.x = x;
+      this.cursorOffset.y = y;
+      this.startPosition = { x: this.x, y: this.y };
+
+      document.addEventListener("mousemove", this.mousemove);
+      document.addEventListener("mouseup", this.mouseup);
+    },
+    mousemove(e) {
+      if (this.startPosition) {
+        e.preventDefault()
+        const [x, y] = this.getLocation(e)
+        this.x = this.startPosition.x + (x - this.cursorOffset.x);
+        this.y = this.startPosition.y + (y - this.cursorOffset.y);
+        this.$emit("updateLocation", {
+            id: this.id,
+            x: this.x,
+            y: this.y
+        });
+      }
+    },
+    mouseup() {
+      this.startPosition = null;
+
+      document.removeEventListener("mousemove", this.mousemove);
+      document.removeEventListener("mouseup", this.mouseup);
     },
     editCandidate() {
       this.$emit("editNode", {
@@ -159,3 +166,8 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+.shadow {
+  filter: drop-shadow(3px 5px 3px rgba(0,0,0,0.3));
+}
+</style>

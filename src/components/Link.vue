@@ -38,8 +38,11 @@
         class="button"
         @click="select"
         @mousedown="mousedown"
+        @touchstart="mousedown"
         @mousemove="mousemove"
+        @touchmove="mousemove"
         @mouseup="mouseup"
+        @touchend="mouseup"
       />
     </g>
     <g>
@@ -57,7 +60,9 @@
   </svg>
 </template>
 <script>
+import mouseEventHandlers from '../mouseEventHandlers'
 export default {
+  mixins: [mouseEventHandlers],
   props: {
     selected: Boolean,
     editable: Boolean,
@@ -94,8 +99,9 @@ export default {
   },
   methods: {
     mousedown(e) {
-      this.cursorOffset.x = e.pageX;
-      this.cursorOffset.y = e.pageY;
+      const [x,y] = this.getLocation(e)
+      this.cursorOffset.x = x;
+      this.cursorOffset.y = y;
       this.startPosition = { x: this.point.x, y: this.point.y };
       //イベントを登録
       document.addEventListener("mousemove", this.mousemove);
@@ -103,8 +109,10 @@ export default {
     },
     mousemove(e) {
       if (this.startPosition) {
-        this.point.x = this.startPosition.x + (e.pageX - this.cursorOffset.x);
-        this.point.y = this.startPosition.y + (e.pageY - this.cursorOffset.y);
+        e.preventDefault()
+        const [x,y] = this.getLocation(e)
+        this.point.x = this.startPosition.x + (x - this.cursorOffset.x);
+        this.point.y = this.startPosition.y + (y - this.cursorOffset.y);
         this.$emit("updateLocation", {
           id: this.id,
           x: this.point.x,

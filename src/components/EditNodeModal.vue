@@ -1,5 +1,5 @@
 <template>
-  <Modal :isActive="isActive">
+  <VModal :isActive="isActive">
     <transition name="item">
       <div class="form" v-if="isActive">
         <VInput v-model="newData.text" placeholder="name" /><br />
@@ -9,15 +9,15 @@
         <VButton class="danger" @click="cancel">Cancel</VButton>
       </div>
     </transition>
-  </Modal>
+  </VModal>
 </template>
 <script>
-import Modal from "@/components/Modal";
+import VModal from "@/components/VModal";
 import VInput from "@/components/VInput";
 import VButton from "@/components/VButton";
 export default {
   components: {
-    Modal,
+    VModal,
     VInput,
     VButton
   },
