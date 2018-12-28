@@ -37,8 +37,8 @@ export default {
   visibility: hidden;
   opacity: 1;
   z-index: 101;
-  top: calc(50% - 50px / 2);
-  left: calc(50% - 50px / 2);
+  top: calc(50vh - 50px / 2);
+  left: calc(50vw - 50px / 2);
   &.is-open {
     visibility: visible;
   }
