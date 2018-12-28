@@ -60,7 +60,7 @@
   </svg>
 </template>
 <script>
-import mouseEventHandlers from '../mouseEventHandlers'
+import mouseEventHandlers from "../mouseEventHandlers";
 export default {
   mixins: [mouseEventHandlers],
   props: {
@@ -99,7 +99,7 @@ export default {
   },
   methods: {
     mousedown(e) {
-      const [x,y] = this.getLocation(e)
+      const [x, y] = this.getLocation(e);
       this.cursorOffset.x = x;
       this.cursorOffset.y = y;
       this.startPosition = { x: this.point.x, y: this.point.y };
@@ -109,8 +109,8 @@ export default {
     },
     mousemove(e) {
       if (this.startPosition) {
-        e.preventDefault()
-        const [x,y] = this.getLocation(e)
+        e.preventDefault();
+        const [x, y] = this.getLocation(e);
         this.point.x = this.startPosition.x + (x - this.cursorOffset.x);
         this.point.y = this.startPosition.y + (y - this.cursorOffset.y);
         this.$emit("updateLocation", {

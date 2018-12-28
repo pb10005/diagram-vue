@@ -76,7 +76,7 @@
   </svg>
 </template>
 <script>
-import mouseEventHandlers from '../mouseEventHandlers'
+import mouseEventHandlers from "../mouseEventHandlers";
 export default {
   mixins: [mouseEventHandlers],
   props: {
@@ -130,7 +130,7 @@ export default {
     mousedown(e) {
       if (!this.editable) return;
       this.$emit("select", this.id);
-      const [x,y] = this.getLocation(e)
+      const [x, y] = this.getLocation(e);
       this.cursorOffset.x = x;
       this.cursorOffset.y = y;
       this.startPosition = { x: this.x, y: this.y };
@@ -140,14 +140,14 @@ export default {
     },
     mousemove(e) {
       if (this.startPosition) {
-        e.preventDefault()
-        const [x, y] = this.getLocation(e)
+        e.preventDefault();
+        const [x, y] = this.getLocation(e);
         this.x = this.startPosition.x + (x - this.cursorOffset.x);
         this.y = this.startPosition.y + (y - this.cursorOffset.y);
         this.$emit("updateLocation", {
-            id: this.id,
-            x: this.x,
-            y: this.y
+          id: this.id,
+          x: this.x,
+          y: this.y
         });
       }
     },
@@ -168,6 +168,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .shadow {
-  filter: drop-shadow(3px 5px 3px rgba(0,0,0,0.3));
+  filter: drop-shadow(3px 5px 3px rgba(0, 0, 0, 0.3));
 }
 </style>
