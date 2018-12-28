@@ -1,12 +1,12 @@
 {
   "name": "diagram-vue",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "main": "dist/diagram.umd.js",
   "unpkg": "dist/diagram.min.js",
   "browser": {
     "./sfc": "src/Diagram.vue"
   },
-  "private": true,
+  "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build src/Diagram.vue --target lib --name diagram",
