@@ -32,8 +32,7 @@
         :cy="point.y"
         rx="10"
         ry="10"
-        fill="white"
-        stroke="#ff7675"
+        fill="#ff7675"
         stroke-width="2"
         class="button"
         @click="select"
@@ -60,9 +59,9 @@
   </svg>
 </template>
 <script>
-import mouseEventHandlers from "../mouseEventHandlers";
+import mouseLocation from "../mouseLocation";
 export default {
-  mixins: [mouseEventHandlers],
+  mixins: [mouseLocation],
   props: {
     selected: Boolean,
     editable: Boolean,
@@ -103,7 +102,6 @@ export default {
       this.cursorOffset.x = x;
       this.cursorOffset.y = y;
       this.startPosition = { x: this.point.x, y: this.point.y };
-      //イベントを登録
       document.addEventListener("mousemove", this.mousemove);
       document.addEventListener("mouseup", this.mouseup);
     },
@@ -122,7 +120,6 @@ export default {
     },
     mouseup() {
       this.startPosition = null;
-      //イベントの後始末
       document.removeEventListener("mousemove", this.mousemove);
       document.removeEventListener("mouseup", this.mouseup);
     },

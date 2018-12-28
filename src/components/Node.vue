@@ -76,9 +76,9 @@
   </svg>
 </template>
 <script>
-import mouseEventHandlers from "../mouseEventHandlers";
+import mouseLocation from "../mouseLocation";
 export default {
-  mixins: [mouseEventHandlers],
+  mixins: [mouseLocation],
   props: {
     node: {
       width: Number,
