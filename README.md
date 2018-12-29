@@ -8,6 +8,7 @@ npm i install --save
 ```
 
 ## Usage
+[![Edit Vue Template](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/1yzpq1y0rq)
 ### Template
 ```html
 <Diagram
