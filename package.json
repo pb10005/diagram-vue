@@ -4,7 +4,10 @@
   "main": "dist/diagram.umd.js",
   "author": "pb10001",
   "license": "MIT",
-  "repository": "https://github.com/pb10001/diagram-vue.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pb10001/diagram-vue.git"
+  },
   "unpkg": "dist/diagram.min.js",
   "browser": {
     "./sfc": "src/Diagram.vue"
