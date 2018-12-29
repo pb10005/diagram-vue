@@ -52,11 +52,13 @@ props: {
 editNode(node /* selected node */) {
     /* event handler */
 },
-nodeChanged(nodes /* array of nodes */) {
+nodeChanged(obj /* array of nodes */) {
     /* event handler */
+    const nodes = obj.nodes
 },
-linkChanged(links /* array of links */) {
+linkChanged(obj /* array of links */) {
     /* event handler */
+    const links = obj.links
 }
 
 ```
