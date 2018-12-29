@@ -1,6 +1,10 @@
 # diagram-vue
-A vue component library of diagrams  
-[Demo](https://diagram.netlify.com/)
+A vue component library of diagrams
+
+[![npm version](https://badge.fury.io/js/diagram-vue.svg)](https://badge.fury.io/js/diagram-vue)
+![npm](https://img.shields.io/npm/dt/:diagram-vue.svg)  
+
+[Demo](https://diagram.netlify.com/)  
 
 ## Installaion
 ```sh
