@@ -1,7 +1,14 @@
 # diagram-vue
+A vue component library of diagrams  
 [Demo](https://diagram.netlify.com/)
 
+## Installaion
+```sh
+npm i install --save
+```
+
 ## Usage
+### Template
 ```html
 <Diagram
     :width="2000"
@@ -16,11 +23,15 @@
         link: 'Link',
         select: 'Select'
     }"
-    @editNode="openEdit"
+    @editNode="editNode"
     @nodeChanged="nodeChanged"
     @linkChanged="linkChanged"
     >
 </Diagram>
+```
+### Import
+```js
+import Diagram from 'diagram-vue'
 ```
 ### Props
 ```js
