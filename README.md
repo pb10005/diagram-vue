@@ -8,7 +8,7 @@ A vue component library of diagrams
 
 ## Installaion
 ```sh
-npm i install --save
+npm i install diagram-vue --save
 ```
 ## Usage
 [![Edit Vue Template](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/1yzpq1y0rq)
