@@ -1,7 +1,14 @@
 # diagram-vue
 A vue component library of diagrams  
 [Demo](https://diagram.netlify.com/)
+
+## Installaion
+```sh
+npm i install --save
+```
 ## Usage
+[![Edit Vue Template](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/1yzpq1y0rq)
+### Template
 ```html
 <Diagram
     :width="2000"
@@ -16,11 +23,15 @@ A vue component library of diagrams
         link: 'Link',
         select: 'Select'
     }"
-    @editNode="openEdit"
+    @editNode="editNode"
     @nodeChanged="nodeChanged"
     @linkChanged="linkChanged"
     >
 </Diagram>
+```
+### Import
+```js
+import Diagram from 'diagram-vue'
 ```
 ### Props
 ```js
@@ -34,17 +45,19 @@ props: {
     labels: Object
 }
 ```
-[Sample data](./src/data.json) helps you know the data structure of nodes and links.
+[Sample data](https://github.com/pb10001/diagram-vue/blob/master/src/data.js) helps you know the data structure of nodes and links.
 ### Events
 ```js
 editNode(node /* selected node */) {
     /* event handler */
 },
-nodeChanged(nodes /* array of nodes */) {
+nodeChanged(obj /* array of nodes */) {
     /* event handler */
+    const nodes = obj.nodes
 },
-linkChanged(links /* array of links */) {
+linkChanged(obj /* array of links */) {
     /* event handler */
+    const links = obj.links
 }
 
 ```
