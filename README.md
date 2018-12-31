@@ -1,17 +1,18 @@
 # diagram-vue
 A vue component library of diagrams
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a66f2b18a900451693f7a41019abf79e)](https://app.codacy.com/app/pb10001/diagram-vue?utm_source=github.com&utm_medium=referral&utm_content=pb10001/diagram-vue&utm_campaign=Badge_Grade_Dashboard)
 [![npm version](https://badge.fury.io/js/diagram-vue.svg)](https://badge.fury.io/js/diagram-vue)
-![npm](https://img.shields.io/npm/dt/:diagram-vue.svg)  
+![npm](https://img.shields.io/npm/dt/diagram-vue.svg)  
 
 [Demo](https://diagram.netlify.com/)  
 
 ## Installaion
 ```sh
-npm i install --save
+npm i install diagram-vue --save
 ```
 ## Usage
-[![Edit Vue Template](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/1yzpq1y0rq)
+[![Edit diagram-vue](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/1yzpq1y0rq)
 ### Template
 ```html
 <Diagram
