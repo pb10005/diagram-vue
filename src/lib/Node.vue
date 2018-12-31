@@ -45,7 +45,7 @@
     </g>
     <svg :x="x" :y="y" :width="width" :height="height" class="shadow">
       <ellipse
-        v-if="node.type === 'ellipse'"
+        v-if="node.shape === 'ellipse'"
         class="grab"
         cx="50%"
         cy="50%"
@@ -114,7 +114,10 @@ export default {
         url: String,
         color: String
       },
-      type: String
+      shape: {
+        type: String,
+        default: "rect"
+      }
     },
     editable: Boolean,
     createLinkMode: Boolean,
