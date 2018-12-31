@@ -5,6 +5,7 @@ export default {
       content: { text: "Search", color: "#fab1a0" },
       width: 150,
       height: 60,
+      type: "ellipse",
       point: { x: 1163, y: 242.2209625601816 }
     },
     {
@@ -33,13 +34,15 @@ export default {
       content: { text: "Development", color: "#fab1a0" },
       width: 200,
       height: 100,
+      type: "ellipse",
       point: { x: 360, y: 163.53316452172362 }
     },
     {
       id: "167efae23b74ae81",
       content: { text: "Entertainment", color: "#fab1a0" },
-      width: 150,
+      width: 200,
       height: 60,
+      type: "ellipse",
       point: { x: 683, y: 491.5452292961393 }
     },
     {
@@ -54,6 +57,7 @@ export default {
       content: { text: "Shopping", color: "#fab1a0" },
       width: 150,
       height: 60,
+      type: "ellipse",
       point: { x: 203, y: 520.2200795768947 }
     },
     {

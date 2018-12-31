@@ -45,6 +45,7 @@
     </g>
     <svg :x="x" :y="y" :width="width" :height="height" class="shadow">
       <ellipse
+        v-if="node.type==='ellipse'"
         class="grab"
         cx="50%"
         cy="50%"
@@ -60,6 +61,23 @@
         @mouseup="mouseup"
         @touchend="mouseup"
       />
+      <rect
+        v-else
+        class="grab"
+        x=0
+        y=0
+        width="100%"
+        height="100%"
+        rx=5
+        ry=3
+        :fill="content.color || '#ecf0f1'"
+        @touchstart="mousedown"
+        @mousedown="mousedown"
+        @mousemove="mousemove"
+        @touchmove="mousemove"
+        @mouseup="mouseup"
+        @touchend="mouseup"
+       />
       <a target="_blank" :href="content.url">
         <text
           x="50%"
@@ -95,7 +113,8 @@ export default {
         text: String,
         url: String,
         color: String
-      }
+      },
+      type: String
     },
     editable: Boolean,
     createLinkMode: Boolean,
