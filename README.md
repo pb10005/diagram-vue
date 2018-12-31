@@ -12,7 +12,7 @@ A vue component library of diagrams
 npm i install diagram-vue --save
 ```
 ## Usage
-[![Edit diagram-vue](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/1yzpq1y0rq)
+[![Edit diagram-vue](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/q7wj02ny2w)
 ### Template
 ```html
 <Diagram
