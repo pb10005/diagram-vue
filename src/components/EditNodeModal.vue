@@ -57,6 +57,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 input {
+  width: 95%;
   margin-bottom: 5px;
 }
 .item-enter-active {
