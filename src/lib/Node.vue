@@ -191,6 +191,8 @@ export default {
 <style lang="scss" scoped>
 .shadow {
   filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.3));
+  -webkit-filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.3));
+  -moz-filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.3));
 }
 .button {
   cursor: pointer;
