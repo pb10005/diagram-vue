@@ -1,6 +1,10 @@
 <template>
   <div>
-    <div class="modal" :class="{ 'is-open': isActive }"></div>
+    <div
+      class="modal"
+      :class="{ 'is-open': isActive }"
+      @click="clickModal"
+    ></div>
     <div class="item" :class="{ 'is-open': isActive }"><slot></slot></div>
   </div>
 </template>
@@ -8,6 +12,11 @@
 export default {
   props: {
     isActive: Boolean
+  },
+  methods: {
+    clickModal() {
+      this.$emit("clickModal");
+    }
   }
 };
 </script>
@@ -31,16 +40,32 @@ export default {
   }
 }
 .item {
+  width: 50vw;
   padding: 10px;
   position: fixed;
   background: white;
   visibility: hidden;
   opacity: 1;
   z-index: 101;
-  top: calc(50vh - 50px / 2);
-  left: calc(50vw - 50px / 2);
+  top: 25vh;
+  left: 25vw;
   &.is-open {
     visibility: visible;
+  }
+}
+@media screen and (max-width: 900px) {
+  .item {
+    width: 100vw;
+    padding: 10px;
+    position: fixed;
+    background: white;
+    visibility: hidden;
+    opacity: 1;
+    z-index: 101;
+    left: 0;
+    &.is-open {
+      visibility: visible;
+    }
   }
 }
 </style>

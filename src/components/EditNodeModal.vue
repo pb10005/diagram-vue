@@ -1,5 +1,5 @@
 <template>
-  <VModal :isActive="isActive">
+  <VModal :isActive="isActive" @clickModal="cancel">
     <transition name="item">
       <div class="form" v-if="isActive">
         <VInput v-model="newData.text" placeholder="name" /><br />
@@ -56,6 +56,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+input {
+  margin-bottom: 5px;
+}
 .item-enter-active {
   transition: all 0.8s ease;
 }

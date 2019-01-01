@@ -1,7 +1,13 @@
 <template>
-  <VModal :isActive="isActive">
+  <VModal :isActive="isActive" @clickModal="cancel">
     <div>
-      <textarea v-model="tmp" required placeholder="JSON"></textarea><br />
+      <textarea
+        class="input"
+        v-model="tmp"
+        required
+        placeholder="JSON"
+      ></textarea
+      ><br />
       <VButton @click="ok">OK</VButton>
       <VButton class="danger" @click="cancel">Cancel</VButton>
     </div>
@@ -41,3 +47,10 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+.input {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 5px;
+}
+</style>

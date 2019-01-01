@@ -34,7 +34,7 @@
         ry="10"
         fill="#ff7675"
         stroke-width="2"
-        class="button"
+        class="grab"
         @click="select"
         @mousedown="mousedown"
         @touchstart="mousedown"
