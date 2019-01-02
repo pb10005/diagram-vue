@@ -20,7 +20,7 @@ export default {
       content: { text: "GitHub", url: "https://github.com" },
       width: 150,
       height: 60,
-      point: { x: 125, y: 80.9606147800741 }
+      point: { x: 119, y: 66.9606147800741 }
     },
     {
       id: "167efaa2c59c27a1",
@@ -72,7 +72,29 @@ export default {
       content: { text: "AWS", url: "https://aws.amazon.com", color: "" },
       width: 150,
       height: 60,
-      point: { x: 631, y: 294.68778041751256 }
+      point: { x: 644, y: 292.68778041751256 }
+    },
+    {
+      id: "1680e229c0732ae9",
+      content: { text: "Social", color: "#fab1a0" },
+      shape: "ellipse",
+      width: 150,
+      height: 60,
+      point: { x: 452, y: 759.8688614196489 }
+    },
+    {
+      id: "1680e2326421055d",
+      content: { text: "Twitter", url: "https://twitter.com/" },
+      width: 150,
+      height: 60,
+      point: { x: 189, y: 659.0198654750499 }
+    },
+    {
+      id: "1680e259f7a6775b",
+      content: { text: "Angular", url: "https://angular.io/" },
+      width: 150,
+      height: 60,
+      point: { x: 618, y: 69.46450051344266 }
     }
   ],
   links: [
@@ -94,7 +116,7 @@ export default {
       id: "167efabe6bfc5f86",
       source: "167efabc40ee0852",
       destination: "167efa7fc5d2f8d6",
-      point: { x: 281, y: 254.73236332876465 },
+      point: { x: 283, y: 254.73236332876465 },
       color: "#74b9ff"
     },
     {
@@ -130,6 +152,20 @@ export default {
       source: "167efaf41e0cc6f2",
       destination: "167efafa9d4b4dbc",
       point: { x: 527.5, y: 354.4701429988721 },
+      color: "#74b9ff"
+    },
+    {
+      id: "1680e2377d4df60c",
+      source: "1680e229c0732ae9",
+      destination: "1680e2326421055d",
+      point: { x: 427.5, y: 687.4443634473494 },
+      color: "#a29bfe"
+    },
+    {
+      id: "1680e25b9919ba70",
+      source: "1680e259f7a6775b",
+      destination: "167efabc40ee0852",
+      point: { x: 500.5, y: 109.49883251758314 },
       color: "#74b9ff"
     }
   ]
