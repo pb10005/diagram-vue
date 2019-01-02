@@ -8,7 +8,7 @@
     "type": "git",
     "url": "https://github.com/pb10001/diagram-vue.git"
   },
-  "unpkg": "dist/diagram.min.js",
+  "unpkg": "dist/diagram.umd.min.js",
   "browser": {
     "./sfc": "src/Diagram.vue"
   },
