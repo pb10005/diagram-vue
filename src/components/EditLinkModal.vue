@@ -2,7 +2,7 @@
   <VModal :isActive="isActive" @clickModal="cancel">
     <transition name="item">
       <div class="form" v-if="isActive">
-        <VInput v-model="newColor" placeholder="color" /><br />
+        <VInput v-model="content.color" placeholder="color" /><br />
         <VButton @click="ok">OK</VButton>
         <VButton class="danger" @click="cancel">Cancel</VButton>
       </div>
@@ -25,15 +25,17 @@ export default {
       type: Object,
       default() {
         return {
-          link: "0",
-          color: "#ecf0f1"
+          id: "0",
+          content: {
+            color: "#ecf0f1"
+          }
         };
       }
     }
   },
   data() {
     return {
-      newColor: this.link.color
+      content: this.link.content
     };
   },
   methods: {
@@ -41,7 +43,7 @@ export default {
       this.$emit("ok", {
         id: this.link.id,
         content: {
-          color: this.newColor
+          color: this.content.color
         }
       });
     },
