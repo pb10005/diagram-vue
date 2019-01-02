@@ -20,6 +20,12 @@
       @ok="editNode"
       @cancel="cancel"
     />
+    <EditLinkModal
+      :link="tmpLink"
+      :isActive="isEditLinkModalActive"
+      @ok="editLink"
+      @cancel="cancel"
+    />
     <InputModal
       :text="json"
       :isActive="isInputModalActive"
@@ -31,7 +37,6 @@
       :height="1000"
       :nodes="nodes"
       :links="links"
-      linkColor="#ffeaa7"
       :editable="editable"
       :labels="{
         edit: 'Edit',
@@ -39,7 +44,8 @@
         link: 'New Link',
         select: 'Select'
       }"
-      @editNode="openEdit"
+      @editNode="openNodeEdit"
+      @editLink="openLinkEdit"
       @nodeChanged="nodeChanged"
       @linkChanged="linkChanged"
     >
@@ -51,6 +57,7 @@
 import data from "./data";
 import Diagram from "./Diagram";
 import EditNodeModal from "@/components/EditNodeModal";
+import EditLinkModal from "@/components/EditLinkModal";
 import InputModal from "@/components/InputModal";
 import VButton from "@/components/VButton";
 export default {
@@ -58,6 +65,7 @@ export default {
   components: {
     Diagram,
     EditNodeModal,
+    EditLinkModal,
     InputModal,
     VButton
   },
@@ -71,6 +79,7 @@ export default {
       links: [],
       isModalActive: false,
       isEditModalActive: false,
+      isEditLinkModalActive: false,
       isInputModalActive: false,
       editable: false,
       tmpNode: {
@@ -78,6 +87,12 @@ export default {
         content: {
           text: "",
           url: "",
+          color: ""
+        }
+      },
+      tmpLink: {
+        id: "",
+        content: {
           color: ""
         }
       }
@@ -100,6 +115,7 @@ export default {
     cancel() {
       this.isModalActive = false;
       this.isEditModalActive = false;
+      this.isEditLinkModalActive = false;
       this.isInputModalActive = false;
     },
     addNode(item) {
@@ -119,7 +135,7 @@ export default {
       });
       this.isModalActive = false;
     },
-    openEdit(item) {
+    openNodeEdit(item) {
       this.tmpNode.id = item.id;
       this.tmpNode.content.text = item.content.text;
       this.tmpNode.content.url = item.content.url;
@@ -133,6 +149,16 @@ export default {
       tmp.content.url = item.content.url;
       tmp.content.color = item.content.color;
       this.isEditModalActive = false;
+    },
+    openLinkEdit(item) {
+      this.tmpLink.id = item.id;
+      this.tmpLink.content.color = item.content.color;
+      this.isEditLinkModalActive = true;
+    },
+    editLink(item) {
+      let tmp = this.links.find(x => x.id === item.id);
+      tmp.color = item.content.color;
+      this.isEditLinkModalActive = false;
     },
     endEdit() {
       this.editable = false;

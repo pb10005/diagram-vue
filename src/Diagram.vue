@@ -15,11 +15,11 @@
           v-for="item in linkList"
           :selected="item.id === selectedLink"
           :key="item.id"
-          :color="linkColor"
           :source="findNode(item.source)"
           :destination="findNode(item.destination)"
           :editable="editable"
           :labels="labels"
+          @editLink="editLink"
           @select="selectLink"
           @updateLocation="updateLinkLocation"
           @remove="removeLink"
@@ -53,7 +53,6 @@ export default {
     nodes: Array,
     links: Array,
     editable: Boolean,
-    linkColor: String,
     labels: Object
   },
   components: {
@@ -93,14 +92,17 @@ export default {
     };
   },
   methods: {
+    editNode(item) {
+      this.$emit("editNode", item);
+    },
+    editLink(item) {
+      this.$emit("editLink", item);
+    },
     generateID() {
       return (
         new Date().getTime().toString(16) +
         Math.floor(Math.random() * 1000000).toString(16)
       );
-    },
-    editNode(item) {
-      this.$emit("editNode", item);
     },
     addNode() {
       if (!this.editable) return;

@@ -29,6 +29,7 @@ npm i install diagram-vue --save
         select: 'Select'
     }"
     @editNode="editNode"
+    @editLink="editLink"
     @nodeChanged="nodeChanged"
     @linkChanged="linkChanged"
     >
@@ -46,7 +47,6 @@ props: {
     nodes: Array,
     links: Array,
     editable: Boolean,
-    linkColor: String,
     labels: Object
 }
 ```
@@ -54,6 +54,9 @@ props: {
 ### Events
 ```js
 editNode(node /* selected node */) {
+    /* event handler */
+},
+editLink(link /* selected link */) {
     /* event handler */
 },
 nodeChanged(obj /* array of nodes */) {

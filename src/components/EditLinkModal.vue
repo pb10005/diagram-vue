@@ -2,9 +2,7 @@
   <VModal :isActive="isActive" @clickModal="cancel">
     <transition name="item">
       <div class="form" v-if="isActive">
-        <VInput v-model="newData.text" placeholder="name" /><br />
-        <VInput v-model="newData.url" placeholder="url" /><br />
-        <VInput v-model="newData.color" placeholder="color" /><br />
+        <VInput v-model="newColor" placeholder="color" /><br />
         <VButton @click="ok">OK</VButton>
         <VButton class="danger" @click="cancel">Cancel</VButton>
       </div>
@@ -23,30 +21,28 @@ export default {
   },
   props: {
     isActive: Boolean,
-    node: {
+    link: {
       type: Object,
       default() {
         return {
-          id: "",
-          content: {
-            text: "none",
-            url: "",
-            color: "#ecf0f1"
-          }
+          link: "0",
+          color: "#ecf0f1"
         };
       }
     }
   },
   data() {
     return {
-      newData: this.node.content
+      newColor: this.link.color
     };
   },
   methods: {
     ok() {
       this.$emit("ok", {
-        id: this.node.id,
-        content: this.newData
+        id: this.link.id,
+        content: {
+          color: this.newColor
+        }
       });
     },
     cancel() {

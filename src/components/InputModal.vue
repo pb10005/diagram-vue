@@ -14,8 +14,8 @@
   </VModal>
 </template>
 <script>
-import VModal from "@/components/VModal";
-import VButton from "@/components/VButton";
+import VModal from "./VModal";
+import VButton from "./VButton";
 export default {
   components: {
     VModal,

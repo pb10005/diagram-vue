@@ -7,7 +7,7 @@
           destination.width / 2} ${destination.point.y +
           destination.height / 2}`
       "
-      :stroke="color"
+      :stroke="link.color || '#ffeaa7'"
       stroke-width="3"
       fill="none"
     />
@@ -47,6 +47,16 @@
     <g>
       <text
         :x="point.x - 15"
+        :y="point.y - 20"
+        fill="#00b894"
+        @click="edit"
+        v-if="selected"
+        class="button"
+      >
+        {{ labels.edit || "Edit" }}
+      </text>
+      <text
+        :x="point.x - 15"
         :y="point.y + 30"
         fill="#ff7675"
         @click="remove"
@@ -65,7 +75,6 @@ export default {
   props: {
     selected: Boolean,
     editable: Boolean,
-    color: String,
     source: {
       id: Number,
       x: Number,
@@ -78,6 +87,7 @@ export default {
     },
     link: {
       id: String,
+      color: String,
       point: {
         x: Number,
         y: Number
@@ -128,6 +138,14 @@ export default {
     },
     select() {
       this.$emit("select", this.id);
+    },
+    edit() {
+      this.$emit("editLink", {
+        id: this.link.id,
+        content: {
+          color: this.link.color
+        }
+      });
     }
   }
 };
