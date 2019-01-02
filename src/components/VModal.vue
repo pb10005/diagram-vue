@@ -40,7 +40,7 @@ export default {
   }
 }
 .item {
-  width: 50vw;
+  width: 70vw;
   padding: 10px;
   position: fixed;
   background: white;
@@ -48,7 +48,7 @@ export default {
   opacity: 1;
   z-index: 101;
   top: 25vh;
-  left: 25vw;
+  left: 15vw;
   &.is-open {
     visibility: visible;
   }
@@ -63,6 +63,7 @@ export default {
     opacity: 1;
     z-index: 101;
     left: 0;
+    top: 10px;
     &.is-open {
       visibility: visible;
     }
