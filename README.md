@@ -16,11 +16,11 @@ npm i install diagram-vue --save
 ### Template
 ```html
 <Diagram
-    :width="2000"
-    :height="1000"
+    width=2000
+    height=1000
+    background="#fafafa"
     :nodes="nodes"
     :links="links"
-    linkColor="#ffeaa7"
     :editable="editable"
     :labels="{
         edit: 'Edit',
@@ -44,6 +44,7 @@ import Diagram from 'diagram-vue'
 props: {
     width: Number,
     height: Number,
+    background: String,
     nodes: Array,
     links: Array,
     editable: Boolean,

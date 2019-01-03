@@ -7,7 +7,7 @@
           y="0"
           width="2000"
           height="1000"
-          fill="white"
+          :fill="background"
           @click="reset"
         />
         <Link
@@ -50,6 +50,7 @@ export default {
   props: {
     width: Number,
     height: Number,
+    background: String,
     nodes: Array,
     links: Array,
     editable: Boolean,

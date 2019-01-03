@@ -35,6 +35,7 @@
     <Diagram
       :width="2000"
       :height="1000"
+      background="#fafafa"
       :nodes="nodes"
       :links="links"
       :editable="editable"
@@ -54,7 +55,7 @@
 </template>
 
 <script>
-import data from "./data";
+import data from "./data.json";
 import Diagram from "./Diagram";
 import EditNodeModal from "@/components/EditNodeModal";
 import EditLinkModal from "@/components/EditLinkModal";
