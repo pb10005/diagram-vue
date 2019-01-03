@@ -116,7 +116,7 @@ export default {
       },
       shape: {
         type: String,
-        default: "rect"
+        default: "rectangle"
       }
     },
     editable: Boolean,
@@ -182,6 +182,7 @@ export default {
     editCandidate() {
       this.$emit("editNode", {
         id: this.id,
+        shape: this.node.shape,
         content: this.content
       });
     }

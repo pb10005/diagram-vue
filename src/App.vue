@@ -84,6 +84,7 @@ export default {
       editable: false,
       tmpNode: {
         id: "",
+        shape: "",
         content: {
           text: "",
           url: "",
@@ -128,6 +129,7 @@ export default {
         },
         width: 150,
         height: 60,
+        shape: item.shape,
         point: {
           x: 10,
           y: 100 + Math.random() * 100
@@ -140,6 +142,7 @@ export default {
       this.tmpNode.content.text = item.content.text;
       this.tmpNode.content.url = item.content.url;
       this.tmpNode.content.color = item.content.color;
+      this.tmpNode.shape = item.shape;
       this.isModalActive = false;
       this.isEditModalActive = true;
     },
@@ -148,6 +151,7 @@ export default {
       tmp.content.text = item.content.text;
       tmp.content.url = item.content.url;
       tmp.content.color = item.content.color;
+      tmp.shape = item.shape;
       this.isEditModalActive = false;
     },
     openLinkEdit(item) {

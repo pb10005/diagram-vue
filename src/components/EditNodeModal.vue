@@ -5,6 +5,10 @@
         <VInput v-model="newData.text" placeholder="name" /><br />
         <VInput v-model="newData.url" placeholder="url" /><br />
         <VInput v-model="newData.color" placeholder="color" /><br />
+        <VSelect v-model="newShape">
+          <option value="rectangle" selected>Rectangle</option>
+          <option value="ellipse">Ellipse</option> </VSelect
+        ><br />
         <VButton @click="ok">OK</VButton>
         <VButton class="danger" @click="cancel">Cancel</VButton>
       </div>
@@ -15,11 +19,13 @@
 import VModal from "./VModal";
 import VInput from "./VInput";
 import VButton from "./VButton";
+import VSelect from "./VSelect";
 export default {
   components: {
     VModal,
     VInput,
-    VButton
+    VButton,
+    VSelect
   },
   props: {
     isActive: Boolean,
@@ -28,6 +34,7 @@ export default {
       default() {
         return {
           id: "",
+          shape: "rectangle",
           content: {
             text: "none",
             url: "",
@@ -39,6 +46,7 @@ export default {
   },
   data() {
     return {
+      newShape: this.node.shape,
       newData: this.node.content
     };
   },
@@ -46,6 +54,7 @@ export default {
     ok() {
       this.$emit("ok", {
         id: this.node.id,
+        shape: this.newShape,
         content: this.newData
       });
     },
@@ -58,6 +67,9 @@ export default {
 <style lang="scss" scoped>
 input {
   width: 95%;
+  margin-bottom: 5px;
+}
+select {
   margin-bottom: 5px;
 }
 .item-enter-active {
