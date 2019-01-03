@@ -18,7 +18,7 @@ npm i install diagram-vue --save
 <Diagram
     :width="2000"
     :height="1000"
-    :scale="1"
+    scale="1"
     background="#fafafa"
     :nodes="nodes"
     :links="links"
