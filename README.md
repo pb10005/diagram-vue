@@ -16,8 +16,9 @@ npm i install diagram-vue --save
 ### Template
 ```html
 <Diagram
-    width=2000
-    height=1000
+    :width="2000"
+    :height="1000"
+    :scale="1"
     background="#fafafa"
     :nodes="nodes"
     :links="links"
