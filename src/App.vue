@@ -8,6 +8,11 @@
       <VButton @click="endEdit" class="button">End</VButton>
     </span>
     <VButton @click="openInputModal" class="button">import/export</VButton>
+    <VSelect v-model="scale">
+      <option value="0.5">Small</option>
+      <option value="1" selected>Medium</option>
+      <option value="2">Large</option>
+    </VSelect>
     <EditNodeModal
       :node="{ content: {} }"
       :isActive="isModalActive"
@@ -35,6 +40,7 @@
     <Diagram
       :width="2000"
       :height="1000"
+      :scale="scale"
       background="#fafafa"
       :nodes="nodes"
       :links="links"
@@ -61,6 +67,7 @@ import EditNodeModal from "@/components/EditNodeModal";
 import EditLinkModal from "@/components/EditLinkModal";
 import InputModal from "@/components/InputModal";
 import VButton from "@/components/VButton";
+import VSelect from "@/components/VSelect";
 export default {
   name: "app",
   components: {
@@ -68,7 +75,8 @@ export default {
     EditNodeModal,
     EditLinkModal,
     InputModal,
-    VButton
+    VButton,
+    VSelect
   },
   data() {
     return {
@@ -76,6 +84,7 @@ export default {
       url: "",
       color: "",
       json: "",
+      scale: "1",
       nodes: [],
       links: [],
       isModalActive: false,
@@ -201,6 +210,10 @@ body {
     -moz-osx-font-smoothing: grayscale;
     // text-align: center;
     color: #2c3e50;
+  }
+  .scrollXY {
+    overflow-x: auto;
+    overflow-y: auto;
   }
 }
 </style>

@@ -93,7 +93,8 @@ export default {
         y: Number
       }
     },
-    labels: Object
+    labels: Object,
+    scale: String
   },
   data() {
     return {
@@ -119,8 +120,12 @@ export default {
       if (this.startPosition) {
         e.preventDefault();
         const [x, y] = this.getLocation(e);
-        this.point.x = this.startPosition.x + (x - this.cursorOffset.x);
-        this.point.y = this.startPosition.y + (y - this.cursorOffset.y);
+        this.point.x =
+          this.startPosition.x +
+          (x - this.cursorOffset.x) / parseFloat(this.scale);
+        this.point.y =
+          this.startPosition.y +
+          (y - this.cursorOffset.y) / parseFloat(this.scale);
         this.$emit("updateLocation", {
           id: this.id,
           x: this.point.x,

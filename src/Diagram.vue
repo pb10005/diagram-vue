@@ -1,44 +1,56 @@
 <template>
-  <div>
-    <div class="scrollX">
-      <svg :width="width" :height="height" xmlns="http://www.w3.org/2000/svg">
-        <rect
-          x="0"
-          y="0"
-          width="2000"
-          height="1000"
-          :fill="background"
-          @click="reset"
-        />
-        <Link
-          :link="item"
-          v-for="item in linkList"
-          :selected="item.id === selectedLink"
-          :key="item.id"
-          :source="findNode(item.source)"
-          :destination="findNode(item.destination)"
-          :editable="editable"
-          :labels="labels"
-          @editLink="editLink"
-          @select="selectLink"
-          @updateLocation="updateLinkLocation"
-          @remove="removeLink"
-        />
-        <Node
-          :node="item"
-          :selected="item.id === selectedNode"
-          v-for="item in nodeList"
-          :key="item.id"
-          :createLinkMode="createLinkMode"
-          :editable="editable"
-          :labels="labels"
-          @editNode="editNode"
-          @select="selectNode"
-          @updateLocation="updateNodeLocation"
-          @toggleSelect="toggleSrcSelect"
-          @commitDest="commitDest"
-          @remove="removeNode"
-        />
+  <div class="scrollXY">
+    <div>
+      <svg
+        :width="width * scale"
+        :height="height * scale"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g :transform="scaleStr">
+          <rect
+            x="0"
+            y="0"
+            :width="width"
+            :height="height"
+            :fill="background"
+            @click="reset"
+          />
+          <Link
+            :width="width"
+            :height="height"
+            :link="item"
+            v-for="item in linkList"
+            :selected="item.id === selectedLink"
+            :key="item.id"
+            :source="findNode(item.source)"
+            :destination="findNode(item.destination)"
+            :editable="editable"
+            :labels="labels"
+            :scale="scale"
+            @editLink="editLink"
+            @select="selectLink"
+            @updateLocation="updateLinkLocation"
+            @remove="removeLink"
+          />
+          <Node
+            :width="width"
+            :height="height"
+            :node="item"
+            :selected="item.id === selectedNode"
+            v-for="item in nodeList"
+            :key="item.id"
+            :createLinkMode="createLinkMode"
+            :editable="editable"
+            :labels="labels"
+            :scale="scale"
+            @editNode="editNode"
+            @select="selectNode"
+            @updateLocation="updateNodeLocation"
+            @toggleSelect="toggleSrcSelect"
+            @commitDest="commitDest"
+            @remove="removeNode"
+          />
+        </g>
       </svg>
     </div>
   </div>
@@ -50,6 +62,7 @@ export default {
   props: {
     width: Number,
     height: Number,
+    scale: String,
     background: String,
     nodes: Array,
     links: Array,
@@ -61,6 +74,11 @@ export default {
     Link
   },
   computed: {
+    scaleStr() {
+      return (
+        "scale(" + (this.scale || 1.0) + ")" + "translate(" + 0 + "," + 0 + ")"
+      );
+    },
     nodeList: {
       get() {
         return this.nodes;
