@@ -1270,12 +1270,12 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"ca0e2238-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Diagram.vue?vue&type=template&id=07dc8d6c&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"ca0e2238-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Diagram.vue?vue&type=template&id=382eabbd&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"scrollXY"},[_c('div',[_c('svg',{attrs:{"width":_vm.width * _vm.scale,"height":_vm.height * _vm.scale,"xmlns":"http://www.w3.org/2000/svg"}},[_c('g',{attrs:{"transform":_vm.scaleStr}},[_c('rect',{attrs:{"x":"0","y":"0","width":_vm.width,"height":_vm.height,"fill":_vm.background},on:{"click":_vm.reset}}),_vm._l((_vm.linkList),function(item){return _c('Link',{key:item.id,attrs:{"width":_vm.width,"height":_vm.height,"link":item,"selected":item.id === _vm.selectedLink,"source":_vm.findNode(item.source),"destination":_vm.findNode(item.destination),"editable":_vm.editable,"labels":_vm.labels,"scale":_vm.scale},on:{"editLink":_vm.editLink,"select":_vm.selectLink,"updateLocation":_vm.updateLinkLocation,"remove":_vm.removeLink}})}),_vm._l((_vm.nodeList),function(item){return _c('Node',{key:item.id,attrs:{"width":_vm.width,"height":_vm.height,"node":item,"selected":item.id === _vm.selectedNode,"createLinkMode":_vm.createLinkMode,"editable":_vm.editable,"labels":_vm.labels,"scale":_vm.scale},on:{"editNode":_vm.editNode,"select":_vm.selectNode,"updateLocation":_vm.updateNodeLocation,"toggleSelect":_vm.toggleSrcSelect,"commitDest":_vm.commitDest,"remove":_vm.removeNode}})})],2)])])])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/Diagram.vue?vue&type=template&id=07dc8d6c&
+// CONCATENATED MODULE: ./src/Diagram.vue?vue&type=template&id=382eabbd&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.array.find.js
 var es6_array_find = __webpack_require__("7514");
@@ -1960,7 +1960,10 @@ Link_component.options.__file = "Link.vue"
   props: {
     width: Number,
     height: Number,
-    scale: String,
+    scale: {
+      type: String,
+      default: "1"
+    },
     background: String,
     nodes: Array,
     links: Array,
