@@ -62,7 +62,10 @@ export default {
   props: {
     width: Number,
     height: Number,
-    scale: String,
+    scale: {
+      type: String,
+      default: "1"
+    },
     background: String,
     nodes: Array,
     links: Array,
