@@ -52,7 +52,7 @@ props: {
     labels: Object
 }
 ```
-[Sample data](https://github.com/pb10001/diagram-vue/blob/master/src/data.js) helps you know the data structure of nodes and links.
+[Sample data](https://github.com/pb10005/diagram-vue/blob/master/src/data.json) helps you know the data structure of nodes and links.
 ### Events
 ```js
 editNode(node /* selected node */) {
