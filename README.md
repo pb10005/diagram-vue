@@ -9,7 +9,7 @@ A vue component library of diagrams
 ![Screen shot](https://raw.githubusercontent.com/pb10001/diagram-vue/master/img/screenshot.png)
 ## Installaion
 ```sh
-npm i install diagram-vue --save
+npm i diagram-vue --save
 ```
 ## Usage
 [![Edit diagram-vue](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/q7wj02ny2w)
