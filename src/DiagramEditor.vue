@@ -62,9 +62,9 @@
 
 <script>
 import Diagram from "./Diagram";
-import EditNodeModal from "@/components/EditNodeModal";
-import EditLinkModal from "@/components/EditLinkModal";
-import InputModal from "@/components/InputModal";
+import EditNodeModal from "@/lib/EditNodeModal";
+import EditLinkModal from "@/lib/EditLinkModal";
+import InputModal from "@/lib/InputModal";
 export default {
   name: "DiagramEditor",
   components: {

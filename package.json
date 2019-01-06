@@ -14,9 +14,9 @@
   },
   "private": false,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build src/Diagram.vue --target lib --name diagram",
-    "build_app": "vue-cli-service build",
+    "serve": "vue-cli-service serve src/demo/main.js",
+    "build": "vue-cli-service build src/index.js --target lib --name diagram",
+    "build_app": "vue-cli-service build src/demo/main.js",
     "lint": "vue-cli-service lint",
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit"

@@ -59,6 +59,7 @@
 import Node from "@/lib/Node";
 import Link from "@/lib/Link";
 export default {
+  name: "Diagram",
   props: {
     width: Number,
     height: Number,

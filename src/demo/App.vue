@@ -4,7 +4,7 @@
 
 <script>
 import data from "./data.json";
-import DiagramEditor from "./DiagramEditor";
+import { DiagramEditor } from "../index.js";
 export default {
   name: "app",
   components: {
