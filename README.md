@@ -18,6 +18,7 @@ npm i diagram-vue --save
 #### Import
 ```js
 import { DiagramEditor } from "diagram-vue";
+import "diagram-vue/dist/diagram.css";
 ```
 #### Template
 ```html
@@ -26,7 +27,8 @@ import { DiagramEditor } from "diagram-vue";
 ### Customization
 #### Import
 ```js
-import Diagram from 'diagram-vue'
+import Diagram from 'diagram-vue';
+import "diagram-vue/dist/diagram.css";
 ```
 #### Template
 ```html
