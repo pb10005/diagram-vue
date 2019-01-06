@@ -3,6 +3,7 @@
 </template>
 <script>
 export default {
+  name: "VButton",
   methods: {
     onClick() {
       this.$emit("click");
@@ -16,6 +17,10 @@ button {
   border: 1px solid #eeeeee;
   padding: 5px 10px;
   cursor: pointer;
+  &.danger {
+    border: 1px solid #ff0000;
+    color: #ff0000;
+  }
 }
 button:hover {
   background: #eeeeee;
@@ -23,7 +28,6 @@ button:hover {
   &.danger {
     background: #ff0000;
     color: #ffffff;
-    border: 0;
   }
 }
 </style>

@@ -10,6 +10,7 @@
 </template>
 <script>
 export default {
+  name: "VModal",
   props: {
     isActive: Boolean
   },

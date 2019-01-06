@@ -16,17 +16,7 @@
   </VModal>
 </template>
 <script>
-import VModal from "./VModal";
-import VInput from "./VInput";
-import VButton from "./VButton";
-import VSelect from "./VSelect";
 export default {
-  components: {
-    VModal,
-    VInput,
-    VButton,
-    VSelect
-  },
   props: {
     isActive: Boolean,
     node: {

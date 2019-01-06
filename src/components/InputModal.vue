@@ -14,13 +14,7 @@
   </VModal>
 </template>
 <script>
-import VModal from "./VModal";
-import VButton from "./VButton";
 export default {
-  components: {
-    VModal,
-    VButton
-  },
   props: {
     isActive: Boolean,
     text: String

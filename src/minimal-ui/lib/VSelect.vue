@@ -1,10 +1,11 @@
 <template>
-  <select v-model="val" @change="onChange">
+  <select value="val" v-model="val" @change="onChange">
     <slot></slot>
   </select>
 </template>
 <script>
 export default {
+  name: "VSelect",
   props: {
     value: String
   },
@@ -22,9 +23,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 select {
-  border: 0;
-  border-bottom: #e0e0e0 solid 1px;
-  padding: 5px;
+  border: 1px solid #eeeeee;
+  padding: 5px 10px;
   background: transparent;
   option {
     padding: 5px;

@@ -10,15 +10,7 @@
   </VModal>
 </template>
 <script>
-import VModal from "./VModal";
-import VInput from "./VInput";
-import VButton from "./VButton";
 export default {
-  components: {
-    VModal,
-    VInput,
-    VButton
-  },
   props: {
     isActive: Boolean,
     link: {

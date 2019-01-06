@@ -66,17 +66,13 @@ import Diagram from "./Diagram";
 import EditNodeModal from "@/components/EditNodeModal";
 import EditLinkModal from "@/components/EditLinkModal";
 import InputModal from "@/components/InputModal";
-import VButton from "@/components/VButton";
-import VSelect from "@/components/VSelect";
 export default {
   name: "app",
   components: {
     Diagram,
     EditNodeModal,
     EditLinkModal,
-    InputModal,
-    VButton,
-    VSelect
+    InputModal
   },
   data() {
     return {
