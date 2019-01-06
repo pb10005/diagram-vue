@@ -1,13 +1,13 @@
 <template>
   <div id="editor">
-    <VButton v-if="!editable" @click="editable = true" class="button"
+    <VButton v-if="!editable" @click="editable = true"
       >Edit</VButton
     >
     <span v-else>
       <VButton @click="openModal">New Node</VButton>
-      <VButton @click="endEdit" class="button">End</VButton>
+      <VButton @click="endEdit">End</VButton>
     </span>
-    <VButton @click="openInputModal" class="button">import/export</VButton>
+    <VButton @click="openInputModal">import/export</VButton>
     <VSelect v-model="scale">
       <option value="0.5">Small</option>
       <option value="1" selected>Medium</option>
