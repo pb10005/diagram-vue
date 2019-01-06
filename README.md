@@ -24,6 +24,7 @@ import "diagram-vue/dist/diagram.css";
 ```html
 <DiagramEditor v-model="graph"></DiagramEditor>
 ```
+[Sample data](https://raw.githubusercontent.com/pb10005/diagram-vue/master/src/demo/data.json) represents the data structure of v-model.
 ### Customization
 #### Import
 ```js
