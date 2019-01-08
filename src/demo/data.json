@@ -29,7 +29,7 @@
       },
       "width": 150,
       "height": 60,
-      "point": { "x": 108, "y": 86.9606147800741 },
+      "point": { "x": 48, "y": 127.9606147800741 },
       "shape": ""
     },
     {
@@ -149,8 +149,9 @@
       "id": "167efabd659483de",
       "source": "167efabc40ee0852",
       "destination": "167efa988e882161",
-      "point": { "x": 345, "y": 138.74688965089885 },
-      "color": "#74b9ff"
+      "point": { "x": 344, "y": 138.74688965089885 },
+      "color": "#74b9ff",
+      "pattern": "solid"
     },
     {
       "id": "167efabe6bfc5f86",
@@ -171,7 +172,8 @@
       "source": "167efae64ea50b14",
       "destination": "167efaa2c59c27a1",
       "point": { "x": 900.5, "y": 219.90269774736257 },
-      "color": "#55efc4"
+      "color": "#55efc4",
+      "pattern": "dash"
     },
     {
       "id": "167efaf767b32352",
@@ -191,8 +193,9 @@
       "id": "167efafd0d253d23",
       "source": "167efaf41e0cc6f2",
       "destination": "167efafa9d4b4dbc",
-      "point": { "x": 736.5, "y": 412.4701429988721 },
-      "color": "#74b9ff"
+      "point": { "x": 733.5, "y": 412.4701429988721 },
+      "color": "#74b9ff",
+      "pattern": "dash"
     },
     {
       "id": "1680e2377d4df60c",

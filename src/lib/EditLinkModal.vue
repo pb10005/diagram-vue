@@ -3,6 +3,11 @@
     <transition name="item">
       <div class="form" v-if="isActive">
         <VInput v-model="content.color" placeholder="color" /><br />
+        <VSelect v-model="content.pattern" placeholder="pattern">
+          <option value="solid" selected>Solid</option>
+          <option value="dash">Dash</option>
+          <option value="dot">Dot</option> </VSelect
+        ><br />
         <VButton @click="ok">OK</VButton>
         <VButton class="danger" @click="cancel">Cancel</VButton>
       </div>
@@ -19,7 +24,8 @@ export default {
         return {
           id: "0",
           content: {
-            color: "#ecf0f1"
+            color: "#ecf0f1",
+            pattern: "solid"
           }
         };
       }
@@ -27,7 +33,8 @@ export default {
   },
   data() {
     return {
-      content: this.link.content
+      content: this.link.content,
+      pattern: this.link.pattern || "solid"
     };
   },
   methods: {
@@ -35,7 +42,8 @@ export default {
       this.$emit("ok", {
         id: this.link.id,
         content: {
-          color: this.content.color
+          color: this.content.color,
+          pattern: this.content.pattern
         }
       });
     },
@@ -59,5 +67,8 @@ input {
 .item-enter,
 .item-leave-to {
   opacity: 0;
+}
+select {
+  margin-bottom: 5px;
 }
 </style>

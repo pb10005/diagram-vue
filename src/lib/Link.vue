@@ -1,6 +1,7 @@
 <template>
   <svg>
     <path
+      v-if="!link.pattern"
       :d="
         `M${source.point.x + source.width / 2} ${source.point.y +
           source.height / 2} Q ${point.x} ${point.y} ${destination.point.x +
@@ -10,6 +11,44 @@
       :stroke="link.color || '#ffeaa7'"
       stroke-width="3"
       fill="none"
+    />
+    <path
+      v-if="link.pattern === 'solid'"
+      :d="
+        `M${source.point.x + source.width / 2} ${source.point.y +
+          source.height / 2} Q ${point.x} ${point.y} ${destination.point.x +
+          destination.width / 2} ${destination.point.y +
+          destination.height / 2}`
+      "
+      :stroke="link.color || '#ffeaa7'"
+      stroke-width="3"
+      fill="none"
+    />
+    <path
+      v-if="link.pattern === 'dash'"
+      :d="
+        `M${source.point.x + source.width / 2} ${source.point.y +
+          source.height / 2} Q ${point.x} ${point.y} ${destination.point.x +
+          destination.width / 2} ${destination.point.y +
+          destination.height / 2}`
+      "
+      :stroke="link.color || '#ffeaa7'"
+      stroke-width="3"
+      stroke-dasharray="10"
+      fill="none"
+    />
+    <path
+      v-if="link.pattern === 'dot'"
+      :d="
+        `M${source.point.x + source.width / 2} ${source.point.y +
+          source.height / 2} Q ${point.x} ${point.y} ${destination.point.x +
+          destination.width / 2} ${destination.point.y +
+          destination.height / 2}`
+      "
+      :stroke="link.color || '#ffeaa7'"
+      stroke-width="3"
+      fill="none"
+      stroke-dasharray="2"
     />
     <g v-if="editable">
       <line
@@ -88,6 +127,10 @@ export default {
     link: {
       id: String,
       color: String,
+      pattern: {
+        type: String,
+        default: "solid"
+      },
       point: {
         x: Number,
         y: Number
