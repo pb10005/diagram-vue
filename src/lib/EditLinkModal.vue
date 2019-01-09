@@ -3,7 +3,7 @@
     <transition name="item">
       <div class="form" v-if="isActive">
         <VInput v-model="content.color" placeholder="color" /><br />
-        <VSelect v-model="content.pattern" placeholder="pattern">
+        <VSelect v-model="content.pattern" placeholder="pattern" multiple>
           <option value="solid" selected>Solid</option>
           <option value="dash">Dash</option>
           <option value="dot">Dot</option> </VSelect
