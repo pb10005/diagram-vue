@@ -5,7 +5,7 @@
         <VInput v-model="newData.text" placeholder="name" /><br />
         <VInput v-model="newData.url" placeholder="url" /><br />
         <VInput v-model="newData.color" placeholder="color" /><br />
-        <VSelect v-model="newShape">
+        <VSelect v-model="newShape" multiple>
           <option value="rectangle" selected>Rectangle</option>
           <option value="ellipse">Ellipse</option> </VSelect
         ><br />
