@@ -15,23 +15,23 @@ npm i diagram-vue --save
 ## Usage
 [![Edit diagram-vue](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/q7wj02ny2w)
 ### Ready-to-use editor
-#### Import
+#### 1. Import
 ```js
 import { DiagramEditor } from "diagram-vue";
 import "diagram-vue/dist/diagram.css";
 ```
-#### Template
+#### 2. Template
 ```html
 <DiagramEditor v-model="graph"></DiagramEditor>
 ```
 [Sample data](https://raw.githubusercontent.com/pb10005/diagram-vue/master/src/demo/data.json) represents the data structure of v-model.
 ### Customization
-#### Import
+#### 1. Import
 ```js
 import Diagram from 'diagram-vue';
 import "diagram-vue/dist/diagram.css";
 ```
-#### Template
+#### 2. Template
 ```html
 <Diagram
     :width="2000"
@@ -54,7 +54,7 @@ import "diagram-vue/dist/diagram.css";
     >
 </Diagram>
 ```
-#### Props
+#### 3. Props
 ```js
 props: {
     width: Number,
@@ -67,7 +67,7 @@ props: {
 }
 ```
 [Sample data](https://raw.githubusercontent.com/pb10005/diagram-vue/master/src/demo/data.json) helps you know the data structure of nodes and links.
-#### Events
+#### 4. Events
 ```js
 editNode(node /* selected node */) {
     /* event handler */
