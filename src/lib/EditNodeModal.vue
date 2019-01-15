@@ -48,7 +48,6 @@ export default {
   },
   watch: {
     node() {
-      console.log("node changed", JSON.stringify(this.node));
       this.newWidth = parseInt(this.node.width);
       this.newHeight = parseInt(this.node.Height);
     }
