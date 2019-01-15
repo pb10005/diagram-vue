@@ -148,8 +148,8 @@ export default {
           url: item.content.url,
           color: item.content.color
         },
-        width: item.width,
-        height: item.height,
+        width: parseInt(item.width) || 150,
+        height: parseInt(item.height) || 60,
         shape: item.shape,
         point: {
           x: 10,
