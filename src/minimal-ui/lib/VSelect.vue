@@ -1,5 +1,8 @@
 <template>
-  <select value="val" v-model="val" @change="onChange">
+  <select v-model="val" :multiple="multiple" @change="onChange">
+    <option id="placeholder" :value="null" selected disabled hidden>
+      {{ placeholder }}
+    </option>
     <slot></slot>
   </select>
 </template>
@@ -7,12 +10,28 @@
 export default {
   name: "VSelect",
   props: {
-    value: String
+    value: {
+      type: [String, Number, Boolean, Object],
+      default: null
+    },
+    multiple: {
+      type: Boolean,
+      default: false
+    },
+    placeholder: {
+      type: String,
+      default: ""
+    }
   },
-  data() {
-    return {
-      val: this.value
-    };
+  computed: {
+    val: {
+      get() {
+        return this.value;
+      },
+      set(value) {
+        this.$emit("input", value);
+      }
+    }
   },
   methods: {
     onChange() {

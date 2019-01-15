@@ -106,7 +106,9 @@ export default {
       editable: false,
       tmpNode: {
         id: "",
-        shape: "",
+        shape: "rectangle",
+        width: 0,
+        height: 0,
         content: {
           text: "",
           url: "",
@@ -146,8 +148,8 @@ export default {
           url: item.content.url,
           color: item.content.color
         },
-        width: 150,
-        height: 60,
+        width: item.width,
+        height: item.height,
         shape: item.shape,
         point: {
           x: 10,
@@ -162,6 +164,8 @@ export default {
       this.tmpNode.content.url = item.content.url;
       this.tmpNode.content.color = item.content.color;
       this.tmpNode.shape = item.shape;
+      this.tmpNode.width = item.width;
+      this.tmpNode.height = item.height;
       this.isModalActive = false;
       this.isEditModalActive = true;
     },
@@ -171,6 +175,8 @@ export default {
       tmp.content.url = item.content.url;
       tmp.content.color = item.content.color;
       tmp.shape = item.shape;
+      tmp.width = parseInt(item.width);
+      tmp.height = parseInt(item.height);
       this.isEditModalActive = false;
     },
     openLinkEdit(item) {

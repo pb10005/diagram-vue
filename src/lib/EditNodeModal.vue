@@ -2,10 +2,20 @@
   <VModal :isActive="isActive" @clickModal="cancel">
     <transition name="item">
       <div class="form" v-if="isActive">
-        <VInput v-model="newData.text" placeholder="name" /><br />
-        <VInput v-model="newData.url" placeholder="url" /><br />
-        <VInput v-model="newData.color" placeholder="color" /><br />
-        <VSelect v-model="newShape">
+        <VInput v-model="newNode.content.text" placeholder="name" /><br />
+        <VInput v-model="newNode.content.url" placeholder="url" /><br />
+        <VInput v-model="newNode.content.color" placeholder="color" /><br />
+        <VInput
+          type="number"
+          v-model="newNode.width"
+          placeholder="width"
+        /><br />
+        <VInput
+          type="number"
+          v-model="newNode.height"
+          placeholder="height"
+        /><br />
+        <VSelect v-model="newNode.shape">
           <option value="rectangle" selected>Rectangle</option>
           <option value="ellipse">Ellipse</option> </VSelect
         ><br />
@@ -25,6 +35,8 @@ export default {
         return {
           id: "",
           shape: "rectangle",
+          width: 150,
+          height: 60,
           content: {
             text: "none",
             url: "",
@@ -34,19 +46,21 @@ export default {
       }
     }
   },
+  watch: {
+    node() {
+      console.log("node changed", JSON.stringify(this.node));
+      this.newWidth = parseInt(this.node.width);
+      this.newHeight = parseInt(this.node.Height);
+    }
+  },
   data() {
     return {
-      newShape: this.node.shape,
-      newData: this.node.content
+      newNode: this.node
     };
   },
   methods: {
     ok() {
-      this.$emit("ok", {
-        id: this.node.id,
-        shape: this.newShape,
-        content: this.newData
-      });
+      this.$emit("ok", this.newNode);
     },
     cancel() {
       this.$emit("cancel");

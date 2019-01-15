@@ -3,7 +3,7 @@
     <g v-if="selected">
       <text
         :x="x + 5"
-        :y="y + height + 22"
+        :y="y + node.height + 22"
         class="button"
         fill="#00b894"
         @click="editCandidate"
@@ -24,7 +24,7 @@
       </text>
       <text
         :x="x + 65"
-        :y="y + height + 22"
+        :y="y + node.height + 22"
         class="button"
         fill="#ff7675"
         @click="remove"
@@ -43,7 +43,7 @@
         {{ labels.select || "Select" }}
       </text>
     </g>
-    <svg :x="x" :y="y" :width="width" :height="height" class="shadow">
+    <svg :x="x" :y="y" :width="node.width" :height="node.height" class="shadow">
       <ellipse
         v-if="node.shape === 'ellipse'"
         class="grab"
@@ -51,8 +51,8 @@
         cy="50%"
         width="100%"
         height="100%"
-        :rx="width / 2"
-        :ry="height / 2"
+        :rx="node.width / 2"
+        :ry="node.height / 2"
         :fill="content.color || '#ecf0f1'"
         @touchstart="mousedown"
         @mousedown="mousedown"
@@ -125,6 +125,12 @@ export default {
     labels: Object,
     scale: String
   },
+  watch: {
+    node() {
+      this.x = this.node.point.x;
+      this.y = this.node.point.y;
+    }
+  },
   data() {
     return {
       startPosition: null,
@@ -135,8 +141,6 @@ export default {
       id: this.node.id,
       x: this.node.point.x,
       y: this.node.point.y,
-      width: this.node.width,
-      height: this.node.height,
       content: this.node.content
     };
   },
@@ -188,6 +192,8 @@ export default {
       this.$emit("editNode", {
         id: this.id,
         shape: this.node.shape,
+        width: this.node.width,
+        height: this.node.height,
         content: this.content
       });
     }
