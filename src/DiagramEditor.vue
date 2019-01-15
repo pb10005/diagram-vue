@@ -36,19 +36,21 @@
       @cancel="cancel"
     />
     <Diagram
-      :width="2000"
-      :height="1000"
+      :width="graphData.width || 2000"
+      :height="graphData.height || 1000"
       :scale="scale"
-      background="#fafafa"
+      :background="graphData.background || '#fafafa'"
       :nodes="graphData.nodes"
       :links="graphData.links"
       :editable="editable"
-      :labels="{
-        edit: 'Edit',
-        remove: 'Remove',
-        link: 'New Link',
-        select: 'Select'
-      }"
+      :labels="
+        graphData.labels || {
+          edit: 'Edit',
+          remove: 'Remove',
+          link: 'New Link',
+          select: 'Select'
+        }
+      "
       @editNode="openNodeEdit"
       @editLink="openLinkEdit"
       @nodeChanged="nodeChanged"
@@ -76,6 +78,15 @@ export default {
       type: Object,
       default: () => {
         return {
+          width: 2000,
+          height: 1000,
+          background: "#fafafa",
+          labels: {
+            edit: "Edit",
+            remove: "Remove",
+            link: "New Link",
+            select: "Select"
+          },
           nodes: [],
           links: []
         };
@@ -207,8 +218,7 @@ export default {
     importData(value) {
       const obj = JSON.parse(value.text);
       if (obj) {
-        this.graphData.nodes = obj.nodes;
-        this.graphData.links = obj.links;
+        this.graphData = obj;
         this.isInputModalActive = false;
       }
     }
