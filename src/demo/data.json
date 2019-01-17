@@ -1,4 +1,7 @@
 {
+  "width": 2000,
+  "height": 1000,
+  "background": "#fafafa",
   "nodes": [
     {
       "id": "167efa699c7863ac",
