@@ -51,6 +51,7 @@ export default {
   top: 25vh;
   left: 15vw;
   &.is-open {
+    z-index: 9999;
     visibility: visible;
   }
 }
@@ -62,10 +63,11 @@ export default {
     background: white;
     visibility: hidden;
     opacity: 1;
-    z-index: 9999;
+    z-index: -9999;
     left: 0;
     top: 10px;
     &.is-open {
+      z-index: 9999;
       visibility: visible;
     }
   }
