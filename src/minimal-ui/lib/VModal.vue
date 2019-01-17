@@ -32,12 +32,12 @@ export default {
   overflow-y: auto;
   visibility: hidden;
   opacity: 0;
-  z-index: -1;
+  z-index: -9999;
   &.is-open {
     background: gray;
     visibility: visible;
     opacity: 0.8;
-    z-index: 100;
+    z-index: 9998;
   }
 }
 .item {
@@ -47,7 +47,7 @@ export default {
   background: white;
   visibility: hidden;
   opacity: 1;
-  z-index: 101;
+  z-index: -9999;
   top: 25vh;
   left: 15vw;
   &.is-open {
@@ -62,7 +62,7 @@ export default {
     background: white;
     visibility: hidden;
     opacity: 1;
-    z-index: 101;
+    z-index: 9999;
     left: 0;
     top: 10px;
     &.is-open {
