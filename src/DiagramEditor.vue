@@ -130,7 +130,8 @@ export default {
         id: "",
         content: {
           color: "",
-          pattern: "solid"
+          pattern: "solid",
+          hasArrow: false
         }
       }
     };
@@ -194,12 +195,14 @@ export default {
       this.tmpLink.id = item.id;
       this.tmpLink.content.color = item.content.color;
       this.tmpLink.content.pattern = item.content.pattern;
+      this.tmpLink.content.hasArrow = item.content.hasArrow;
       this.isEditLinkModalActive = true;
     },
     editLink(item) {
       let tmp = this.graphData.links.find(x => x.id === item.id);
       tmp.color = item.content.color;
       tmp.pattern = item.content.pattern;
+      tmp.hasArrow = item.content.hasArrow;
       this.isEditLinkModalActive = false;
     },
     endEdit() {

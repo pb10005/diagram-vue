@@ -146,7 +146,8 @@
       "source": "167efaa2c59c27a1",
       "destination": "167efa699c7863ac",
       "point": { "x": 1156.5, "y": 172.62461249002126 },
-      "color": "#55efc4"
+      "color": "#55efc4",
+      "hasArrow": true
     },
     {
       "id": "167efabd659483de",
@@ -212,7 +213,8 @@
       "source": "1680e259f7a6775b",
       "destination": "167efabc40ee0852",
       "point": { "x": 500.5, "y": 109.49883251758314 },
-      "color": "#74b9ff"
+      "color": "#74b9ff",
+      "hasArrow": true
     }
   ]
 }

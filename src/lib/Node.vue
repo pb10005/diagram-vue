@@ -1,5 +1,5 @@
 <template>
-  <svg>
+  <g>
     <g v-if="selected">
       <text
         :x="x + 5"
@@ -91,7 +91,7 @@
         </text>
       </a>
     </svg>
-  </svg>
+  </g>
 </template>
 <script>
 import mouseLocation from "../mouseLocation";

@@ -8,6 +8,8 @@
           <option value="dash">Dash</option>
           <option value="dot">Dot</option> </VSelect
         ><br />
+        <input v-model="content.hasArrow" type="checkbox" id="has-arrow" />
+        <label for="has-arrow">Has arrow</label><br />
         <VButton @click="ok">OK</VButton>
         <VButton class="danger" @click="cancel">Cancel</VButton>
       </div>
@@ -25,7 +27,8 @@ export default {
           id: "0",
           content: {
             color: "#ecf0f1",
-            pattern: "solid"
+            pattern: "solid",
+            hasArrow: false
           }
         };
       }
@@ -34,7 +37,8 @@ export default {
   data() {
     return {
       content: this.link.content,
-      pattern: this.link.pattern || "solid"
+      pattern: this.link.pattern || "solid",
+      hasArrow: this.link.hasArrow
     };
   },
   methods: {
@@ -43,7 +47,8 @@ export default {
         id: this.link.id,
         content: {
           color: this.content.color,
-          pattern: this.content.pattern
+          pattern: this.content.pattern,
+          hasArrow: this.content.hasArrow
         }
       });
     },
@@ -55,7 +60,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 input {
-  width: 95%;
   margin-bottom: 5px;
 }
 .item-enter-active {

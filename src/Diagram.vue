@@ -6,6 +6,20 @@
         :height="height * scale"
         xmlns="http://www.w3.org/2000/svg"
       >
+        <defs>
+          <marker
+            id="m_atr"
+            markerUnits="userSpaceOnUse"
+            orient="auto"
+            markerWidth="15"
+            markerHeight="15"
+            viewBox="0 0 10 10"
+            refX="5"
+            refY="5"
+          >
+            <polygon points="0,0 0,10 10,5 " fill="black" />
+          </marker>
+        </defs>
         <g :transform="scaleStr">
           <rect
             x="0"
@@ -14,23 +28,6 @@
             :height="height"
             :fill="background"
             @click="reset"
-          />
-          <Link
-            :width="width"
-            :height="height"
-            :link="item"
-            v-for="item in linkList"
-            :selected="item.id === selectedLink"
-            :key="item.id"
-            :source="findNode(item.source)"
-            :destination="findNode(item.destination)"
-            :editable="editable"
-            :labels="labels"
-            :scale="scale"
-            @editLink="editLink"
-            @select="selectLink"
-            @updateLocation="updateLinkLocation"
-            @remove="removeLink"
           />
           <Node
             :width="width"
@@ -49,6 +46,23 @@
             @toggleSelect="toggleSrcSelect"
             @commitDest="commitDest"
             @remove="removeNode"
+          />
+          <Link
+            :width="width"
+            :height="height"
+            :link="item"
+            v-for="item in linkList"
+            :selected="item.id === selectedLink"
+            :key="item.id"
+            :source="findNode(item.source)"
+            :destination="findNode(item.destination)"
+            :editable="editable"
+            :labels="labels"
+            :scale="scale"
+            @editLink="editLink"
+            @select="selectLink"
+            @updateLocation="updateLinkLocation"
+            @remove="removeLink"
           />
         </g>
       </svg>
