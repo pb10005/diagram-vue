@@ -8,16 +8,16 @@
       >
         <defs>
           <marker
-            id="m_atr"
+            id="arrow"
             markerUnits="userSpaceOnUse"
-            orient="auto"
+            orient="auto-start-reverse"
             markerWidth="15"
             markerHeight="15"
             viewBox="0 0 10 10"
             refX="5"
             refY="5"
           >
-            <polygon points="0,0 0,10 10,5 " fill="black" />
+            <polygon points="0,1.5 0,8.5 10,5 " fill="black" />
           </marker>
         </defs>
         <g :transform="scaleStr">

@@ -10,7 +10,12 @@
       :stroke="link.color || '#ffeaa7'"
       stroke-width="3"
       fill="none"
-      :marker-end="link.hasArrow ? 'url(#m_atr)' : ''"
+      :marker-start="
+        link.arrow === 'src' || link.arrow === 'both' ? 'url(#arrow)' : ''
+      "
+      :marker-end="
+        link.arrow === 'dest' || link.arrow === 'both' ? 'url(#arrow)' : ''
+      "
     />
     <path
       v-if="link.pattern === 'solid'"
@@ -22,7 +27,12 @@
       :stroke="link.color || '#ffeaa7'"
       stroke-width="3"
       fill="none"
-      :marker-end="link.hasArrow ? 'url(#m_atr)' : ''"
+      :marker-start="
+        link.arrow === 'src' || link.arrow === 'both' ? 'url(#arrow)' : ''
+      "
+      :marker-end="
+        link.arrow === 'dest' || link.arrow === 'both' ? 'url(#arrow)' : ''
+      "
     />
     <path
       v-if="link.pattern === 'dash'"
@@ -35,7 +45,12 @@
       stroke-width="3"
       stroke-dasharray="10"
       fill="none"
-      :marker-end="link.hasArrow ? 'url(#m_atr)' : ''"
+      :marker-start="
+        link.arrow === 'src' || link.arrow === 'both' ? 'url(#arrow)' : ''
+      "
+      :marker-end="
+        link.arrow === 'dest' || link.arrow === 'both' ? 'url(#arrow)' : ''
+      "
     />
     <path
       v-if="link.pattern === 'dot'"
@@ -48,7 +63,12 @@
       stroke-width="3"
       fill="none"
       stroke-dasharray="2"
-      :marker-end="link.hasArrow ? 'url(#m_atr)' : ''"
+      :marker-start="
+        link.arrow === 'src' || link.arrow === 'both' ? 'url(#arrow)' : ''
+      "
+      :marker-end="
+        link.arrow === 'dest' || link.arrow === 'both' ? 'url(#arrow)' : ''
+      "
     />
     <g v-if="editable">
       <line

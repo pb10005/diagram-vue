@@ -2,14 +2,21 @@
   <VModal :isActive="isActive" @clickModal="cancel">
     <transition name="item">
       <div class="form" v-if="isActive">
+        <label>Color</label>
         <VInput v-model="content.color" placeholder="color" /><br />
+        <label>Pattern</label>
         <VSelect v-model="content.pattern" :placeholder="content.pattern">
           <option value="solid" selected>Solid</option>
           <option value="dash">Dash</option>
           <option value="dot">Dot</option> </VSelect
         ><br />
-        <input v-model="content.hasArrow" type="checkbox" id="has-arrow" />
-        <label for="has-arrow">Has arrow</label><br />
+        <label>Arrow</label>
+        <VSelect v-model="content.arrow">
+          <option value="none">none</option>
+          <option value="src">One side(source)</option>
+          <option value="dest">One side(destination)</option>
+          <option value="both">Both side</option> </VSelect
+        ><br />
         <VButton @click="ok">OK</VButton>
         <VButton class="danger" @click="cancel">Cancel</VButton>
       </div>
@@ -38,7 +45,7 @@ export default {
     return {
       content: this.link.content,
       pattern: this.link.pattern || "solid",
-      hasArrow: this.link.hasArrow
+      arrow: this.link.arrow
     };
   },
   methods: {
@@ -48,7 +55,7 @@ export default {
         content: {
           color: this.content.color,
           pattern: this.content.pattern,
-          hasArrow: this.content.hasArrow
+          arrow: this.content.arrow
         }
       });
     },
