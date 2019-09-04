@@ -6,20 +6,7 @@
         :height="height * scale"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <defs>
-          <marker
-            id="arrow"
-            markerUnits="userSpaceOnUse"
-            orient="auto-start-reverse"
-            markerWidth="15"
-            markerHeight="15"
-            viewBox="0 0 10 10"
-            refX="5"
-            refY="5"
-          >
-            <polygon points="0,1.5 0,8.5 10,5 " fill="black" />
-          </marker>
-        </defs>
+        <defs></defs>
         <g :transform="scaleStr">
           <rect
             x="0"

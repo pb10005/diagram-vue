@@ -11,10 +11,10 @@
       stroke-width="3"
       fill="none"
       :marker-start="
-        link.arrow === 'src' || link.arrow === 'both' ? 'url(#arrow)' : ''
+        link.arrow === 'src' || link.arrow === 'both' ? `url(#${link.id})` : ''
       "
       :marker-end="
-        link.arrow === 'dest' || link.arrow === 'both' ? 'url(#arrow)' : ''
+        link.arrow === 'dest' || link.arrow === 'both' ? `url(#${link.id})` : ''
       "
     />
     <path
@@ -28,10 +28,10 @@
       stroke-width="3"
       fill="none"
       :marker-start="
-        link.arrow === 'src' || link.arrow === 'both' ? 'url(#arrow)' : ''
+        link.arrow === 'src' || link.arrow === 'both' ? `url(#${link.id})` : ''
       "
       :marker-end="
-        link.arrow === 'dest' || link.arrow === 'both' ? 'url(#arrow)' : ''
+        link.arrow === 'dest' || link.arrow === 'both' ? `url(#${link.id})` : ''
       "
     />
     <path
@@ -46,10 +46,10 @@
       stroke-dasharray="10"
       fill="none"
       :marker-start="
-        link.arrow === 'src' || link.arrow === 'both' ? 'url(#arrow)' : ''
+        link.arrow === 'src' || link.arrow === 'both' ? `url(#${link.id})` : ''
       "
       :marker-end="
-        link.arrow === 'dest' || link.arrow === 'both' ? 'url(#arrow)' : ''
+        link.arrow === 'dest' || link.arrow === 'both' ? `url(#${link.id})` : ''
       "
     />
     <path
@@ -64,12 +64,24 @@
       fill="none"
       stroke-dasharray="2"
       :marker-start="
-        link.arrow === 'src' || link.arrow === 'both' ? 'url(#arrow)' : ''
+        link.arrow === 'src' || link.arrow === 'both' ? `url(#${link.id})` : ''
       "
       :marker-end="
-        link.arrow === 'dest' || link.arrow === 'both' ? 'url(#arrow)' : ''
+        link.arrow === 'dest' || link.arrow === 'both' ? `url(#${link.id})` : ''
       "
     />
+    <marker
+      :id="link.id"
+      markerUnits="userSpaceOnUse"
+      orient="auto-start-reverse"
+      markerWidth="15"
+      markerHeight="15"
+      viewBox="0 0 10 10"
+      refX="5"
+      refY="5"
+    >
+      <polygon points="0,1.5 0,8.5 10,5 " :fill="link.color || '#ffeaa7'" />
+    </marker>
     <g v-if="editable">
       <line
         :x1="calcSource().x"
