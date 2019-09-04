@@ -7,7 +7,7 @@ A vue component library of diagrams
 ![npm](https://img.shields.io/npm/dw/diagram-vue.svg)  
 
 [Demo](https://diagram.netlify.com/)  
-![Screen shot](https://raw.githubusercontent.com/pb10001/diagram-vue/master/img/screenshot.png)
+![Screen shot](https://raw.githubusercontent.com/pb10005/diagram-vue/master/img/screenshot.png)
 ## Installaion
 ```sh
 npm i diagram-vue --save
