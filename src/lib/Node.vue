@@ -1,47 +1,49 @@
 <template>
   <g>
-    <g v-if="selected">
-      <text
-        :x="x + 5"
-        :y="y + node.height + 22"
-        class="button"
-        fill="#00b894"
-        @click="editCandidate"
-      >
-        {{ labels.edit || "Edit" }}
-      </text>
-    </g>
-    <g v-if="selected">
-      <text
-        :x="x + 5"
-        :y="y - 10"
-        class="button"
-        fill="#00b894"
-        stroke="none"
-        @click="toggleSelect"
-      >
-        {{ labels.link || "Link" }}
-      </text>
-      <text
-        :x="x + 65"
-        :y="y + node.height + 22"
-        class="button"
-        fill="#ff7675"
-        @click="remove"
-      >
-        {{ labels.remove || "Remove" }}
-      </text>
-    </g>
-    <g v-if="createLinkMode && !selected">
-      <text
-        :x="x + 5"
-        :y="y - 10"
-        class="button"
-        fill="#ff7675"
-        @click="commitDest"
-      >
-        {{ labels.select || "Select" }}
-      </text>
+    <g v-if="editable">
+      <g v-if="selected">
+        <text
+          :x="x + 5"
+          :y="y + node.height + 22"
+          class="button"
+          fill="#00b894"
+          @click="editCandidate"
+        >
+          {{ labels.edit || "Edit" }}
+        </text>
+      </g>
+      <g v-if="selected">
+        <text
+          :x="x + 5"
+          :y="y - 10"
+          class="button"
+          fill="#00b894"
+          stroke="none"
+          @click="toggleSelect"
+        >
+          {{ labels.link || "Link" }}
+        </text>
+        <text
+          :x="x + 65"
+          :y="y + node.height + 22"
+          class="button"
+          fill="#ff7675"
+          @click="remove"
+        >
+          {{ labels.remove || "Remove" }}
+        </text>
+      </g>
+      <g v-if="createLinkMode && !selected">
+        <text
+          :x="x + 5"
+          :y="y - 10"
+          class="button"
+          fill="#ff7675"
+          @click="commitDest"
+        >
+          {{ labels.select || "Select" }}
+        </text>
+      </g>
     </g>
     <svg :x="x" :y="y" :width="node.width" :height="node.height" class="shadow">
       <ellipse
