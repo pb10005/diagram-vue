@@ -1,6 +1,6 @@
 {
   "name": "diagram-vue",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "main": "dist/diagram.umd.js",
   "author": "pb10005",
   "license": "MIT",
