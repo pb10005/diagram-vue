@@ -6,6 +6,7 @@
       <VButton @click="endEdit">End</VButton>
     </span>
     <VButton @click="openInputModal">import/export</VButton>
+    <VButton @click="downloadSVG">Download SVG</VButton>
     <VSelect v-model="scale">
       <option value="0.5">Small</option>
       <option value="1" selected>Medium</option>
@@ -224,6 +225,19 @@ export default {
         this.graphData = obj;
         this.isInputModalActive = false;
       }
+    },
+    downloadSVG() {
+      const blob = new Blob(
+        [document.getElementById("svg-diagram-show-area").innerHTML],
+        {
+          type: "image/svg+xml"
+        }
+      );
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "image.svg";
+      link.click();
     }
   }
 };

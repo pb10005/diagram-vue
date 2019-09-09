@@ -1,58 +1,52 @@
 <template>
-  <div class="scrollXY">
-    <div>
-      <svg
-        :width="width * scale"
-        :height="height * scale"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <g :transform="scaleStr">
-          <rect
-            x="0"
-            y="0"
-            :width="width"
-            :height="height"
-            :fill="background"
-            @click="reset"
-          />
-          <Node
-            :width="width"
-            :height="height"
-            :node="item"
-            :selected="item.id === selectedNode"
-            v-for="item in nodeList"
-            :key="item.id"
-            :createLinkMode="createLinkMode"
-            :editable="editable"
-            :labels="labels"
-            :scale="scale"
-            @editNode="editNode"
-            @select="selectNode"
-            @updateLocation="updateNodeLocation"
-            @toggleSelect="toggleSrcSelect"
-            @commitDest="commitDest"
-            @remove="removeNode"
-          />
-          <Link
-            :width="width"
-            :height="height"
-            :link="item"
-            v-for="item in linkList"
-            :selected="item.id === selectedLink"
-            :key="item.id"
-            :source="findNode(item.source)"
-            :destination="findNode(item.destination)"
-            :editable="editable"
-            :labels="labels"
-            :scale="scale"
-            @editLink="editLink"
-            @select="selectLink"
-            @updateLocation="updateLinkLocation"
-            @remove="removeLink"
-          />
-        </g>
-      </svg>
-    </div>
+  <div id="svg-diagram-show-area" class="scrollXY">
+    <svg
+      :width="width * scale"
+      :height="height * scale"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g :transform="scaleStr">
+        <rect
+          x="0"
+          y="0"
+          :width="width"
+          :height="height"
+          :fill="background"
+          @click="reset"
+        />
+        <Node
+          :node="item"
+          :selected="item.id === selectedNode"
+          v-for="item in nodeList"
+          :key="item.id"
+          :createLinkMode="createLinkMode"
+          :editable="editable"
+          :labels="labels"
+          :scale="scale"
+          @editNode="editNode"
+          @select="selectNode"
+          @updateLocation="updateNodeLocation"
+          @toggleSelect="toggleSrcSelect"
+          @commitDest="commitDest"
+          @remove="removeNode"
+        />
+        <Link
+          :link="item"
+          v-for="item in linkList"
+          :selected="item.id === selectedLink"
+          :key="item.id"
+          :source="findNode(item.source)"
+          :destination="findNode(item.destination)"
+          :editable="editable"
+          :labels="labels"
+          :scale="scale"
+          @editLink="editLink"
+          @select="selectLink"
+          @updateLocation="updateLinkLocation"
+          @remove="removeLink"
+        />
+      </g>
+    </svg>
   </div>
 </template>
 <script>
