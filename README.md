@@ -89,7 +89,7 @@ linkChanged(obj /* array of links */) {
 #### 5. Get SVG as String
 Use plain JavaScript.
 ```js
-document.getElementById('svg-diagram-show-area'); // <svg ...>...</svg>
+document.getElementById('svg-diagram-show-area').innerHTML; // <svg ...>...</svg>
 ```
 
 ## Development
