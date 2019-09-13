@@ -4,6 +4,7 @@
       <svg
         :width="width * scale"
         :height="height * scale"
+        :viewBox="viewBoxDiagram"
         xmlns="http://www.w3.org/2000/svg"
       >
         <g :transform="scaleStr">
@@ -71,16 +72,23 @@ export default {
     nodes: Array,
     links: Array,
     editable: Boolean,
-    labels: Object
+    labels: Object,
+    fluid: {
+      type: Boolean,
+      default: false
+    },
   },
   components: {
     Node,
     Link
   },
   computed: {
+    viewBoxDiagram() {
+        return this.fluid ? `0 0 ${this.width * this.scale} ${this.height * this.scale}` : `0 0 ${this.width} ${this.height}`;
+    },
     scaleStr() {
       return (
-        "scale(" + (this.scale || 1.0) + ")" + "translate(" + 0 + "," + 0 + ")"
+        "scale(" + (this.fluid ? 1.0 : (this.scale || 1.0)) + ")" + "translate(" + 0 + "," + 0 + ")"
       );
     },
     nodeList: {
