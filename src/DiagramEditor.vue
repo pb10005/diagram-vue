@@ -6,6 +6,7 @@
       <VButton @click="endEdit">End</VButton>
     </span>
     <VButton @click="openInputModal">import/export</VButton>
+    <VButton @click="downloadSVG">Download SVG</VButton>
     <VSelect v-model="scale">
       <option value="0.5">Small</option>
       <option value="1" selected>Medium</option>
@@ -130,7 +131,8 @@ export default {
         id: "",
         content: {
           color: "",
-          pattern: "solid"
+          pattern: "solid",
+          arrow: "none"
         }
       }
     };
@@ -194,12 +196,14 @@ export default {
       this.tmpLink.id = item.id;
       this.tmpLink.content.color = item.content.color;
       this.tmpLink.content.pattern = item.content.pattern;
+      this.tmpLink.content.arrow = item.content.arrow;
       this.isEditLinkModalActive = true;
     },
     editLink(item) {
       let tmp = this.graphData.links.find(x => x.id === item.id);
       tmp.color = item.content.color;
       tmp.pattern = item.content.pattern;
+      tmp.arrow = item.content.arrow;
       this.isEditLinkModalActive = false;
     },
     endEdit() {
@@ -221,6 +225,19 @@ export default {
         this.graphData = obj;
         this.isInputModalActive = false;
       }
+    },
+    downloadSVG() {
+      const blob = new Blob(
+        [document.getElementById("svg-diagram-show-area").innerHTML],
+        {
+          type: "image/svg+xml"
+        }
+      );
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "image.svg";
+      link.click();
     }
   }
 };

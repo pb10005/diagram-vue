@@ -7,8 +7,8 @@ A vue component library of diagrams
 ![npm](https://img.shields.io/npm/dw/diagram-vue.svg)  
 
 [Demo](https://diagram.netlify.com/)  
-![Screen shot](https://raw.githubusercontent.com/pb10001/diagram-vue/master/img/screenshot.png)
-## Installaion
+![Screen shot](https://raw.githubusercontent.com/pb10005/diagram-vue/master/img/screenshot.png)
+## Installation
 ```sh
 npm i diagram-vue --save
 ```
@@ -85,6 +85,13 @@ linkChanged(obj /* array of links */) {
 }
 
 ```
+
+#### 5. Get SVG as String
+Use plain JavaScript.
+```js
+document.getElementById('svg-diagram-show-area').innerHTML; // <svg ...>...</svg>
+```
+
 ## Development
 
 ## Project setup
