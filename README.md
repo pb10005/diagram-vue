@@ -24,7 +24,8 @@ import "diagram-vue/dist/diagram.css";
 ```html
 <DiagramEditor v-model="graph"></DiagramEditor>
 ```
-[Sample data](https://raw.githubusercontent.com/pb10005/diagram-vue/master/src/demo/data.json) represents the data structure of v-model.
+See [Data specification](https://github.com/pb10005/diagram-vue/blob/master/DATA_SPECIFICATION.md).
+
 ### Customization
 #### 1. Import
 ```js
@@ -66,7 +67,8 @@ props: {
     labels: Object
 }
 ```
-[Sample data](https://raw.githubusercontent.com/pb10005/diagram-vue/master/src/demo/data.json) helps you know the data structure of nodes and links.
+See [Data specification](https://github.com/pb10005/diagram-vue/blob/master/DATA_SPECIFICATION.md).
+
 #### 4. Events
 ```js
 editNode(node /* selected node */) {
