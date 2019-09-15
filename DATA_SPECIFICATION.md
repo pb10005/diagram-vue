@@ -45,7 +45,8 @@
 |arrow|String|`none`, `src`, `dest`, or `both`
 
 ### 1-2-1. Point
-Middle control point of bezier curve
+Middle control point of bezier curve  
+
 |Attribute|Type|Description
 |---|---|---
 |x|Number|
