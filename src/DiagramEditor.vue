@@ -39,6 +39,7 @@
     <Diagram
       :width="graphData.width || 2000"
       :height="graphData.height || 1000"
+      :fluid="graphData.isFluid"
       :scale="scale"
       :background="graphData.background || '#fafafa'"
       :nodes="graphData.nodes"

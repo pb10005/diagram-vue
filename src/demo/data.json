@@ -1,7 +1,8 @@
 {
-  "width": 2000,
+  "width": 1500,
   "height": 1000,
   "background": "#eee",
+  "isFluid": true,
   "nodes": [{
     "id": "167efa699c7863ac",
     "content": {

@@ -1,9 +1,9 @@
 <template>
   <div id="svg-diagram-show-area" class="scrollXY">
     <svg
-      :width="width * scale"
-      :height="height * scale"
-        :viewBox="viewBoxDiagram"
+      :width="fluid ? '100%' : width"
+      :height="fluid ? '100%' : height"
+      :viewBox="viewBoxDiagram"
       xmlns="http://www.w3.org/2000/svg"
     >
       <g :transform="scaleStr">
@@ -78,7 +78,7 @@ export default {
   },
   computed: {
     viewBoxDiagram() {
-        return this.fluid ? `0 0 ${this.width * this.scale} ${this.height * this.scale}` : `0 0 ${this.width} ${this.height}`;
+        return this.fluid ? `0 0 ${this.width / this.scale} ${this.height / this.scale}` : `0 0 ${this.width} ${this.height}`;
     },
     scaleStr() {
       return (
