@@ -37,7 +37,7 @@ import "diagram-vue/dist/diagram.css";
 <Diagram
     :width="2000"
     :height="1000"
-    :isFluid="false"
+    :fluid="false"
     scale="1"
     background="#fafafa"
     :nodes="nodes"
@@ -66,7 +66,7 @@ props: {
     links: Array,
     editable: Boolean,
     labels: Object,
-    isFluid: Boolean
+    fluid: Boolean
 }
 ```
 See [Data specification](https://github.com/pb10005/diagram-vue/blob/master/DATA_SPECIFICATION.md).
