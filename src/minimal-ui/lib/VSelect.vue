@@ -1,6 +1,6 @@
 <template>
   <select v-model="val" :multiple="multiple" @change="onChange">
-    <option id="placeholder" :value="null" selected disabled hidden>
+    <option class="placeholder" :value="null" disabled>
       {{ placeholder }}
     </option>
     <slot></slot>
@@ -47,6 +47,9 @@ select {
   background: transparent;
   option {
     padding: 5px;
+  }
+  .placeholder {
+    display: none;
   }
 }
 </style>

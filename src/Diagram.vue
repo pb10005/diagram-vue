@@ -70,7 +70,7 @@ export default {
     fluid: {
       type: Boolean,
       default: false
-    },
+    }
   },
   components: {
     Node,
@@ -78,11 +78,20 @@ export default {
   },
   computed: {
     viewBoxDiagram() {
-        return this.fluid ? `0 0 ${this.width / this.scale} ${this.height / this.scale}` : `0 0 ${this.width} ${this.height}`;
+      return this.fluid
+        ? `0 0 ${this.width / this.scale} ${this.height / this.scale}`
+        : `0 0 ${this.width} ${this.height}`;
     },
     scaleStr() {
       return (
-        "scale(" + (this.fluid ? 1.0 : (this.scale || 1.0)) + ")" + "translate(" + 0 + "," + 0 + ")"
+        "scale(" +
+        (this.fluid ? 1.0 : this.scale || 1.0) +
+        ")" +
+        "translate(" +
+        0 +
+        "," +
+        0 +
+        ")"
       );
     },
     nodeList: {

@@ -15,7 +15,7 @@
           v-model="newNode.height"
           placeholder="height"
         /><br />
-        <VSelect v-model="newNode.shape">
+        <VSelect v-model="newNode.shape" placeholder="Select shape">
           <option value="rectangle" selected>Rectangle</option>
           <option value="ellipse">Ellipse</option> </VSelect
         ><br />

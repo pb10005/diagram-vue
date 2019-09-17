@@ -12,6 +12,8 @@
       <option value="1" selected>Medium</option>
       <option value="2">Large</option>
     </VSelect>
+    <input v-model="isFluid" type="checkbox" id="fluid-box" />
+    <label for="fluid-box">Toggle fluid</label>
     <EditNodeModal
       :node="{ content: {} }"
       :isActive="isModalActive"
@@ -39,7 +41,7 @@
     <Diagram
       :width="graphData.width || 2000"
       :height="graphData.height || 1000"
-      :fluid="graphData.isFluid"
+      :fluid="isFluid"
       :scale="scale"
       :background="graphData.background || '#fafafa'"
       :nodes="graphData.nodes"
@@ -117,6 +119,7 @@ export default {
       isEditLinkModalActive: false,
       isInputModalActive: false,
       editable: false,
+      isFluid: false,
       tmpNode: {
         id: "",
         shape: "rectangle",
@@ -195,9 +198,7 @@ export default {
     },
     openLinkEdit(item) {
       this.tmpLink.id = item.id;
-      this.tmpLink.content.color = item.content.color;
-      this.tmpLink.content.pattern = item.content.pattern;
-      this.tmpLink.content.arrow = item.content.arrow;
+      this.tmpLink.content = Object.assign({}, item.content);
       this.isEditLinkModalActive = true;
     },
     editLink(item) {

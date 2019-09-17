@@ -5,7 +5,6 @@
 |---|---|---|  
 |width|Number|Width of the graph area|
 |height|Number|Height of the graph area|
-|isFluid|Boolean|`true` if graph area is fluid|
 |background|String| Color name/code|
 |nodes|Array(Object)| See `1-1. Node`|
 |links|Array(Object)| See `1-2. Link`|

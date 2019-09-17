@@ -2,16 +2,13 @@
   <VModal :isActive="isActive" @clickModal="cancel">
     <transition name="item">
       <div class="form" v-if="isActive">
-        <label>Color</label>
-        <VInput v-model="content.color" placeholder="color" /><br />
-        <label>Pattern</label>
-        <VSelect v-model="content.pattern" :placeholder="content.pattern">
+        <VInput v-model="newLink.color" placeholder="color" /><br />
+        <VSelect v-model="newLink.pattern" placeholder="Select line pattern">
           <option value="solid" selected>Solid</option>
           <option value="dash">Dash</option>
           <option value="dot">Dot</option> </VSelect
         ><br />
-        <label>Arrow</label>
-        <VSelect v-model="content.arrow">
+        <VSelect v-model="newLink.arrow" placeholder="Select arrow type">
           <option value="none">none</option>
           <option value="src">One side(source)</option>
           <option value="dest">One side(destination)</option>
@@ -35,27 +32,27 @@ export default {
           content: {
             color: "#ecf0f1",
             pattern: "solid",
-            hasArrow: false
+            arrow: "none"
           }
         };
       }
     }
   },
-  data() {
-    return {
-      content: this.link.content,
-      pattern: this.link.pattern || "solid",
-      arrow: this.link.arrow
-    };
+  computed: {
+    newLink: {
+      get() {
+        return this.link.content;
+      }
+    }
   },
   methods: {
     ok() {
       this.$emit("ok", {
         id: this.link.id,
         content: {
-          color: this.content.color,
-          pattern: this.content.pattern,
-          arrow: this.content.arrow
+          color: this.newLink.color,
+          pattern: this.newLink.pattern,
+          arrow: this.newLink.arrow
         }
       });
     },

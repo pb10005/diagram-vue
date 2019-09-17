@@ -224,7 +224,9 @@ export default {
       this.$emit("editLink", {
         id: this.link.id,
         content: {
-          color: this.link.color
+          color: this.link.color,
+          pattern: this.link.pattern,
+          arrow: this.link.arrow
         }
       });
     },
