@@ -52,7 +52,8 @@
           edit: 'Edit',
           remove: 'Remove',
           link: 'New Link',
-          select: 'Select'
+          select: 'Select',
+          cancel: 'Cancel'
         }
       "
       @editNode="openNodeEdit"
