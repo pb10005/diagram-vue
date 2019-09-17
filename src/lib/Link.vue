@@ -3,7 +3,7 @@
     <path
       v-if="!link.pattern"
       :d="
-        `M${calcSource().x} ${calcSource().y} 
+        `M${calcSource().x} ${calcSource().y}
         Q ${point.x} ${point.y}
         ${calcDestination().x} ${calcDestination().y}`
       "
@@ -20,7 +20,7 @@
     <path
       v-if="link.pattern === 'solid'"
       :d="
-        `M${calcSource().x} ${calcSource().y} 
+        `M${calcSource().x} ${calcSource().y}
         Q ${point.x} ${point.y}
         ${calcDestination().x} ${calcDestination().y}`
       "
@@ -37,7 +37,7 @@
     <path
       v-if="link.pattern === 'dash'"
       :d="
-        `M${calcSource().x} ${calcSource().y} 
+        `M${calcSource().x} ${calcSource().y}
         Q ${point.x} ${point.y}
         ${calcDestination().x} ${calcDestination().y}`
       "
@@ -55,7 +55,7 @@
     <path
       v-if="link.pattern === 'dot'"
       :d="
-        `M${calcSource().x} ${calcSource().y} 
+        `M${calcSource().x} ${calcSource().y}
         Q ${point.x} ${point.y}
         ${calcDestination().x} ${calcDestination().y}`
       "
@@ -158,10 +158,17 @@ export default {
     },
     link: {
       id: String,
-      color: String,
+      color: {
+        type: String,
+        default: "#ffeaa7"
+      },
       pattern: {
         type: String,
         default: "solid"
+      },
+      arrow: {
+        type: String,
+        default: "none"
       },
       point: {
         x: Number,
@@ -224,9 +231,9 @@ export default {
       this.$emit("editLink", {
         id: this.link.id,
         content: {
-          color: this.link.color,
-          pattern: this.link.pattern,
-          arrow: this.link.arrow
+          color: this.link.color || "#ffeaa7",
+          pattern: this.link.pattern || "solid",
+          arrow: this.link.arrow || "none"
         }
       });
     },
