@@ -47,7 +47,8 @@ import "diagram-vue/dist/diagram.css";
         edit: 'Edit',
         remove: 'Remove',
         link: 'Link',
-        select: 'Select'
+        select: 'Select',
+        cancel: 'Cancel'
     }"
     @editNode="editNode"
     @editLink="editLink"
