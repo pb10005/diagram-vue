@@ -1,7 +1,6 @@
 <template>
   <g>
     <path
-      v-if="!link.pattern"
       :d="
         `M${calcSource().x} ${calcSource().y}
         Q ${point.x} ${point.y}
@@ -10,59 +9,7 @@
       :stroke="link.color || '#ffeaa7'"
       stroke-width="3"
       fill="none"
-      :marker-start="
-        link.arrow === 'src' || link.arrow === 'both' ? `url(#${link.id})` : ''
-      "
-      :marker-end="
-        link.arrow === 'dest' || link.arrow === 'both' ? `url(#${link.id})` : ''
-      "
-    />
-    <path
-      v-if="link.pattern === 'solid'"
-      :d="
-        `M${calcSource().x} ${calcSource().y}
-        Q ${point.x} ${point.y}
-        ${calcDestination().x} ${calcDestination().y}`
-      "
-      :stroke="link.color || '#ffeaa7'"
-      stroke-width="3"
-      fill="none"
-      :marker-start="
-        link.arrow === 'src' || link.arrow === 'both' ? `url(#${link.id})` : ''
-      "
-      :marker-end="
-        link.arrow === 'dest' || link.arrow === 'both' ? `url(#${link.id})` : ''
-      "
-    />
-    <path
-      v-if="link.pattern === 'dash'"
-      :d="
-        `M${calcSource().x} ${calcSource().y}
-        Q ${point.x} ${point.y}
-        ${calcDestination().x} ${calcDestination().y}`
-      "
-      :stroke="link.color || '#ffeaa7'"
-      stroke-width="3"
-      stroke-dasharray="10"
-      fill="none"
-      :marker-start="
-        link.arrow === 'src' || link.arrow === 'both' ? `url(#${link.id})` : ''
-      "
-      :marker-end="
-        link.arrow === 'dest' || link.arrow === 'both' ? `url(#${link.id})` : ''
-      "
-    />
-    <path
-      v-if="link.pattern === 'dot'"
-      :d="
-        `M${calcSource().x} ${calcSource().y}
-        Q ${point.x} ${point.y}
-        ${calcDestination().x} ${calcDestination().y}`
-      "
-      :stroke="link.color || '#ffeaa7'"
-      stroke-width="3"
-      fill="none"
-      stroke-dasharray="2"
+      :stroke-dasharray="definePattern(link.pattern)"
       :marker-start="
         link.arrow === 'src' || link.arrow === 'both' ? `url(#${link.id})` : ''
       "
@@ -214,6 +161,19 @@ export default {
           x: this.point.x,
           y: this.point.y
         });
+      }
+    },
+    definePattern (p) {
+      if (p == "solid") {
+        return 0
+      }
+      if (p == "dash") {
+        return 10
+      }
+      if (p == "dot") {
+        return 3
+      } else {
+        return 0
       }
     },
     mouseup() {
