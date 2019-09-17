@@ -164,13 +164,11 @@ export default {
       }
     },
     definePattern (p) {
-      if (p == "solid") {
+      if (p === "solid") {
         return 0
-      }
-      if (p == "dash") {
+      } else if (p === "dash") {
         return 10
-      }
-      if (p == "dot") {
+      } else if (p === "dot") {
         return 3
       } else {
         return 0
