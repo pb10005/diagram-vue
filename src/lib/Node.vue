@@ -20,7 +20,7 @@
         stroke="none"
         @click="toggleSelect"
       >
-        {{ labels.link || "Link" }}
+        {{ !createLinkMode ? (labels.link || "Link") : (labels.cancel || "Cancel") }}
       </text>
       <text
         v-if="selected"
