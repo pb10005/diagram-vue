@@ -208,6 +208,7 @@ export default {
         return x.source !== id && x.destination !== id;
       });
       this.linkList = links;
+      this.createLinkMode = false;
     }
   }
 };
