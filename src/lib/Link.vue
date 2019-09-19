@@ -1,68 +1,15 @@
 <template>
   <g>
     <path
-      v-if="!link.pattern"
       :d="
-        `M${calcSource().x} ${calcSource().y} 
+        `M${calcSource().x} ${calcSource().y}
         Q ${point.x} ${point.y}
         ${calcDestination().x} ${calcDestination().y}`
       "
       :stroke="link.color || '#ffeaa7'"
       stroke-width="3"
       fill="none"
-      :marker-start="
-        link.arrow === 'src' || link.arrow === 'both' ? `url(#${link.id})` : ''
-      "
-      :marker-end="
-        link.arrow === 'dest' || link.arrow === 'both' ? `url(#${link.id})` : ''
-      "
-    />
-    <path
-      v-if="link.pattern === 'solid'"
-      :d="
-        `M${calcSource().x} ${calcSource().y} 
-        Q ${point.x} ${point.y}
-        ${calcDestination().x} ${calcDestination().y}`
-      "
-      :stroke="link.color || '#ffeaa7'"
-      stroke-width="3"
-      fill="none"
-      :marker-start="
-        link.arrow === 'src' || link.arrow === 'both' ? `url(#${link.id})` : ''
-      "
-      :marker-end="
-        link.arrow === 'dest' || link.arrow === 'both' ? `url(#${link.id})` : ''
-      "
-    />
-    <path
-      v-if="link.pattern === 'dash'"
-      :d="
-        `M${calcSource().x} ${calcSource().y} 
-        Q ${point.x} ${point.y}
-        ${calcDestination().x} ${calcDestination().y}`
-      "
-      :stroke="link.color || '#ffeaa7'"
-      stroke-width="3"
-      stroke-dasharray="10"
-      fill="none"
-      :marker-start="
-        link.arrow === 'src' || link.arrow === 'both' ? `url(#${link.id})` : ''
-      "
-      :marker-end="
-        link.arrow === 'dest' || link.arrow === 'both' ? `url(#${link.id})` : ''
-      "
-    />
-    <path
-      v-if="link.pattern === 'dot'"
-      :d="
-        `M${calcSource().x} ${calcSource().y} 
-        Q ${point.x} ${point.y}
-        ${calcDestination().x} ${calcDestination().y}`
-      "
-      :stroke="link.color || '#ffeaa7'"
-      stroke-width="3"
-      fill="none"
-      stroke-dasharray="2"
+      :stroke-dasharray="definePattern(link.pattern)"
       :marker-start="
         link.arrow === 'src' || link.arrow === 'both' ? `url(#${link.id})` : ''
       "
@@ -158,10 +105,17 @@ export default {
     },
     link: {
       id: String,
-      color: String,
+      color: {
+        type: String,
+        default: "#ffeaa7"
+      },
       pattern: {
         type: String,
         default: "solid"
+      },
+      arrow: {
+        type: String,
+        default: "none"
       },
       point: {
         x: Number,
@@ -209,6 +163,17 @@ export default {
         });
       }
     },
+    definePattern (p) {
+      if (p === "solid") {
+        return 0
+      } else if (p === "dash") {
+        return 10
+      } else if (p === "dot") {
+        return 3
+      } else {
+        return 0
+      }
+    },
     mouseup() {
       this.startPosition = null;
       document.removeEventListener("mousemove", this.mousemove);
@@ -224,9 +189,9 @@ export default {
       this.$emit("editLink", {
         id: this.link.id,
         content: {
-          color: this.link.color,
-          pattern: this.link.pattern,
-          arrow: this.link.arrow
+          color: this.link.color || "#ffeaa7",
+          pattern: this.link.pattern || "solid",
+          arrow: this.link.arrow || "none"
         }
       });
     },

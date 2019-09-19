@@ -30,7 +30,7 @@ export default {
         return {
           id: "0",
           content: {
-            color: "#ecf0f1",
+            color: "#ffeaa7",
             pattern: "solid",
             arrow: "none"
           }
