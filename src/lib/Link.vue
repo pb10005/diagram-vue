@@ -123,7 +123,9 @@ export default {
       }
     },
     labels: Object,
-    scale: String
+    scale: String,
+    rWidth: Number,
+    rHeight: Number
   },
   computed: {},
   data() {
@@ -152,10 +154,10 @@ export default {
         const [x, y] = this.getLocation(e);
         this.point.x =
           this.startPosition.x +
-          (x - this.cursorOffset.x) / parseFloat(this.scale);
+          (x - this.cursorOffset.x) / this.rWidth / parseFloat(this.scale);
         this.point.y =
           this.startPosition.y +
-          (y - this.cursorOffset.y) / parseFloat(this.scale);
+          (y - this.cursorOffset.y) / this.rHeight / parseFloat(this.scale);
         this.$emit("updateLocation", {
           id: this.id,
           x: this.point.x,
@@ -163,15 +165,15 @@ export default {
         });
       }
     },
-    definePattern (p) {
+    definePattern(p) {
       if (p === "solid") {
-        return 0
+        return 0;
       } else if (p === "dash") {
-        return 10
+        return 10;
       } else if (p === "dot") {
-        return 3
+        return 3;
       } else {
-        return 0
+        return 0;
       }
     },
     mouseup() {

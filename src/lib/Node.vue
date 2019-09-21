@@ -20,7 +20,9 @@
         stroke="none"
         @click="toggleSelect"
       >
-        {{ !createLinkMode ? (labels.link || "Link") : (labels.cancel || "Cancel") }}
+        {{
+          !createLinkMode ? labels.link || "Link" : labels.cancel || "Cancel"
+        }}
       </text>
       <text
         v-if="selected"
@@ -121,7 +123,9 @@ export default {
     createLinkMode: Boolean,
     selected: Boolean,
     labels: Object,
-    scale: String
+    scale: String,
+    rWidth: Number,
+    rHeight: Number
   },
   watch: {
     node() {
@@ -169,10 +173,10 @@ export default {
         const [x, y] = this.getLocation(e);
         this.x =
           this.startPosition.x +
-          (x - this.cursorOffset.x) / parseFloat(this.scale);
+          (x - this.cursorOffset.x) / this.rWidth / parseFloat(this.scale);
         this.y =
           this.startPosition.y +
-          (y - this.cursorOffset.y) / parseFloat(this.scale);
+          (y - this.cursorOffset.y) / this.rHeight / parseFloat(this.scale);
         this.$emit("updateLocation", {
           id: this.id,
           x: this.x,

@@ -1,5 +1,5 @@
 <template>
-  <div id="svg-diagram-show-area" class="scrollXY">
+  <div id="svg-diagram-show-area" class="scrollXY" ref="field">
     <svg
       :width="fluid ? '100%' : width"
       :height="fluid ? '100%' : height"
@@ -23,6 +23,8 @@
           :createLinkMode="createLinkMode"
           :editable="editable"
           :labels="labels"
+          :rWidth="rect().rWidth"
+          :rHeight="rect().rHeight"
           :scale="scale"
           @editNode="editNode"
           @select="selectNode"
@@ -40,6 +42,8 @@
           :destination="findNode(item.destination)"
           :editable="editable"
           :labels="labels"
+          :rWidth="rect().rWidth"
+          :rHeight="rect().rHeight"
           :scale="scale"
           @editLink="editLink"
           @select="selectLink"
@@ -171,6 +175,13 @@ export default {
     },
     removeLink(id) {
       this.linkList = this.linkList.filter(x => x.id !== id);
+    },
+    rect() {
+      const rect = this.$refs.field.getBoundingClientRect();
+      return {
+        rWidth: this.fluid ? rect.width / this.width : 1,
+        rHeight: this.fluid ? rect.height / this.height : 1
+      };
     },
     updateNodeLocation(obj) {
       let item = this.nodeList.find(x => x.id === obj.id);
