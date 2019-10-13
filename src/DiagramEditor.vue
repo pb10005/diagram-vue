@@ -12,8 +12,12 @@
       <option value="1" selected>Medium</option>
       <option value="2">Large</option>
     </VSelect>
-    <input v-model="isFluid" type="checkbox" id="fluid-box" />
-    <label for="fluid-box">Toggle fluid</label>
+    <VCkbox v-model="isFluid">
+      Toggle fluid
+    </VCkbox>
+    <VCkbox v-model="showGrid" @changed="changeGrid">
+      Show grid
+    </VCkbox>
     <EditNodeModal
       :node="{ content: {} }"
       :isActive="isModalActive"
@@ -139,7 +143,8 @@ export default {
           pattern: "solid",
           arrow: "none"
         }
-      }
+      },
+      showGrid: false
     };
   },
   methods: {
@@ -241,6 +246,9 @@ export default {
       link.href = url;
       link.download = "image.svg";
       link.click();
+    },
+    changeGrid(val){
+      this.graphData.background = val ? 'url(#grid)' : '#eee'
     }
   }
 };
