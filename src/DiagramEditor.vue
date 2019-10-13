@@ -5,8 +5,9 @@
       <VButton @click="openModal">New Node</VButton>
       <VButton @click="endEdit">End</VButton>
     </span>
-    <VButton @click="openInputModal">import/export</VButton>
+    <VButton @click="openInputModal">Import/Export</VButton>
     <VButton @click="downloadSVG">Download SVG</VButton>
+    <VButton @click="isAskClearDiagram = true">Clear Diagram</VButton>
     <VSelect v-model="scale">
       <option value="0.5">Small</option>
       <option value="1" selected>Medium</option>
@@ -18,6 +19,12 @@
     <VCkbox v-model="showGrid" @changed="changeGrid">
       Show grid
     </VCkbox>
+    <AskModal
+      :isActive="isAskClearDiagram"
+      @ok="clearDiagram"
+      @cancel="cancel">
+      Do you wanna clear the Diagram?
+    </AskModal>
     <EditNodeModal
       :node="{ content: {} }"
       :isActive="isModalActive"
@@ -74,13 +81,15 @@ import Diagram from "./Diagram";
 import EditNodeModal from "@/lib/EditNodeModal";
 import EditLinkModal from "@/lib/EditLinkModal";
 import InputModal from "@/lib/InputModal";
+import AskModal from "@/lib/AskModal";
 export default {
   name: "DiagramEditor",
   components: {
     Diagram,
     EditNodeModal,
     EditLinkModal,
-    InputModal
+    InputModal,
+    AskModal
   },
   props: {
     value: {
@@ -144,10 +153,16 @@ export default {
           arrow: "none"
         }
       },
-      showGrid: false
+      showGrid: false,
+      isAskClearDiagram: false
     };
   },
   methods: {
+    clearDiagram() {
+      this.graphData.nodes = [];
+      this.graphData.links = [];
+      this.isAskClearDiagram = false;
+    },
     generateID() {
       return (
         new Date().getTime().toString(16) +
@@ -162,6 +177,7 @@ export default {
       this.isEditModalActive = false;
       this.isEditLinkModalActive = false;
       this.isInputModalActive = false;
+      this.isAskClearDiagram = false;
     },
     addNode(item) {
       this.graphData.nodes.push({

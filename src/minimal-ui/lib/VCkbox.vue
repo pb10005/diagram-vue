@@ -1,7 +1,7 @@
 <template>
   <span>
-    <input class="ckbox" id="checkbox" type="checkbox" v-model="val" @change="onChange"/>
-    <label for="checkbox"><slot/></label>
+    <input class="ckbox" :id="idCheckbox" type="checkbox" v-model="val" @change="onChange"/>
+    <label :for="idCheckbox"><slot/></label>
   </span>
 </template>
 
@@ -15,6 +15,11 @@ export default {
     return {
       val: this.value
     };
+  },
+  computed: {
+    idCheckbox(){
+      return Math.floor(Math.random() * 1000000).toString(16);
+    }
   },
   methods: {
     onChange() {
@@ -40,5 +45,8 @@ export default {
 .ckbox:hover {
   background: #eeeeee;
   opacity: 0.8;
+}
+label{
+  font-size: 14px;
 }
 </style>
