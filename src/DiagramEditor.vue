@@ -64,7 +64,8 @@
           remove: 'Remove',
           link: 'New Link',
           select: 'Select',
-          cancel: 'Cancel'
+          cancel: 'Cancel',
+          copy: 'Copy'
         }
       "
       @editNode="openNodeEdit"
@@ -103,7 +104,8 @@ export default {
             edit: "Edit",
             remove: "Remove",
             link: "New Link",
-            select: "Select"
+            select: "Select",
+            copy: "Copy"
           },
           nodes: [],
           links: []
