@@ -37,6 +37,7 @@
           :scale="scale"
           @editNode="editNode"
           @select="selectNode"
+          @copy="copyNode"
           @updateLocation="updateNodeLocation"
           @toggleSelect="toggleSrcSelect"
           @commitDest="commitDest"
@@ -229,6 +230,24 @@ export default {
       });
       this.linkList = links;
       this.createLinkMode = false;
+    },
+    copyNode(node){
+      if (!this.editable) return;
+      this.nodeList.push({
+        id: this.generateID(),
+        content: {
+          text: node.content.text,
+          color: node.content.color,
+          url: node.content.url
+        },
+        width: node.width,
+        height: node.height,
+        point: {
+          x: node.point.x + 30,
+          y: node.point.y + 30
+        },
+        shape: node.shape
+      });
     }
   }
 };

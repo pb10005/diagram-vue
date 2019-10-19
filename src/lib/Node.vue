@@ -26,6 +26,16 @@
       </text>
       <text
         v-if="selected"
+        :x="x + 100"
+        :y="y - 10"
+        class="button"
+        fill="orange"
+        @click="copy"
+      >
+        {{ labels.copy || "Copy" }}
+      </text>
+      <text
+        v-if="selected"
         :x="x + 65"
         :y="y + node.height + 22"
         class="button"
@@ -155,6 +165,9 @@ export default {
     },
     remove() {
       this.$emit("remove", this.id);
+    },
+    copy(){
+      this.$emit("copy", this.node);
     },
     mousedown(e) {
       if (!this.editable) return;
