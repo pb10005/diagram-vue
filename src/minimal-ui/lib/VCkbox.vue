@@ -1,7 +1,13 @@
 <template>
   <span>
-    <input class="ckbox" :id="idCheckbox" type="checkbox" v-model="val" @change="onChange"/>
-    <label :for="idCheckbox"><slot/></label>
+    <input
+      class="ckbox"
+      :id="idCheckbox"
+      type="checkbox"
+      v-model="val"
+      @change="onChange"
+    />
+    <label :for="idCheckbox"><slot /></label>
   </span>
 </template>
 
@@ -17,7 +23,7 @@ export default {
     };
   },
   computed: {
-    idCheckbox(){
+    idCheckbox() {
       return Math.floor(Math.random() * 1000000).toString(16);
     }
   },
@@ -27,7 +33,7 @@ export default {
       this.$emit("changed", this.val);
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -46,7 +52,7 @@ export default {
   background: #eeeeee;
   opacity: 0.8;
 }
-label{
+label {
   font-size: 14px;
 }
 </style>

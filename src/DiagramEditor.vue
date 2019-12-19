@@ -13,16 +13,9 @@
       <option value="1" selected>Medium</option>
       <option value="2">Large</option>
     </VSelect>
-    <VCkbox v-model="isFluid">
-      Toggle fluid
-    </VCkbox>
-    <VCkbox v-model="showGrid" @changed="changeGrid">
-      Show grid
-    </VCkbox>
-    <AskModal
-      :isActive="isAskClearDiagram"
-      @ok="clearDiagram"
-      @cancel="cancel">
+    <VCkbox v-model="isFluid"> Toggle fluid </VCkbox>
+    <VCkbox v-model="showGrid" @changed="changeGrid"> Show grid </VCkbox>
+    <AskModal :isActive="isAskClearDiagram" @ok="clearDiagram" @cancel="cancel">
       Do you wanna clear the Diagram?
     </AskModal>
     <EditNodeModal
@@ -265,8 +258,8 @@ export default {
       link.download = "image.svg";
       link.click();
     },
-    changeGrid(val){
-      this.graphData.background = val ? 'url(#grid)' : '#eee'
+    changeGrid(val) {
+      this.graphData.background = val ? "url(#grid)" : "#eee";
     }
   }
 };

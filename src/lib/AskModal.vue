@@ -2,9 +2,7 @@
   <VModal :isActive="isActive" @clickModal="cancel">
     <transition name="item">
       <div class="block">
-        <div class="inner-block">
-            <slot></slot>
-        </div>
+        <div class="inner-block"><slot></slot></div>
         <VButton @click="ok">OK</VButton>
         <VButton class="danger" @click="cancel">Cancel</VButton>
       </div>
@@ -27,11 +25,11 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.inner-block{
-    margin-bottom: 20px;
+.inner-block {
+  margin-bottom: 20px;
 }
 .block {
-    padding: 40px;
+  padding: 40px;
 }
 input {
   margin-bottom: 5px;

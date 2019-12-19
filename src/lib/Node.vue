@@ -166,7 +166,7 @@ export default {
     remove() {
       this.$emit("remove", this.id);
     },
-    copy(){
+    copy() {
       this.$emit("copy", this.node);
     },
     mousedown(e) {
