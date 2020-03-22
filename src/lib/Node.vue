@@ -65,6 +65,8 @@
       :rx="node.width / 2"
       :ry="node.height / 2"
       :fill="content.color || '#ecf0f1'"
+      :stroke-width="node.strokeWeight"
+      :stroke="node.stroke"
       @touchstart="mousedown"
       @mousedown="mousedown"
       @mousemove="mousemove"
@@ -82,6 +84,8 @@
       rx="5"
       ry="3"
       :fill="content.color || '#ecf0f1'"
+      :stroke-width="node.strokeWeight"
+      :stroke="node.stroke"
       @touchstart="mousedown"
       @mousedown="mousedown"
       @mousemove="mousemove"
@@ -127,7 +131,9 @@ export default {
       shape: {
         type: String,
         default: "rectangle"
-      }
+      },
+      stroke: String,
+      strokeWeight: Number
     },
     editable: Boolean,
     createLinkMode: Boolean,
@@ -209,7 +215,9 @@ export default {
         shape: this.node.shape,
         width: this.node.width,
         height: this.node.height,
-        content: this.content
+        content: this.content,
+        stroke: this.node.stroke,
+        strokeWeight: this.node.strokeWeight
       });
     }
   }
