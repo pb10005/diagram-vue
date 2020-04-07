@@ -184,6 +184,8 @@ export default {
         },
         width: parseInt(item.width) || 150,
         height: parseInt(item.height) || 60,
+        stroke: item.stroke,
+        strokeWeight: item.strokeWeight,
         shape: item.shape,
         point: {
           x: 10,
@@ -198,6 +200,8 @@ export default {
       this.tmpNode.content.url = item.content.url;
       this.tmpNode.content.color = item.content.color;
       this.tmpNode.shape = item.shape;
+      this.tmpNode.stroke = item.stroke;
+      this.tmpNode.strokeWeight = item.strokeWeight;
       this.tmpNode.width = item.width;
       this.tmpNode.height = item.height;
       this.isModalActive = false;
@@ -209,6 +213,8 @@ export default {
       tmp.content.url = item.content.url;
       tmp.content.color = item.content.color;
       tmp.shape = item.shape;
+      tmp.stroke = item.stroke;
+      tmp.strokeWeight = item.strokeWeight;
       tmp.width = parseInt(item.width);
       tmp.height = parseInt(item.height);
       this.isEditModalActive = false;

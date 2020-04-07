@@ -15,6 +15,16 @@
           v-model="newNode.height"
           placeholder="height"
         /><br />
+        <VInput
+          type="text"
+          v-model="newNode.stroke"
+          placeholder="stroke"
+        /><br />
+        <VInput
+          type="number"
+          v-model="newNode.strokeWeight"
+          placeholder="stroke weight"
+        /><br />
         <VSelect v-model="newNode.shape" placeholder="Select shape">
           <option value="rectangle" selected>Rectangle</option>
           <option value="ellipse">Ellipse</option> </VSelect
@@ -37,6 +47,8 @@ export default {
           shape: "rectangle",
           width: 150,
           height: 60,
+          stroke: "",
+          strokeWeight: 0,
           content: {
             text: "none",
             url: "",
