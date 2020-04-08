@@ -8,13 +8,7 @@
     <VButton @click="openInputModal">Import/Export</VButton>
     <VButton @click="downloadSVG">Download SVG</VButton>
     <VButton @click="isAskClearDiagram = true">Clear Diagram</VButton>
-    <VSelect v-model="scale">
-      <option value="0.5">Small</option>
-      <option value="1" selected>Medium</option>
-      <option value="2">Large</option>
-    </VSelect>
-    <VCkbox v-model="isFluid"> Toggle fluid </VCkbox>
-    <VCkbox v-model="showGrid" @changed="changeGrid"> Show grid </VCkbox>
+    <VButton @click="openSettingsModal">Settings</VButton>
     <AskModal :isActive="isAskClearDiagram" @ok="clearDiagram" @cancel="cancel">
       Do you wanna clear the Diagram?
     </AskModal>
@@ -42,11 +36,17 @@
       @ok="importData"
       @cancel="cancel"
     />
+    <SettingsModal
+      :isActive="isSettingsModalActive"
+      :settings="settings"
+      @ok="updateSettings"
+      @cancel="cancel"
+    />
     <Diagram
       :width="graphData.width || 2000"
       :height="graphData.height || 1000"
-      :fluid="isFluid"
-      :scale="scale"
+      :fluid="settings.isFluid"
+      :scale="settings.scale"
       :background="graphData.background || '#fafafa'"
       :nodes="graphData.nodes"
       :links="graphData.links"
@@ -76,6 +76,7 @@ import EditNodeModal from "@/lib/EditNodeModal";
 import EditLinkModal from "@/lib/EditLinkModal";
 import InputModal from "@/lib/InputModal";
 import AskModal from "@/lib/AskModal";
+import SettingsModal from "@/lib/SettingsModal";
 export default {
   name: "DiagramEditor",
   components: {
@@ -83,7 +84,8 @@ export default {
     EditNodeModal,
     EditLinkModal,
     InputModal,
-    AskModal
+    AskModal,
+    SettingsModal
   },
   props: {
     value: {
@@ -122,13 +124,17 @@ export default {
       url: "",
       color: "",
       json: "",
-      scale: "1",
       isModalActive: false,
       isEditModalActive: false,
       isEditLinkModalActive: false,
       isInputModalActive: false,
+      isSettingsModalActive: false,
       editable: false,
-      isFluid: false,
+      settings: {
+        isFluid: false,
+        scale: "1",
+        showGrid: false,
+      },
       tmpNode: {
         id: "",
         shape: "rectangle",
@@ -148,7 +154,6 @@ export default {
           arrow: "none"
         }
       },
-      showGrid: false,
       isAskClearDiagram: false
     };
   },
@@ -173,6 +178,7 @@ export default {
       this.isEditLinkModalActive = false;
       this.isInputModalActive = false;
       this.isAskClearDiagram = false;
+      this.isSettingsModalActive = false;
     },
     addNode(item) {
       this.graphData.nodes.push({
@@ -264,8 +270,16 @@ export default {
       link.download = "image.svg";
       link.click();
     },
-    changeGrid(val) {
-      this.graphData.background = val ? "url(#grid)" : "#eee";
+    changeGrid() {
+      this.graphData.background = this.settings.showGrid ? "url(#grid)" : "#eee";
+    },
+    openSettingsModal() {
+      this.isSettingsModalActive = true;
+    },
+    updateSettings(val) {
+      this.settings = Object.assign({}, val);
+      this.changeGrid();
+      this.isSettingsModalActive = false;
     }
   }
 };
