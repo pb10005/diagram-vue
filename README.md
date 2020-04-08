@@ -1,5 +1,5 @@
 # diagram-vue
-A vue component library of diagrams
+A SVG-based diagram component for Vue
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/a66f2b18a900451693f7a41019abf79e)](https://app.codacy.com/app/pb10001/diagram-vue?utm_source=github.com&utm_medium=referral&utm_content=pb10001/diagram-vue&utm_campaign=Badge_Grade_Dashboard)
 [![npm version](https://badge.fury.io/js/diagram-vue.svg)](https://badge.fury.io/js/diagram-vue)
@@ -98,6 +98,8 @@ document.getElementById('svg-diagram-show-area').innerHTML; // <svg ...>...</svg
 ```
 
 ## Development
+### Development Environment
+See [diagram-vue-dev-env](https://github.com/pb10005/diagram-vue-dev-env)
 
 ## Project setup
 ```
