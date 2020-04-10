@@ -23,6 +23,9 @@ export default {
       default: ""
     }
   },
+  mounted() {
+    this.val = this.value;
+  },
   computed: {
     val: {
       get() {

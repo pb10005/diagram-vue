@@ -48,6 +48,7 @@
       :fluid="settings.isFluid"
       :scale="settings.scale"
       :background="graphData.background || '#fafafa'"
+      :showGrid="graphData.showGrid"
       :nodes="graphData.nodes"
       :links="graphData.links"
       :editable="editable"
@@ -95,6 +96,7 @@ export default {
           width: 2000,
           height: 1000,
           background: "#fafafa",
+          showGrid: false,
           labels: {
             edit: "Edit",
             remove: "Remove",
@@ -131,9 +133,11 @@ export default {
       isSettingsModalActive: false,
       editable: false,
       settings: {
+        width: 1500,
+        height: 1000,
         isFluid: false,
         scale: "1",
-        showGrid: false,
+        showGrid: false
       },
       tmpNode: {
         id: "",
@@ -271,10 +275,15 @@ export default {
       link.click();
     },
     changeGrid() {
-      this.graphData.background = this.settings.showGrid ? "url(#grid)" : "#eee";
+      this.graphData.width = parseInt(this.settings.width);
+      this.graphData.height = parseInt(this.settings.height);
+      this.graphData.showGrid = this.settings.showGrid;
     },
     openSettingsModal() {
       this.isSettingsModalActive = true;
+      this.settings.width = this.graphData.width;
+      this.settings.height = this.graphData.height;
+      this.settings.showGrid = this.graphData.showGrid;
     },
     updateSettings(val) {
       this.settings = Object.assign({}, val);

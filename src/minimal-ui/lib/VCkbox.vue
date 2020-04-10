@@ -22,6 +22,9 @@ export default {
       val: this.value
     };
   },
+  mounted() {
+    this.val = this.value;
+  },
   computed: {
     idCheckbox() {
       return Math.floor(Math.random() * 1000000).toString(16);

@@ -13,6 +13,9 @@ export default {
       val: this.value
     };
   },
+  mounted() {
+    this.val = this.value;
+  },
   methods: {
     onInput() {
       if (this.value !== this.val) this.$emit("input", this.val);

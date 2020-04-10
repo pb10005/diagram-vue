@@ -41,7 +41,7 @@
           y="0"
           :width="width"
           :height="height"
-          :fill="background || 'url(#smallGrid)'"
+          :fill="showGrid ? 'url(#grid)' : background"
           @click="reset"
         />
         <Node
@@ -97,6 +97,7 @@ export default {
       default: "1"
     },
     background: String,
+    showGrid: Boolean,
     nodes: Array,
     links: Array,
     editable: Boolean,
