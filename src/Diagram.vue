@@ -208,11 +208,19 @@ export default {
       this.linkList = this.linkList.filter(x => x.id !== id);
     },
     rect() {
-      const rect = this.$refs.field.getBoundingClientRect();
-      return {
-        rWidth: this.fluid ? rect.width / this.width : 1,
-        rHeight: this.fluid ? rect.height / this.height : 1
-      };
+      if(this.fluid) {
+        const rect = this.$refs.field.getBoundingClientRect();
+        return {
+            rWidth: rect.width / this.width,
+            rHeight: rect.height / this.height
+        };
+
+      } else {
+        return {
+          rWidth: 1,
+          rHeight: 1
+        };
+      }
     },
     updateNodeLocation(obj) {
       let item = this.nodeList.find(x => x.id === obj.id);
