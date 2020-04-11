@@ -8,13 +8,16 @@ export default {
     type: String,
     value: [String, Number]
   },
-  data() {
-    return {
-      val: this.value
-    };
-  },
-  mounted() {
-    this.val = this.value;
+  computed: {
+      val: {
+        get() {
+            return this.value;
+        },
+        set(content) {
+            this.$emit("input", content);
+        }
+
+      }
   },
   methods: {
     onInput() {

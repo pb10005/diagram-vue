@@ -1,7 +1,7 @@
 <template>
   <VModal :isActive="isActive" @clickModal="cancel">
     <h2>Settings</h2>
-    <h3>Window Size</h3>
+    <h3>Field Size</h3>
     <label>Width</label>
     <VInput type="number" v-model="newSettings.width" />
     <label>Height</label>

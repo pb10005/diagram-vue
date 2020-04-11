@@ -17,23 +17,26 @@ export default {
   props: {
     value: Boolean
   },
-  data() {
-    return {
-      val: this.value
-    };
-  },
-  mounted() {
-    this.val = this.value;
-  },
   computed: {
     idCheckbox() {
       return Math.floor(Math.random() * 1000000).toString(16);
+    },
+    val: {
+        get() {
+            return this.value;
+        },
+        set(content) {
+            this.$emit("input", content);
+            this.$emit("changed", content);
+        }
     }
   },
   methods: {
     onChange() {
-      this.$emit("input", this.val);
-      this.$emit("changed", this.val);
+        if(this.value !== this.val) {
+            this.$emit("input", this.val);
+            this.$emit("changed", this.val);
+        }
     }
   }
 };
