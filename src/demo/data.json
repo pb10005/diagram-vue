@@ -275,6 +275,7 @@
       "y": 109.49883251758314
     },
     "color": "#74b9ff",
+    "shape": "bezier",
     "arrow": "both"
   }]
 }

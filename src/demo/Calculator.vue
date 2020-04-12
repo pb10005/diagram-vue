@@ -1,10 +1,6 @@
 <template>
-    <section>
-        Coming soon...
-    </section>
+  <section>Coming soon...</section>
 </template>
 <script>
-export default {
-    
-}
+export default {};
 </script>

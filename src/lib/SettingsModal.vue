@@ -42,7 +42,7 @@ export default {
   },
   watch: {
     isActive(val) {
-      if(val) {
+      if (val) {
         this.newSettings = Object.assign({}, this.settings);
       }
     }

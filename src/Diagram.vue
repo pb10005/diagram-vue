@@ -208,13 +208,12 @@ export default {
       this.linkList = this.linkList.filter(x => x.id !== id);
     },
     rect() {
-      if(this.fluid) {
+      if (this.fluid) {
         const rect = this.$refs.field.getBoundingClientRect();
         return {
-            rWidth: rect.width / this.width,
-            rHeight: rect.height / this.height
+          rWidth: rect.width / this.width,
+          rHeight: rect.height / this.height
         };
-
       } else {
         return {
           rWidth: 1,

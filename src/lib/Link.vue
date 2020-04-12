@@ -1,6 +1,7 @@
 <template>
   <g>
     <path
+      v-if="link.shape === 'bezier'"
       :d="
         `M${calcSource().x} ${calcSource().y}
         Q ${point.x} ${point.y}
@@ -17,6 +18,23 @@
         link.arrow === 'dest' || link.arrow === 'both' ? `url(#${link.id})` : ''
       "
     />
+    <line
+       v-else
+        :x1="calcSource().x"
+        :y1="calcSource().y"
+        :x2="calcDestination().x"
+        :y2="calcDestination().y"
+      :stroke="link.color || '#ffeaa7'"
+      stroke-width="3"
+      fill="none"
+      :stroke-dasharray="definePattern(link.pattern)"
+      :marker-start="
+        link.arrow === 'src' || link.arrow === 'both' ? `url(#${link.id})` : ''
+      "
+      :marker-end="
+        link.arrow === 'dest' || link.arrow === 'both' ? `url(#${link.id})` : ''
+      "
+      />
     <marker
       :id="link.id"
       markerUnits="userSpaceOnUse"
@@ -109,6 +127,10 @@ export default {
         type: String,
         default: "#ffeaa7"
       },
+      shape: {
+        type: String,
+        default: "straight"
+      },
       pattern: {
         type: String,
         default: "solid"
@@ -192,6 +214,7 @@ export default {
         id: this.link.id,
         content: {
           color: this.link.color || "#ffeaa7",
+          shapfe: this.link.shape || "straight",
           pattern: this.link.pattern || "solid",
           arrow: this.link.arrow || "none"
         }

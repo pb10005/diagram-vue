@@ -7,13 +7,12 @@
         <option value="default">Default Editor</option>
         <option value="calculator">Calculator</option>
       </VSelect>
-    </section><br>
+    </section>
+    <br />
     <section v-if="demo === 'default'">
       <DiagramEditor v-model="graph"></DiagramEditor>
     </section>
-    <section v-if="demo === 'calculator'">
-      <Calculator />
-    </section>
+    <section v-if="demo === 'calculator'"><Calculator /></section>
   </div>
 </template>
 

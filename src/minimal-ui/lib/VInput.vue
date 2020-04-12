@@ -9,15 +9,14 @@ export default {
     value: [String, Number]
   },
   computed: {
-      val: {
-        get() {
-            return this.value;
-        },
-        set(content) {
-            this.$emit("input", content);
-        }
-
+    val: {
+      get() {
+        return this.value;
+      },
+      set(content) {
+        this.$emit("input", content);
       }
+    }
   },
   methods: {
     onInput() {

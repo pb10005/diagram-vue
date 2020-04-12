@@ -2,12 +2,21 @@
   <VModal :isActive="isActive" @clickModal="cancel">
     <transition name="item">
       <div class="form" v-if="isActive">
+        <h2>Edit link</h2>
+        <label>Color:</label>
         <VInput v-model="newLink.color" placeholder="color" /><br />
+        <label>Shape:</label>
+        <VSelect v-model="newLink.shape" placeholder="Select line shape">
+          <option value="straight">Straight line</option>
+          <option value="bezier">Bezier curve</option> </VSelect
+        ><br />
+        <label>Pattern:</label>
         <VSelect v-model="newLink.pattern" placeholder="Select line pattern">
           <option value="solid" selected>Solid</option>
           <option value="dash">Dash</option>
           <option value="dot">Dot</option> </VSelect
         ><br />
+        <label>Arrow type:</label>
         <VSelect v-model="newLink.arrow" placeholder="Select arrow type">
           <option value="none">none</option>
           <option value="src">One side(source)</option>
@@ -31,6 +40,7 @@ export default {
           id: "0",
           content: {
             color: "#ffeaa7",
+            shape: "straight",
             pattern: "solid",
             arrow: "none"
           }
@@ -51,6 +61,7 @@ export default {
         id: this.link.id,
         content: {
           color: this.newLink.color,
+          shape: this.newLink.shape,
           pattern: this.newLink.pattern,
           arrow: this.newLink.arrow
         }

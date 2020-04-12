@@ -237,6 +237,7 @@ export default {
     editLink(item) {
       let tmp = this.graphData.links.find(x => x.id === item.id);
       tmp.color = item.content.color;
+      tmp.shape = item.content.shape;
       tmp.pattern = item.content.pattern;
       tmp.arrow = item.content.arrow;
       this.isEditLinkModalActive = false;
