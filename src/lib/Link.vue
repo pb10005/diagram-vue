@@ -19,11 +19,11 @@
       "
     />
     <line
-       v-else
-        :x1="calcSource().x"
-        :y1="calcSource().y"
-        :x2="calcDestination().x"
-        :y2="calcDestination().y"
+      v-else
+      :x1="calcSource().x"
+      :y1="calcSource().y"
+      :x2="calcDestination().x"
+      :y2="calcDestination().y"
       :stroke="link.color || '#ffeaa7'"
       stroke-width="3"
       fill="none"
@@ -34,7 +34,7 @@
       :marker-end="
         link.arrow === 'dest' || link.arrow === 'both' ? `url(#${link.id})` : ''
       "
-      />
+    />
     <marker
       :id="link.id"
       markerUnits="userSpaceOnUse"
@@ -214,7 +214,7 @@ export default {
         id: this.link.id,
         content: {
           color: this.link.color || "#ffeaa7",
-          shapfe: this.link.shape || "straight",
+          shape: this.link.shape || "straight",
           pattern: this.link.pattern || "solid",
           arrow: this.link.arrow || "none"
         }
