@@ -90,7 +90,7 @@ export default {
         height: 50,
         shape: "rectangle",
         content: {
-        color: "#F00",
+          color: "#F00",
           text: "result"
         },
         point: {

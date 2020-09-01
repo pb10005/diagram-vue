@@ -274,7 +274,9 @@ export default {
           x: node.point.x + 30,
           y: node.point.y + 30
         },
-        shape: node.shape
+        shape: node.shape,
+        stroke: node.stroke,
+        strokeWeight: node.strokeWeight
       });
     }
   }
