@@ -163,6 +163,7 @@ export default {
   },
   methods: {
     mousedown(e) {
+      this.$emit("click", this.link.id);
       const [x, y] = this.getLocation(e);
       this.cursorOffset.x = x;
       this.cursorOffset.y = y;

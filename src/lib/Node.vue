@@ -176,6 +176,7 @@ export default {
       this.$emit("copy", this.node);
     },
     mousedown(e) {
+      this.$emit("click", this.id);
       if (!this.editable) return;
       this.$emit("select", this.id);
       const [x, y] = this.getLocation(e);

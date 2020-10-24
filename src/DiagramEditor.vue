@@ -64,6 +64,8 @@
       "
       @editNode="openNodeEdit"
       @editLink="openLinkEdit"
+      @nodeClicked="nodeClicked"
+      @linkClicked="linkClicked"
       @nodeChanged="nodeChanged"
       @linkChanged="linkChanged"
     >
@@ -244,6 +246,12 @@ export default {
     },
     endEdit() {
       this.editable = false;
+    },
+    nodeClicked(id) {
+      this.$emit("nodeClicked", id);
+    },
+    linkClicked(id) {
+      this.$emit("linkClicked", id);
     },
     nodeChanged(obj) {
       this.graphData.nodes = obj.nodes;

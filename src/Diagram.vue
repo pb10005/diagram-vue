@@ -56,6 +56,7 @@
           :rHeight="rect().rHeight"
           :scale="scale"
           @editNode="editNode"
+          @click="clickNode"
           @select="selectNode"
           @copy="copyNode"
           @updateLocation="updateNodeLocation"
@@ -76,6 +77,7 @@
           :rHeight="rect().rHeight"
           :scale="scale"
           @editLink="editLink"
+          @click="clickLink"
           @select="selectLink"
           @updateLocation="updateLinkLocation"
           @remove="removeLink"
@@ -225,6 +227,12 @@ export default {
       let item = this.nodeList.find(x => x.id === obj.id);
       item.point.x = obj.x;
       item.point.y = obj.y;
+    },
+    clickNode(id) {
+      this.$emit("nodeClicked", id);
+    },
+    clickLink(id) {
+      this.$emit("linkClicked", id);
     },
     selectNode(id) {
       this.selectedNode = id;
