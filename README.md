@@ -6,7 +6,7 @@ A SVG-based diagram component for Vue
 ![npm](https://img.shields.io/npm/dt/diagram-vue.svg)
 ![npm](https://img.shields.io/npm/dw/diagram-vue.svg)  
 
-[Demo](https://diagram.netlify.com/)  
+[Demo](https://diagramvue.netlify.com/)  
 ![Screen shot](https://raw.githubusercontent.com/pb10005/diagram-vue/master/img/screenshot.svg)
 ## Installation
 ```sh
