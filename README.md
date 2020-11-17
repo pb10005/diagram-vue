@@ -87,8 +87,15 @@ nodeChanged(obj /* array of nodes */) {
 linkChanged(obj /* array of links */) {
     /* event handler */
     const links = obj.links
+},
+nodeClicked(id /* identifier of node */) {
+   /* event handler */
+   console.log("your cliked in node: ", id)
+},
+linkClicked(id /* identifier of link */) {
+   /* event handler */
+   console.log("your cliked in link: ", id)
 }
-
 ```
 
 #### 5. Get SVG as String
