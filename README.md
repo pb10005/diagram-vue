@@ -90,11 +90,11 @@ linkChanged(obj /* array of links */) {
 },
 nodeClicked(id /* identifier of node */) {
    /* event handler */
-   console.log("your cliked in node: ", id)
+   console.log("your clicked in node: ", id)
 },
 linkClicked(id /* identifier of link */) {
    /* event handler */
-   console.log("your cliked in link: ", id)
+   console.log("your clicked in link: ", id)
 }
 ```
 
