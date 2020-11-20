@@ -87,6 +87,12 @@ nodeChanged(obj /* array of nodes */) {
 linkChanged(obj /* array of links */) {
     /* event handler */
     const links = obj.links
+},
+nodeRemoved(id /*Identifier of node*/){
+    /* event handler */
+},
+linkRemoved(id /*Identifier of link*/){
+    /* event handler */
 }
 
 ```
