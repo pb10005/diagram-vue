@@ -68,6 +68,8 @@
       @linkClicked="linkClicked"
       @nodeChanged="nodeChanged"
       @linkChanged="linkChanged"
+      @nodeRemoved="nodeRemoved"
+      @linkRemoved="linkRemoved"
     >
     </Diagram>
   </div>
@@ -252,6 +254,12 @@ export default {
     },
     linkClicked(id) {
       this.$emit("linkClicked", id);
+    },
+    nodeRemoved(id) {
+      this.$emit("nodeRemoved", id)
+    },
+    linkRemoved(id) {
+      this.$emit("linkRemoved", id)
     },
     nodeChanged(obj) {
       this.graphData.nodes = obj.nodes;

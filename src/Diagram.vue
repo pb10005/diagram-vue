@@ -207,6 +207,7 @@ export default {
       return this.nodes.find(x => x.id === id);
     },
     removeLink(id) {
+      this.$emit("linkRemoved", id)
       this.linkList = this.linkList.filter(x => x.id !== id);
     },
     rect() {
@@ -259,6 +260,7 @@ export default {
       this.selectedNode = -1;
     },
     removeNode(id) {
+      this.$emit("nodeRemoved", id)
       const nodes = this.nodeList.filter(x => x.id !== id);
       this.nodeList = nodes;
       const links = this.linkList.filter(x => {
