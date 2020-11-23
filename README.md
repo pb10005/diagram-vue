@@ -93,6 +93,7 @@ nodeRemoved(id /*Identifier of node*/){
 },
 linkRemoved(id /*Identifier of link*/){
     /* event handler */
+},
 nodeClicked(id /* identifier of node */) {
    /* event handler */
    console.log("your clicked in node: ", id)
