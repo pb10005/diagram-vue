@@ -41,7 +41,7 @@
     "vue-template-compiler": "^2.7.0"
   },
   "engines": {
-    "node": "16.x"
+    "node": ">=16"
   },
   "keywords": [
     "vue",
