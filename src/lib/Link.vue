@@ -150,6 +150,10 @@ export default {
     rHeight: Number
   },
   computed: {},
+  beforeDestroy() {
+    document.removeEventListener("mousemove", this.mousemove);
+    document.removeEventListener("mouseup", this.mouseup);
+  },
   data() {
     return {
       startPosition: null,

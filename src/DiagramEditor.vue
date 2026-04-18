@@ -196,8 +196,8 @@ export default {
           url: item.content.url,
           color: item.content.color
         },
-        width: parseInt(item.width) || 150,
-        height: parseInt(item.height) || 60,
+        width: parseInt(item.width, 10) || 150,
+        height: parseInt(item.height, 10) || 60,
         stroke: item.stroke,
         strokeWeight: item.strokeWeight,
         shape: item.shape,
@@ -223,14 +223,15 @@ export default {
     },
     editNode(item) {
       let tmp = this.graphData.nodes.find(x => x.id === item.id);
+      if (!tmp) return;
       tmp.content.text = item.content.text;
       tmp.content.url = item.content.url;
       tmp.content.color = item.content.color;
       tmp.shape = item.shape;
       tmp.stroke = item.stroke;
       tmp.strokeWeight = item.strokeWeight;
-      tmp.width = parseInt(item.width);
-      tmp.height = parseInt(item.height);
+      tmp.width = parseInt(item.width, 10);
+      tmp.height = parseInt(item.height, 10);
       this.isEditModalActive = false;
     },
     openLinkEdit(item) {
@@ -240,6 +241,7 @@ export default {
     },
     editLink(item) {
       let tmp = this.graphData.links.find(x => x.id === item.id);
+      if (!tmp) return;
       tmp.color = item.content.color;
       tmp.shape = item.content.shape;
       tmp.pattern = item.content.pattern;
@@ -272,15 +274,21 @@ export default {
       this.json = JSON.stringify(this.graphData);
     },
     importData(value) {
-      const obj = JSON.parse(value.text);
-      if (obj) {
-        this.graphData = obj;
-        this.isInputModalActive = false;
+      try {
+        const obj = JSON.parse(value.text);
+        if (obj) {
+          this.graphData = obj;
+          this.isInputModalActive = false;
+        }
+      } catch (e) {
+        alert("Invalid JSON: " + e.message);
       }
     },
     downloadSVG() {
+      const el = document.getElementById("svg-diagram-show-area");
+      if (!el) return;
       const blob = new Blob(
-        [document.getElementById("svg-diagram-show-area").innerHTML],
+        [el.innerHTML],
         {
           type: "image/svg+xml"
         }
@@ -292,8 +300,8 @@ export default {
       link.click();
     },
     changeGrid() {
-      this.graphData.width = parseInt(this.settings.width);
-      this.graphData.height = parseInt(this.settings.height);
+      this.graphData.width = parseInt(this.settings.width, 10);
+      this.graphData.height = parseInt(this.settings.height, 10);
       this.graphData.showGrid = this.settings.showGrid;
     },
     openSettingsModal() {

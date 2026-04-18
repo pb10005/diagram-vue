@@ -12,14 +12,20 @@
 </template>
 
 <script>
+let ckboxCounter = 0;
 export default {
   name: "VCkbox",
   props: {
     value: Boolean
   },
+  data() {
+    return {
+      checkboxId: "vckbox-" + ++ckboxCounter
+    };
+  },
   computed: {
     idCheckbox() {
-      return Math.floor(Math.random() * 1000000).toString(16);
+      return this.checkboxId;
     },
     val: {
       get() {
