@@ -2,61 +2,28 @@
   <span>
     <input
       class="ckbox"
-      :id="idCheckbox"
+      :id="checkboxId"
       type="checkbox"
-      v-model="val"
-      @change="onChange"
+      :checked="modelValue"
+      @change="$emit('update:modelValue', ($event.target as HTMLInputElement).checked)"
     />
-    <label :for="idCheckbox"><slot /></label>
+    <label :for="checkboxId"><slot /></label>
   </span>
 </template>
-
-<script>
-let ckboxCounter = 0;
-export default {
-  name: "VCkbox",
-  props: {
-    value: Boolean
-  },
-  data() {
-    return {
-      checkboxId: "vckbox-" + ++ckboxCounter
-    };
-  },
-  computed: {
-    idCheckbox() {
-      return this.checkboxId;
-    },
-    val: {
-      get() {
-        return this.value;
-      },
-      set(content) {
-        this.$emit("input", content);
-        this.$emit("changed", content);
-      }
-    }
-  },
-  methods: {
-    onChange() {
-      if (this.value !== this.val) {
-        this.$emit("input", this.val);
-        this.$emit("changed", this.val);
-      }
-    }
-  }
-};
+<script lang="ts">
+let ckboxCounter = 0
 </script>
-
+<script setup lang="ts">
+defineOptions({ name: 'VCkbox' })
+const checkboxId = `vckbox-${++ckboxCounter}`
+defineProps({ modelValue: Boolean })
+defineEmits(['update:modelValue'])
+</script>
 <style lang="scss" scoped>
 .ckbox {
   background: #ffffff;
   cursor: pointer;
   border: 1px solid #eeeeee;
-  -ms-transform: scale(1.5); /* IE */
-  -moz-transform: scale(1.5); /* FF */
-  -webkit-transform: scale(1.5); /* Safari and Chrome */
-  -o-transform: scale(1.5); /* Opera */
   transform: scale(1.5);
   padding: 5px;
 }

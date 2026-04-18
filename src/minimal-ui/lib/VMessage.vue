@@ -4,18 +4,11 @@
     <div id="content">{{ content }}</div>
   </div>
 </template>
-<script>
-export default {
-  name: "VMessage",
-  props: {
-    content: String
-  },
-  data() {
-    return {
-      dismiss: false
-    };
-  }
-};
+<script setup lang="ts">
+import { ref } from 'vue'
+defineOptions({ name: 'VMessage' })
+defineProps({ content: String })
+const dismiss = ref(false)
 </script>
 <style lang="scss" scoped>
 #message {

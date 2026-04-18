@@ -52,269 +52,202 @@
       :nodes="graphData.nodes"
       :links="graphData.links"
       :editable="editable"
-      :labels="
-        graphData.labels || {
-          edit: 'Edit',
-          remove: 'Remove',
-          link: 'New Link',
-          select: 'Select',
-          cancel: 'Cancel',
-          copy: 'Copy'
-        }
-      "
+      :labels="graphData.labels || { edit: 'Edit', remove: 'Remove', link: 'New Link', select: 'Select', cancel: 'Cancel', copy: 'Copy' }"
       @editNode="openNodeEdit"
       @editLink="openLinkEdit"
       @nodeClicked="nodeClicked"
       @linkClicked="linkClicked"
-      @nodeChanged="nodeChanged"
-      @linkChanged="linkChanged"
       @nodeRemoved="nodeRemoved"
       @linkRemoved="linkRemoved"
-    >
-    </Diagram>
+    />
   </div>
 </template>
+<script setup lang="ts">
+import { ref, reactive, computed } from 'vue'
+import Diagram from './Diagram.vue'
+import EditNodeModal from '@/lib/EditNodeModal.vue'
+import EditLinkModal from '@/lib/EditLinkModal.vue'
+import InputModal from '@/lib/InputModal.vue'
+import AskModal from '@/lib/AskModal.vue'
+import SettingsModal from '@/lib/SettingsModal.vue'
 
-<script>
-import Diagram from "./Diagram";
-import EditNodeModal from "@/lib/EditNodeModal";
-import EditLinkModal from "@/lib/EditLinkModal";
-import InputModal from "@/lib/InputModal";
-import AskModal from "@/lib/AskModal";
-import SettingsModal from "@/lib/SettingsModal";
-export default {
-  name: "DiagramEditor",
-  components: {
-    Diagram,
-    EditNodeModal,
-    EditLinkModal,
-    InputModal,
-    AskModal,
-    SettingsModal
-  },
-  props: {
-    value: {
-      type: Object,
-      default: () => {
-        return {
-          width: 2000,
-          height: 1000,
-          background: "#fafafa",
-          showGrid: false,
-          labels: {
-            edit: "Edit",
-            remove: "Remove",
-            link: "New Link",
-            select: "Select",
-            copy: "Copy"
-          },
-          nodes: [],
-          links: []
-        };
-      }
-    }
-  },
-  computed: {
-    graphData: {
-      get() {
-        return this.value;
-      },
-      set(val) {
-        this.$emit("input", val);
-      }
-    }
-  },
-  data() {
-    return {
-      name: "",
-      url: "",
-      color: "",
-      json: "",
-      isModalActive: false,
-      isEditModalActive: false,
-      isEditLinkModalActive: false,
-      isInputModalActive: false,
-      isSettingsModalActive: false,
-      editable: false,
-      settings: {
-        width: 1500,
-        height: 1000,
-        isFluid: false,
-        scale: "1",
-        showGrid: false
-      },
-      tmpNode: {
-        id: "",
-        shape: "rectangle",
-        width: 0,
-        height: 0,
-        content: {
-          text: "",
-          url: "",
-          color: ""
-        }
-      },
-      tmpLink: {
-        id: "",
-        content: {
-          color: "",
-          pattern: "solid",
-          arrow: "none"
-        }
-      },
-      isAskClearDiagram: false
-    };
-  },
-  methods: {
-    clearDiagram() {
-      this.graphData.nodes = [];
-      this.graphData.links = [];
-      this.isAskClearDiagram = false;
-    },
-    generateID() {
-      return (
-        new Date().getTime().toString(16) +
-        Math.floor(Math.random() * 1000000).toString(16)
-      );
-    },
-    openModal() {
-      this.isModalActive = true;
-    },
-    cancel() {
-      this.isModalActive = false;
-      this.isEditModalActive = false;
-      this.isEditLinkModalActive = false;
-      this.isInputModalActive = false;
-      this.isAskClearDiagram = false;
-      this.isSettingsModalActive = false;
-    },
-    addNode(item) {
-      this.graphData.nodes.push({
-        id: this.generateID(),
-        content: {
-          text: item.content.text,
-          url: item.content.url,
-          color: item.content.color
-        },
-        width: parseInt(item.width, 10) || 150,
-        height: parseInt(item.height, 10) || 60,
-        stroke: item.stroke,
-        strokeWeight: item.strokeWeight,
-        shape: item.shape,
-        point: {
-          x: 10,
-          y: 100 + Math.random() * 100
-        }
-      });
-      this.isModalActive = false;
-    },
-    openNodeEdit(item) {
-      this.tmpNode.id = item.id;
-      this.tmpNode.content.text = item.content.text;
-      this.tmpNode.content.url = item.content.url;
-      this.tmpNode.content.color = item.content.color;
-      this.tmpNode.shape = item.shape;
-      this.tmpNode.stroke = item.stroke;
-      this.tmpNode.strokeWeight = item.strokeWeight;
-      this.tmpNode.width = item.width;
-      this.tmpNode.height = item.height;
-      this.isModalActive = false;
-      this.isEditModalActive = true;
-    },
-    editNode(item) {
-      let tmp = this.graphData.nodes.find(x => x.id === item.id);
-      if (!tmp) return;
-      tmp.content.text = item.content.text;
-      tmp.content.url = item.content.url;
-      tmp.content.color = item.content.color;
-      tmp.shape = item.shape;
-      tmp.stroke = item.stroke;
-      tmp.strokeWeight = item.strokeWeight;
-      tmp.width = parseInt(item.width, 10);
-      tmp.height = parseInt(item.height, 10);
-      this.isEditModalActive = false;
-    },
-    openLinkEdit(item) {
-      this.tmpLink.id = item.id;
-      this.tmpLink.content = Object.assign({}, item.content);
-      this.isEditLinkModalActive = true;
-    },
-    editLink(item) {
-      let tmp = this.graphData.links.find(x => x.id === item.id);
-      if (!tmp) return;
-      tmp.color = item.content.color;
-      tmp.shape = item.content.shape;
-      tmp.pattern = item.content.pattern;
-      tmp.arrow = item.content.arrow;
-      this.isEditLinkModalActive = false;
-    },
-    endEdit() {
-      this.editable = false;
-    },
-    nodeClicked(id) {
-      this.$emit("nodeClicked", id);
-    },
-    linkClicked(id) {
-      this.$emit("linkClicked", id);
-    },
-    nodeRemoved(id) {
-      this.$emit("nodeRemoved", id)
-    },
-    linkRemoved(id) {
-      this.$emit("linkRemoved", id)
-    },
-    nodeChanged(obj) {
-      this.graphData.nodes = obj.nodes;
-    },
-    linkChanged(obj) {
-      this.graphData.links = obj.links;
-    },
-    openInputModal() {
-      this.isInputModalActive = true;
-      this.json = JSON.stringify(this.graphData);
-    },
-    importData(value) {
-      try {
-        const obj = JSON.parse(value.text);
-        if (obj) {
-          this.graphData = obj;
-          this.isInputModalActive = false;
-        }
-      } catch (e) {
-        alert("Invalid JSON: " + e.message);
-      }
-    },
-    downloadSVG() {
-      const el = document.getElementById("svg-diagram-show-area");
-      if (!el) return;
-      const blob = new Blob(
-        [el.innerHTML],
-        {
-          type: "image/svg+xml"
-        }
-      );
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = "image.svg";
-      link.click();
-    },
-    changeGrid() {
-      this.graphData.width = parseInt(this.settings.width, 10);
-      this.graphData.height = parseInt(this.settings.height, 10);
-      this.graphData.showGrid = this.settings.showGrid;
-    },
-    openSettingsModal() {
-      this.isSettingsModalActive = true;
-      this.settings.width = this.graphData.width;
-      this.settings.height = this.graphData.height;
-      this.settings.showGrid = this.graphData.showGrid;
-    },
-    updateSettings(val) {
-      this.settings = Object.assign({}, val);
-      this.changeGrid();
-      this.isSettingsModalActive = false;
-    }
+const props = defineProps({
+  modelValue: {
+    type: Object,
+    default: () => ({
+      width: 2000,
+      height: 1000,
+      background: '#fafafa',
+      showGrid: false,
+      labels: { edit: 'Edit', remove: 'Remove', link: 'New Link', select: 'Select', copy: 'Copy' },
+      nodes: [],
+      links: []
+    })
   }
-};
+})
+
+const emit = defineEmits([
+  'update:modelValue', 'nodeClicked', 'linkClicked', 'nodeRemoved', 'linkRemoved'
+])
+
+const graphData = computed({
+  get: () => props.modelValue,
+  set: val => emit('update:modelValue', val)
+})
+
+const json = ref('')
+const isModalActive = ref(false)
+const isEditModalActive = ref(false)
+const isEditLinkModalActive = ref(false)
+const isInputModalActive = ref(false)
+const isSettingsModalActive = ref(false)
+const isAskClearDiagram = ref(false)
+const editable = ref(false)
+
+const settings = reactive({
+  width: 1500, height: 1000, isFluid: false, scale: '1', showGrid: false
+})
+
+const tmpNode = reactive({
+  id: '', shape: 'rectangle', width: 0, height: 0,
+  stroke: '', strokeWeight: 0,
+  content: { text: '', url: '', color: '' }
+})
+
+const tmpLink = reactive({
+  id: '',
+  content: { color: '', pattern: 'solid', arrow: 'none' }
+})
+
+function generateID() {
+  return new Date().getTime().toString(16) + Math.floor(Math.random() * 1000000).toString(16)
+}
+
+function clearDiagram() {
+  graphData.value.nodes = []
+  graphData.value.links = []
+  isAskClearDiagram.value = false
+}
+
+function openModal() { isModalActive.value = true }
+
+function cancel() {
+  isModalActive.value = false
+  isEditModalActive.value = false
+  isEditLinkModalActive.value = false
+  isInputModalActive.value = false
+  isAskClearDiagram.value = false
+  isSettingsModalActive.value = false
+}
+
+function addNode(item) {
+  graphData.value.nodes.push({
+    id: generateID(),
+    content: { text: item.content.text, url: item.content.url, color: item.content.color },
+    width: parseInt(item.width, 10) || 150,
+    height: parseInt(item.height, 10) || 60,
+    stroke: item.stroke,
+    strokeWeight: item.strokeWeight,
+    shape: item.shape,
+    point: { x: 10, y: 100 + Math.random() * 100 }
+  })
+  isModalActive.value = false
+}
+
+function openNodeEdit(item) {
+  Object.assign(tmpNode, {
+    id: item.id,
+    shape: item.shape,
+    stroke: item.stroke,
+    strokeWeight: item.strokeWeight,
+    width: item.width,
+    height: item.height
+  })
+  Object.assign(tmpNode.content, {
+    text: item.content.text,
+    url: item.content.url,
+    color: item.content.color
+  })
+  isEditModalActive.value = true
+}
+
+function editNode(item) {
+  const tmp = graphData.value.nodes.find(x => x.id === item.id)
+  if (!tmp) return
+  tmp.content.text = item.content.text
+  tmp.content.url = item.content.url
+  tmp.content.color = item.content.color
+  tmp.shape = item.shape
+  tmp.stroke = item.stroke
+  tmp.strokeWeight = item.strokeWeight
+  tmp.width = parseInt(item.width, 10)
+  tmp.height = parseInt(item.height, 10)
+  isEditModalActive.value = false
+}
+
+function openLinkEdit(item) {
+  tmpLink.id = item.id
+  Object.assign(tmpLink.content, item.content)
+  isEditLinkModalActive.value = true
+}
+
+function editLink(item) {
+  const tmp = graphData.value.links.find(x => x.id === item.id)
+  if (!tmp) return
+  tmp.color = item.content.color
+  tmp.shape = item.content.shape
+  tmp.pattern = item.content.pattern
+  tmp.arrow = item.content.arrow
+  isEditLinkModalActive.value = false
+}
+
+function endEdit() { editable.value = false }
+
+function nodeClicked(id) { emit('nodeClicked', id) }
+function linkClicked(id) { emit('linkClicked', id) }
+function nodeRemoved(id) { emit('nodeRemoved', id) }
+function linkRemoved(id) { emit('linkRemoved', id) }
+
+function openInputModal() {
+  isInputModalActive.value = true
+  json.value = JSON.stringify(graphData.value)
+}
+
+function importData(value) {
+  try {
+    const obj = JSON.parse(value.text)
+    if (obj) {
+      graphData.value = obj
+      isInputModalActive.value = false
+    }
+  } catch (e) {
+    alert('Invalid JSON: ' + e.message)
+  }
+}
+
+function downloadSVG() {
+  const el = document.getElementById('svg-diagram-show-area')
+  if (!el) return
+  const blob = new Blob([el.innerHTML], { type: 'image/svg+xml' })
+  const url = window.URL.createObjectURL(blob)
+  const link = document.createElement('a')
+  link.href = url
+  link.download = 'image.svg'
+  link.click()
+}
+
+function openSettingsModal() {
+  isSettingsModalActive.value = true
+  settings.width = graphData.value.width
+  settings.height = graphData.value.height
+  settings.showGrid = graphData.value.showGrid
+}
+
+function updateSettings(val) {
+  Object.assign(settings, val)
+  graphData.value.width = parseInt(settings.width, 10)
+  graphData.value.height = parseInt(settings.height, 10)
+  graphData.value.showGrid = settings.showGrid
+  isSettingsModalActive.value = false
+}
 </script>

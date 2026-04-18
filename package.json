@@ -1,44 +1,42 @@
 {
   "name": "diagram-vue",
   "version": "0.3.2",
-  "main": "dist/diagram.umd.js",
+  "main": "dist/diagram.cjs.js",
+  "module": "dist/diagram.es.js",
   "author": "pb10005",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pb10005/diagram-vue.git"
   },
-  "unpkg": "dist/diagram.umd.min.js",
+  "unpkg": "dist/diagram.umd.js",
   "browser": {
     "./sfc": "src/Diagram.vue"
   },
   "private": false,
   "scripts": {
-    "serve": "vue-cli-service serve src/demo/main.js",
-    "build": "vue-cli-service build src/index.js --target lib --name diagram",
-    "build_app": "vue-cli-service build src/demo/main.js",
-    "lint": "vue-cli-service lint",
-    "test:e2e": "vue-cli-service test:e2e",
-    "test:unit": "vue-cli-service test:unit"
+    "dev": "vite",
+    "build": "vite build --config vite.lib.config.js",
+    "build:app": "vite build",
+    "lint": "eslint --ext .vue,.js,.ts src",
+    "test:unit": "vitest run",
+    "test:unit:watch": "vitest"
   },
   "dependencies": {
-    "vue": "^2.7.0"
+    "vue": "^3.4.0"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.19.0",
-    "@vue/cli-plugin-babel": "^5.0.0",
-    "@vue/cli-plugin-e2e-nightwatch": "^5.0.0",
-    "@vue/cli-plugin-eslint": "^5.0.0",
-    "@vue/cli-plugin-unit-mocha": "^5.0.0",
-    "@vue/cli-service": "^5.0.0",
-    "@vue/eslint-config-prettier": "^7.0.0",
-    "@vue/test-utils": "^1.3.0",
-    "chai": "^4.3.0",
+    "@vitejs/plugin-vue": "^5.0.0",
+    "autoprefixer": "^10.4.0",
+    "@vue/eslint-config-prettier": "^9.0.0",
+    "@vue/test-utils": "^2.4.0",
     "eslint": "^8.0.0",
     "eslint-plugin-vue": "^9.0.0",
+    "jsdom": "^24.0.0",
+    "prettier": "^3.0.0",
     "sass": "^1.57.0",
-    "sass-loader": "^10.4.1",
-    "vue-template-compiler": "^2.7.0"
+    "vite": "^5.0.0",
+    "vitest": "^1.0.0"
   },
   "engines": {
     "node": ">=16"

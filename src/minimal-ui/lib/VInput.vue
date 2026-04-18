@@ -1,29 +1,10 @@
 <template>
-  <input :type="type" v-model="val" @input="onInput" />
+  <input :type="type" :value="modelValue" @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)" />
 </template>
-<script>
-export default {
-  name: "VInput",
-  props: {
-    type: String,
-    value: [String, Number]
-  },
-  computed: {
-    val: {
-      get() {
-        return this.value;
-      },
-      set(content) {
-        this.$emit("input", content);
-      }
-    }
-  },
-  methods: {
-    onInput() {
-      if (this.value !== this.val) this.$emit("input", this.val);
-    }
-  }
-};
+<script setup lang="ts">
+defineOptions({ name: 'VInput' })
+defineProps({ type: String, modelValue: [String, Number] })
+defineEmits(['update:modelValue'])
 </script>
 <style lang="scss" scoped>
 input {
@@ -36,20 +17,8 @@ input {
 input:focus {
   border-bottom: 1px solid #00b894;
 }
-input::-webkit-input-placeholder {
+input::placeholder {
   font-weight: lighter;
-  font-size: 20;
-}
-input:-moz-placeholder {
-  font-weight: lighter;
-  font-size: 20;
-}
-input::-moz-placeholder {
-  font-weight: lighter;
-  font-size: 20;
-}
-input:-ms-input-placeholder {
-  font-weight: lighter;
-  font-size: 20;
+  font-size: 20px;
 }
 </style>

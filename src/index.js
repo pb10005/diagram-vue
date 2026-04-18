@@ -1,9 +1,14 @@
-import Vue from "vue";
-import Diagram from "./Diagram";
-import DiagramEditor from "./DiagramEditor";
+import Diagram from './Diagram.vue'
+import DiagramEditor from './DiagramEditor.vue'
+import MinimalUI from './minimal-ui'
 
-import MinimalUI from "./minimal-ui";
-Vue.use(MinimalUI);
+const DiagramVue = {
+  install(app) {
+    app.use(MinimalUI)
+    app.component('Diagram', Diagram)
+    app.component('DiagramEditor', DiagramEditor)
+  }
+}
 
-export default Diagram;
-export { Diagram, DiagramEditor };
+export { Diagram, DiagramEditor }
+export default DiagramVue
