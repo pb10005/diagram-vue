@@ -7,47 +7,25 @@
       xmlns="http://www.w3.org/2000/svg"
     >
       <defs>
-        <pattern
-          id="smallGrid"
-          width="10"
-          height="10"
-          patternUnits="userSpaceOnUse"
-        >
-          <path
-            d="M 10 0 L 0 0 0 10"
-            fill="none"
-            stroke="gray"
-            stroke-width="0.5"
-          />
+        <pattern id="smallGrid" width="10" height="10" patternUnits="userSpaceOnUse">
+          <path d="M 10 0 L 0 0 0 10" fill="none" stroke="gray" stroke-width="0.5" />
         </pattern>
-        <pattern
-          id="grid"
-          width="100"
-          height="100"
-          patternUnits="userSpaceOnUse"
-        >
+        <pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse">
           <rect width="100" height="100" fill="url(#smallGrid)" />
-          <path
-            d="M 100 0 L 0 0 0 100"
-            fill="none"
-            stroke="gray"
-            stroke-width="1"
-          />
+          <path d="M 100 0 L 0 0 0 100" fill="none" stroke="gray" stroke-width="1" />
         </pattern>
       </defs>
       <g :transform="scaleStr">
         <rect
-          x="0"
-          y="0"
-          :width="width"
-          :height="height"
+          x="0" y="0"
+          :width="width" :height="height"
           :fill="showGrid ? 'url(#grid)' : background"
           @click="reset"
         />
         <Node
           :node="item"
           :selected="item.id === selectedNode"
-          v-for="item in nodeList"
+          v-for="item in nodes"
           :key="item.id"
           :createLinkMode="createLinkMode"
           :editable="editable"
@@ -66,7 +44,7 @@
         />
         <Link
           :link="item"
-          v-for="item in linkList"
+          v-for="item in links"
           :selected="item.id === selectedLink"
           :key="item.id"
           :source="findNode(item.source)"
@@ -86,220 +64,136 @@
     </svg>
   </div>
 </template>
-<script>
-import Node from "@/lib/Node";
-import Link from "@/lib/Link";
-export default {
-  name: "Diagram",
-  props: {
-    width: Number,
-    height: Number,
-    scale: {
-      type: String,
-      default: "1"
-    },
-    background: String,
-    showGrid: Boolean,
-    nodes: Array,
-    links: Array,
-    editable: Boolean,
-    labels: Object,
-    fluid: {
-      type: Boolean,
-      default: false
-    }
-  },
-  components: {
-    Node,
-    Link
-  },
-  computed: {
-    viewBoxDiagram() {
-      return this.fluid
-        ? `0 0 ${this.width / this.scale} ${this.height / this.scale}`
-        : `0 0 ${this.width} ${this.height}`;
-    },
-    scaleStr() {
-      return (
-        "scale(" +
-        (this.fluid ? 1.0 : this.scale || 1.0) +
-        ")" +
-        "translate(" +
-        0 +
-        "," +
-        0 +
-        ")"
-      );
-    },
-    nodeList: {
-      get() {
-        return this.nodes;
-      },
-      set(val) {
-        this.$emit("nodeChanged", {
-          nodes: val
-        });
-      }
-    },
-    linkList: {
-      get() {
-        return this.links;
-      },
-      set(val) {
-        this.$emit("linkChanged", {
-          links: val
-        });
-      }
-    }
-  },
-  data() {
-    return {
-      name: "",
-      url: "",
-      color: "",
-      selectedNode: -1,
-      selectedLink: -1,
-      createLinkMode: false
-    };
-  },
-  methods: {
-    editNode(item) {
-      this.$emit("editNode", item);
-    },
-    editLink(item) {
-      this.$emit("editLink", item);
-    },
-    generateID() {
-      return (
-        new Date().getTime().toString(16) +
-        Math.floor(Math.random() * 1000000).toString(16)
-      );
-    },
-    addNode() {
-      if (!this.editable) return;
-      this.nodeList.push({
-        id: this.generateID(),
-        content: {
-          text: this.name,
-          color: this.color,
-          url: this.url
-        },
-        width: 200,
-        height: 60,
-        point: {
-          x: 10,
-          y: 100 + Math.random() * 100
-        }
-      });
-    },
-    reset() {
-      if (!this.createLinkMode) {
-        this.selectedNode = -1;
-        this.selectedLink = -1;
-      }
-    },
-    updateLinkLocation(obj) {
-      let item = this.linkList.find(x => x.id === obj.id);
-      if (!item) return;
-      item.point.x = obj.x;
-      item.point.y = obj.y;
-    },
-    findNode(id) {
-      return this.nodes.find(x => x.id === id);
-    },
-    removeLink(id) {
-      this.$emit("linkRemoved", id)
-      this.linkList = this.linkList.filter(x => x.id !== id);
-    },
-    rect() {
-      if (this.fluid) {
-        const rect = this.$refs.field.getBoundingClientRect();
-        return {
-          rWidth: rect.width / this.width,
-          rHeight: rect.height / this.height
-        };
-      } else {
-        return {
-          rWidth: 1,
-          rHeight: 1
-        };
-      }
-    },
-    updateNodeLocation(obj) {
-      let item = this.nodeList.find(x => x.id === obj.id);
-      if (!item) return;
-      item.point.x = obj.x;
-      item.point.y = obj.y;
-    },
-    clickNode(id) {
-      this.$emit("nodeClicked", id);
-    },
-    clickLink(id) {
-      this.$emit("linkClicked", id);
-    },
-    selectNode(id) {
-      this.selectedNode = id;
-    },
-    selectLink(id) {
-      this.selectedLink = id;
-    },
-    toggleSrcSelect() {
-      this.createLinkMode = !this.createLinkMode;
-    },
-    commitDest(id) {
-      let src = this.nodeList.find(x => x.id === this.selectedNode);
-      let dest = this.nodeList.find(x => x.id === id);
-      if (!src || !dest) return;
-      this.linkList.push({
-        id: this.generateID(),
-        source: this.selectedNode,
-        destination: id,
-        point: {
-          x: (src.point.x + dest.point.x) * 0.5,
-          y: (src.point.y + dest.point.y) * 0.5
-        }
-      });
-      this.createLinkMode = false;
-      this.selectedNode = -1;
-    },
-    removeNode(id) {
-      this.$emit("nodeRemoved", id)
-      const nodes = this.nodeList.filter(x => x.id !== id);
-      this.nodeList = nodes;
-      const links = this.linkList.filter(x => {
-        return x.source !== id && x.destination !== id;
-      });
-      this.linkList = links;
-      this.createLinkMode = false;
-    },
-    copyNode(node) {
-      if (!this.editable) return;
-      this.nodeList.push({
-        id: this.generateID(),
-        content: {
-          text: node.content.text,
-          color: node.content.color,
-          url: node.content.url
-        },
-        width: node.width,
-        height: node.height,
-        point: {
-          x: node.point.x + 30,
-          y: node.point.y + 30
-        },
-        shape: node.shape,
-        stroke: node.stroke,
-        strokeWeight: node.strokeWeight
-      });
-    }
+<script setup lang="ts">
+import { ref, computed } from 'vue'
+import Node from '@/lib/Node.vue'
+import Link from '@/lib/Link.vue'
+
+const props = defineProps({
+  width: Number,
+  height: Number,
+  scale: { type: String, default: '1' },
+  background: String,
+  showGrid: Boolean,
+  nodes: Array,
+  links: Array,
+  editable: Boolean,
+  labels: Object,
+  fluid: { type: Boolean, default: false }
+})
+
+const emit = defineEmits([
+  'editNode', 'editLink', 'nodeClicked', 'linkClicked',
+  'nodeRemoved', 'linkRemoved', 'linkAdded', 'nodeCopied'
+])
+
+const field = ref(null)
+const selectedNode = ref(-1)
+const selectedLink = ref(-1)
+const createLinkMode = ref(false)
+
+const viewBoxDiagram = computed(() =>
+  props.fluid
+    ? `0 0 ${props.width / props.scale} ${props.height / props.scale}`
+    : `0 0 ${props.width} ${props.height}`
+)
+
+const scaleStr = computed(() =>
+  `scale(${props.fluid ? 1.0 : props.scale || 1.0})translate(0,0)`
+)
+
+function generateID() {
+  return new Date().getTime().toString(16) + Math.floor(Math.random() * 1000000).toString(16)
+}
+
+function rect() {
+  if (props.fluid && field.value) {
+    const r = field.value.getBoundingClientRect()
+    return { rWidth: r.width / props.width, rHeight: r.height / props.height }
   }
-};
+  return { rWidth: 1, rHeight: 1 }
+}
+
+function findNode(id) {
+  return props.nodes.find(x => x.id === id)
+}
+
+function reset() {
+  if (!createLinkMode.value) {
+    selectedNode.value = -1
+    selectedLink.value = -1
+  }
+}
+
+function editNode(item) { emit('editNode', item) }
+function editLink(item) { emit('editLink', item) }
+
+function updateNodeLocation(obj) {
+  const item = props.nodes.find(x => x.id === obj.id)
+  if (!item) return
+  item.point.x = obj.x
+  item.point.y = obj.y
+}
+
+function updateLinkLocation(obj) {
+  const item = props.links.find(x => x.id === obj.id)
+  if (!item) return
+  item.point.x = obj.x
+  item.point.y = obj.y
+}
+
+function clickNode(id) { emit('nodeClicked', id) }
+function clickLink(id) { emit('linkClicked', id) }
+function selectNode(id) { selectedNode.value = id }
+function selectLink(id) { selectedLink.value = id }
+
+function toggleSrcSelect() { createLinkMode.value = !createLinkMode.value }
+
+function commitDest(id) {
+  const src = props.nodes.find(x => x.id === selectedNode.value)
+  const dest = props.nodes.find(x => x.id === id)
+  if (!src || !dest) return
+  emit('linkAdded', {
+    id: generateID(),
+    source: selectedNode.value,
+    destination: id,
+    point: {
+      x: (src.point.x + dest.point.x) * 0.5,
+      y: (src.point.y + dest.point.y) * 0.5
+    }
+  })
+  createLinkMode.value = false
+  selectedNode.value = -1
+}
+
+function removeLink(id) {
+  emit('linkRemoved', id)
+}
+
+function removeNode(id) {
+  emit('nodeRemoved', id)
+  createLinkMode.value = false
+}
+
+function copyNode(node) {
+  if (!props.editable) return
+  emit('nodeCopied', {
+    id: generateID(),
+    content: { ...node.content },
+    width: node.width,
+    height: node.height,
+    point: { x: node.point.x + 30, y: node.point.y + 30 },
+    shape: node.shape,
+    stroke: node.stroke,
+    strokeWeight: node.strokeWeight
+  })
+}
+
+defineExpose({ updateNodeLocation, updateLinkLocation, commitDest })
 </script>
 <style>
-.button {
-  cursor: pointer;
-}
-.grab {
-  cursor: grab;
+.scrollXY {
+  overflow-x: auto;
+  overflow-y: auto;
 }
 </style>

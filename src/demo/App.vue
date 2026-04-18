@@ -13,39 +13,22 @@
     </section>
   </div>
 </template>
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import data from './data.json'
+import { DiagramEditor } from '../index.js'
 
-<script>
-import data from "./data.json";
-import { DiagramEditor } from "../index.js";
-export default {
-  name: "app",
-  components: {
-    DiagramEditor
-  },
-  data() {
-    return {
-      demo: "default",
-      graph: {}
-    };
-  },
-  mounted() {
-    this.graph = data;
-  },
-  methods: {
-    refresh() {
-      this.graph = data;
-    }
-  }
-};
+const demo = ref('default')
+const graph = ref({})
+
+onMounted(() => { graph.value = data })
 </script>
-
 <style lang="scss">
 body {
   #app {
     font-family: "Avenir", Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    // text-align: center;
     color: #2c3e50;
   }
   .scrollXY {

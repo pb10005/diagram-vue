@@ -1,5 +1,3 @@
 module.exports = {
-  env: {
-    mocha: true
-  }
-};
+  env: { node: true }
+}

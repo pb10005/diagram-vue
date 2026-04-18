@@ -20,9 +20,7 @@
         stroke="none"
         @click="toggleSelect"
       >
-        {{
-          !createLinkMode ? labels.link || "Link" : labels.cancel || "Cancel"
-        }}
+        {{ !createLinkMode ? labels.link || "Link" : labels.cancel || "Cancel" }}
       </text>
       <text
         v-if="selected"
@@ -64,7 +62,7 @@
       :height="node.height"
       :rx="node.width / 2"
       :ry="node.height / 2"
-      :fill="content.color || '#ecf0f1'"
+      :fill="node.content.color || '#ecf0f1'"
       :stroke-width="node.strokeWeight"
       :stroke="node.stroke"
       @touchstart="mousedown"
@@ -83,7 +81,7 @@
       :height="node.height"
       rx="5"
       ry="3"
-      :fill="content.color || '#ecf0f1'"
+      :fill="node.content.color || '#ecf0f1'"
       :stroke-width="node.strokeWeight"
       :stroke="node.stroke"
       @touchstart="mousedown"
@@ -102,145 +100,103 @@
         font-size="20"
         text-anchor="middle"
       >
-        {{ content.text }}
+        {{ node.content.text }}
       </text>
     </a>
   </g>
 </template>
-<script>
-import mouseLocation from "../mouseLocation";
-export default {
-  mixins: [mouseLocation],
-  props: {
-    node: {
-      width: Number,
-      height: Number,
-      id: String,
-      point: {
-        type: Object,
-        default: {
-          x: 0,
-          y: 0
-        }
-      },
-      content: {
-        text: String,
-        url: String,
-        color: String
-      },
-      shape: {
-        type: String,
-        default: "rectangle"
-      },
-      stroke: String,
-      strokeWeight: Number
-    },
-    editable: Boolean,
-    createLinkMode: Boolean,
-    selected: Boolean,
-    labels: Object,
-    scale: String,
-    rWidth: Number,
-    rHeight: Number
-  },
-  computed: {
-    safeUrl() {
-      const url = this.content.url;
-      return url && /^https?:\/\//i.test(url) ? url : '';
-    }
-  },
-  watch: {
-    node() {
-      this.x = this.node.point.x;
-      this.y = this.node.point.y;
-    }
-  },
-  data() {
-    return {
-      startPosition: null,
-      cursorOffset: {
-        x: 0,
-        y: 0
-      },
-      id: this.node.id,
-      x: this.node.point.x,
-      y: this.node.point.y,
-      content: this.node.content
-    };
-  },
-  beforeDestroy() {
-    document.removeEventListener("mousemove", this.mousemove);
-    document.removeEventListener("mouseup", this.mouseup);
-  },
-  methods: {
-    toggleSelect() {
-      this.$emit("toggleSelect");
-    },
-    commitDest() {
-      this.$emit("commitDest", this.id);
-    },
-    remove() {
-      this.$emit("remove", this.id);
-    },
-    copy() {
-      this.$emit("copy", this.node);
-    },
-    mousedown(e) {
-      this.$emit("click", this.id);
-      if (!this.editable) return;
-      this.$emit("select", this.id);
-      const [x, y] = this.getLocation(e);
-      this.cursorOffset.x = x;
-      this.cursorOffset.y = y;
-      this.startPosition = { x: this.x, y: this.y };
+<script setup lang="ts">
+import { ref, computed, watch, onBeforeUnmount } from 'vue'
+import { useMouseLocation } from '../composables/useMouseLocation'
 
-      document.addEventListener("mousemove", this.mousemove);
-      document.addEventListener("mouseup", this.mouseup);
-    },
-    mousemove(e) {
-      if (this.startPosition) {
-        e.preventDefault();
-        const [x, y] = this.getLocation(e);
-        this.x =
-          this.startPosition.x +
-          (x - this.cursorOffset.x) / this.rWidth / parseFloat(this.scale);
-        this.y =
-          this.startPosition.y +
-          (y - this.cursorOffset.y) / this.rHeight / parseFloat(this.scale);
-        this.$emit("updateLocation", {
-          id: this.id,
-          x: this.x,
-          y: this.y
-        });
-      }
-    },
-    mouseup() {
-      this.startPosition = null;
+const props = defineProps({
+  node: { type: Object, required: true },
+  editable: Boolean,
+  createLinkMode: Boolean,
+  selected: Boolean,
+  labels: Object,
+  scale: String,
+  rWidth: Number,
+  rHeight: Number
+})
 
-      document.removeEventListener("mousemove", this.mousemove);
-      document.removeEventListener("mouseup", this.mouseup);
-    },
-    editCandidate() {
-      this.$emit("editNode", {
-        id: this.id,
-        shape: this.node.shape,
-        width: this.node.width,
-        height: this.node.height,
-        content: this.content,
-        stroke: this.node.stroke,
-        strokeWeight: this.node.strokeWeight
-      });
-    }
-  }
-};
+const emit = defineEmits([
+  'toggleSelect', 'commitDest', 'remove', 'copy',
+  'click', 'select', 'updateLocation', 'editNode'
+])
+
+const { getLocation } = useMouseLocation()
+
+const startPosition = ref(null)
+const cursorOffset = ref({ x: 0, y: 0 })
+const x = ref(props.node.point.x)
+const y = ref(props.node.point.y)
+
+const safeUrl = computed(() => {
+  const url = props.node.content?.url
+  return url && /^https?:\/\//i.test(url) ? url : ''
+})
+
+watch(() => props.node, node => {
+  x.value = node.point.x
+  y.value = node.point.y
+})
+
+function toggleSelect() { emit('toggleSelect') }
+function commitDest() { emit('commitDest', props.node.id) }
+function remove() { emit('remove', props.node.id) }
+function copy() { emit('copy', props.node) }
+
+function mousedown(e) {
+  emit('click', props.node.id)
+  if (!props.editable) return
+  emit('select', props.node.id)
+  const [ex, ey] = getLocation(e)
+  cursorOffset.value = { x: ex, y: ey }
+  startPosition.value = { x: x.value, y: y.value }
+  document.addEventListener('mousemove', mousemove)
+  document.addEventListener('mouseup', mouseup)
+}
+
+function mousemove(e) {
+  if (!startPosition.value) return
+  e.preventDefault()
+  const [ex, ey] = getLocation(e)
+  x.value = startPosition.value.x + (ex - cursorOffset.value.x) / props.rWidth / parseFloat(props.scale)
+  y.value = startPosition.value.y + (ey - cursorOffset.value.y) / props.rHeight / parseFloat(props.scale)
+  emit('updateLocation', { id: props.node.id, x: x.value, y: y.value })
+}
+
+function mouseup() {
+  startPosition.value = null
+  document.removeEventListener('mousemove', mousemove)
+  document.removeEventListener('mouseup', mouseup)
+}
+
+function editCandidate() {
+  emit('editNode', {
+    id: props.node.id,
+    shape: props.node.shape,
+    width: props.node.width,
+    height: props.node.height,
+    content: props.node.content,
+    stroke: props.node.stroke,
+    strokeWeight: props.node.strokeWeight
+  })
+}
+
+onBeforeUnmount(() => {
+  document.removeEventListener('mousemove', mousemove)
+  document.removeEventListener('mouseup', mouseup)
+})
+
+defineExpose({ safeUrl })
 </script>
 <style lang="scss" scoped>
-.shadow {
-  filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.3));
-  -webkit-filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.3));
-  -moz-filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.3));
-}
 .button {
   cursor: pointer;
+}
+.grab {
+  cursor: grab;
 }
 </style>

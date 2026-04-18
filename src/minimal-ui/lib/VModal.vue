@@ -1,27 +1,14 @@
 <template>
   <div>
-    <div
-      class="modal"
-      :class="{ 'is-open': isActive }"
-      @click="clickModal"
-    ></div>
+    <div class="modal" :class="{ 'is-open': isActive }" @click="$emit('clickModal')"></div>
     <div class="item" :class="{ 'is-open': isActive }"><slot></slot></div>
   </div>
 </template>
-<script>
-export default {
-  name: "VModal",
-  props: {
-    isActive: Boolean
-  },
-  methods: {
-    clickModal() {
-      this.$emit("clickModal");
-    }
-  }
-};
+<script setup lang="ts">
+defineOptions({ name: 'VModal' })
+defineProps({ isActive: Boolean })
+defineEmits(['clickModal'])
 </script>
-
 <style lang="scss" scoped>
 .modal {
   position: fixed;
@@ -58,18 +45,8 @@ export default {
 @media screen and (max-width: 900px) {
   .item {
     width: 100vw;
-    padding: 10px;
-    position: fixed;
-    background: white;
-    visibility: hidden;
-    opacity: 1;
-    z-index: -9999;
     left: 0;
     top: 10px;
-    &.is-open {
-      z-index: 9999;
-      visibility: visible;
-    }
   }
 }
 </style>

@@ -20,52 +20,25 @@
     <VButton class="danger" @click="cancel">Cancel</VButton>
   </VModal>
 </template>
-<script>
-export default {
-  props: {
-    isActive: {
-      type: Boolean,
-      default: false
-    },
-    settings: {
-      type: Object,
-      default() {
-        return {
-          width: 1500,
-          height: 1000,
-          scale: "1",
-          isFluid: false,
-          showGrid: false
-        };
-      }
-    }
-  },
-  watch: {
-    isActive(val) {
-      if (val) {
-        this.newSettings = Object.assign({}, this.settings);
-      }
-    }
-  },
-  data() {
-    return {
-      newSettings: {
-        width: 0,
-        height: 0,
-        showGrid: false
-      }
-    };
-  },
-  methods: {
-    changeGrid() {
-      this.$emit("changeGrid");
-    },
-    ok() {
-      this.$emit("ok", this.newSettings);
-    },
-    cancel() {
-      this.$emit("cancel");
-    }
+<script setup lang="ts">
+import { reactive, watch } from 'vue'
+
+const props = defineProps({
+  isActive: { type: Boolean, default: false },
+  settings: {
+    type: Object,
+    default: () => ({ width: 1500, height: 1000, scale: '1', isFluid: false, showGrid: false })
   }
-};
+})
+
+const emit = defineEmits(['ok', 'cancel'])
+
+const newSettings = reactive({ width: 0, height: 0, scale: '1', isFluid: false, showGrid: false })
+
+watch(() => props.isActive, val => {
+  if (val) Object.assign(newSettings, props.settings)
+})
+
+function ok() { emit('ok', { ...newSettings }) }
+function cancel() { emit('cancel') }
 </script>
