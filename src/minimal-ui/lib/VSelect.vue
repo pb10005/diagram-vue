@@ -1,5 +1,5 @@
 <template>
-  <select :value="modelValue" :multiple="multiple" @change="$emit('update:modelValue', ($event.target as HTMLSelectElement).value)">
+  <select :value="modelValue" :multiple="multiple" @change="handleChange">
     <option class="placeholder" :value="null" disabled>{{ placeholder }}</option>
     <slot></slot>
   </select>
@@ -11,18 +11,18 @@ defineProps({
   multiple: { type: Boolean, default: false },
   placeholder: { type: String, default: '' }
 })
-defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue'])
+
+function handleChange(event: Event) {
+  emit('update:modelValue', (event.target as HTMLSelectElement).value)
+}
 </script>
 <style lang="scss" scoped>
 select {
   border: 1px solid #eeeeee;
   padding: 5px 10px;
   background: transparent;
-  option {
-    padding: 5px;
-  }
-  .placeholder {
-    display: none;
-  }
+  option { padding: 5px; }
+  .placeholder { display: none; }
 }
 </style>

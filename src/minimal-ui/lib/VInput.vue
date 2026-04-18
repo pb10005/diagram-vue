@@ -1,10 +1,14 @@
 <template>
-  <input :type="type" :value="modelValue" @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)" />
+  <input :type="type" :value="modelValue" @input="handleInput" />
 </template>
 <script setup lang="ts">
 defineOptions({ name: 'VInput' })
 defineProps({ type: String, modelValue: [String, Number] })
-defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue'])
+
+function handleInput(event: Event) {
+  emit('update:modelValue', (event.target as HTMLInputElement).value)
+}
 </script>
 <style lang="scss" scoped>
 input {

@@ -5,7 +5,7 @@
       :id="checkboxId"
       type="checkbox"
       :checked="modelValue"
-      @change="$emit('update:modelValue', ($event.target as HTMLInputElement).checked)"
+      @change="handleCheckChange"
     />
     <label :for="checkboxId"><slot /></label>
   </span>
@@ -17,7 +17,11 @@ let ckboxCounter = 0
 defineOptions({ name: 'VCkbox' })
 const checkboxId = `vckbox-${++ckboxCounter}`
 defineProps({ modelValue: Boolean })
-defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue'])
+
+function handleCheckChange(event: Event) {
+  emit('update:modelValue', (event.target as HTMLInputElement).checked)
+}
 </script>
 <style lang="scss" scoped>
 .ckbox {
@@ -31,7 +35,5 @@ defineEmits(['update:modelValue'])
   background: #eeeeee;
   opacity: 0.8;
 }
-label {
-  font-size: 14px;
-}
+label { font-size: 14px; }
 </style>

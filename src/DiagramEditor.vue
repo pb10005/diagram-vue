@@ -57,13 +57,15 @@
       @editLink="openLinkEdit"
       @nodeClicked="nodeClicked"
       @linkClicked="linkClicked"
-      @nodeRemoved="nodeRemoved"
-      @linkRemoved="linkRemoved"
+      @nodeRemoved="handleNodeRemoved"
+      @linkRemoved="handleLinkRemoved"
+      @linkAdded="handleLinkAdded"
+      @nodeCopied="handleNodeCopied"
     />
   </div>
 </template>
 <script setup lang="ts">
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, watch } from 'vue'
 import Diagram from './Diagram.vue'
 import EditNodeModal from '@/lib/EditNodeModal.vue'
 import EditLinkModal from '@/lib/EditLinkModal.vue'
@@ -90,10 +92,8 @@ const emit = defineEmits([
   'update:modelValue', 'nodeClicked', 'linkClicked', 'nodeRemoved', 'linkRemoved'
 ])
 
-const graphData = computed({
-  get: () => props.modelValue,
-  set: val => emit('update:modelValue', val)
-})
+const graphData = ref(JSON.parse(JSON.stringify(props.modelValue)))
+watch(graphData, val => emit('update:modelValue', val), { deep: true })
 
 const json = ref('')
 const isModalActive = ref(false)
@@ -205,8 +205,25 @@ function endEdit() { editable.value = false }
 
 function nodeClicked(id) { emit('nodeClicked', id) }
 function linkClicked(id) { emit('linkClicked', id) }
-function nodeRemoved(id) { emit('nodeRemoved', id) }
-function linkRemoved(id) { emit('linkRemoved', id) }
+
+function handleNodeRemoved(id) {
+  graphData.value.nodes = graphData.value.nodes.filter(x => x.id !== id)
+  graphData.value.links = graphData.value.links.filter(x => x.source !== id && x.destination !== id)
+  emit('nodeRemoved', id)
+}
+
+function handleLinkRemoved(id) {
+  graphData.value.links = graphData.value.links.filter(x => x.id !== id)
+  emit('linkRemoved', id)
+}
+
+function handleLinkAdded(link) {
+  graphData.value.links.push(link)
+}
+
+function handleNodeCopied(node) {
+  graphData.value.nodes.push(node)
+}
 
 function openInputModal() {
   isInputModalActive.value = true

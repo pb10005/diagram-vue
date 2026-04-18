@@ -1,7 +1,7 @@
 <template>
   <VModal :isActive="isActive" @clickModal="cancel">
     <transition name="item">
-      <div class="block">
+      <div class="block" v-if="isActive">
         <div class="inner-block"><slot></slot></div>
         <VButton @click="ok">OK</VButton>
         <VButton class="danger" @click="cancel">Cancel</VButton>

@@ -7,5 +7,15 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'vue/multi-word-component-names': 'off',
     'vue/no-reserved-component-names': 'off'
-  }
+  },
+  parserOptions: {
+    parser: '@typescript-eslint/parser',
+    requireConfigFile: false
+  },
+  overrides: [
+    {
+      files: ['*.ts'],
+      parser: '@typescript-eslint/parser'
+    }
+  ]
 }

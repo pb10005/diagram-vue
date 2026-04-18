@@ -84,7 +84,7 @@ const props = defineProps({
 
 const emit = defineEmits([
   'editNode', 'editLink', 'nodeClicked', 'linkClicked',
-  'nodeChanged', 'linkChanged', 'nodeRemoved', 'linkRemoved'
+  'nodeRemoved', 'linkRemoved', 'linkAdded', 'nodeCopied'
 ])
 
 const field = ref(null)
@@ -153,7 +153,7 @@ function commitDest(id) {
   const src = props.nodes.find(x => x.id === selectedNode.value)
   const dest = props.nodes.find(x => x.id === id)
   if (!src || !dest) return
-  props.links.push({
+  emit('linkAdded', {
     id: generateID(),
     source: selectedNode.value,
     destination: id,
@@ -168,25 +168,16 @@ function commitDest(id) {
 
 function removeLink(id) {
   emit('linkRemoved', id)
-  const idx = props.links.findIndex(x => x.id === id)
-  if (idx !== -1) props.links.splice(idx, 1)
 }
 
 function removeNode(id) {
   emit('nodeRemoved', id)
-  const nIdx = props.nodes.findIndex(x => x.id === id)
-  if (nIdx !== -1) props.nodes.splice(nIdx, 1)
-  const toRemove = props.links.filter(x => x.source === id || x.destination === id)
-  toRemove.forEach(l => {
-    const lIdx = props.links.findIndex(x => x.id === l.id)
-    if (lIdx !== -1) props.links.splice(lIdx, 1)
-  })
   createLinkMode.value = false
 }
 
 function copyNode(node) {
   if (!props.editable) return
-  props.nodes.push({
+  emit('nodeCopied', {
     id: generateID(),
     content: { ...node.content },
     width: node.width,
