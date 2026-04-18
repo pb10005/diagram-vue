@@ -28,10 +28,6 @@
         cancel: 'Cancel',
         copy: '_'
       }"
-      @editNode="onEditNode"
-      @editLink="onEditLink"
-      @nodeChanged="nodeChanged"
-      @linkChanged="linkChanged"
     >
     </Diagram>
   </section>
@@ -100,7 +96,7 @@ export default {
       });
       const operatorID = ++this.maxID;
       this.nodes.push({
-        id: this.maxID,
+        id: operatorID,
         width: 100,
         height: 50,
         shape: "ellipse",
@@ -123,10 +119,6 @@ export default {
         }
       });
     },
-    onEditNode() {},
-    onEditLink() {},
-    nodeChanged() {},
-    linkChanged() {}
   }
 };
 </script>

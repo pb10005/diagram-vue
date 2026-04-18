@@ -200,6 +200,7 @@ export default {
     },
     updateLinkLocation(obj) {
       let item = this.linkList.find(x => x.id === obj.id);
+      if (!item) return;
       item.point.x = obj.x;
       item.point.y = obj.y;
     },
@@ -226,6 +227,7 @@ export default {
     },
     updateNodeLocation(obj) {
       let item = this.nodeList.find(x => x.id === obj.id);
+      if (!item) return;
       item.point.x = obj.x;
       item.point.y = obj.y;
     },
@@ -247,6 +249,7 @@ export default {
     commitDest(id) {
       let src = this.nodeList.find(x => x.id === this.selectedNode);
       let dest = this.nodeList.find(x => x.id === id);
+      if (!src || !dest) return;
       this.linkList.push({
         id: this.generateID(),
         source: this.selectedNode,

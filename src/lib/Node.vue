@@ -93,7 +93,7 @@
       @mouseup="mouseup"
       @touchend="mouseup"
     />
-    <a target="_blank" :href="content.url">
+    <a target="_blank" :href="safeUrl">
       <text
         :x="x + node.width / 2"
         :y="y + node.height / 2"
@@ -143,6 +143,12 @@ export default {
     rWidth: Number,
     rHeight: Number
   },
+  computed: {
+    safeUrl() {
+      const url = this.content.url;
+      return url && /^https?:\/\//i.test(url) ? url : '';
+    }
+  },
   watch: {
     node() {
       this.x = this.node.point.x;
@@ -161,6 +167,10 @@ export default {
       y: this.node.point.y,
       content: this.node.content
     };
+  },
+  beforeDestroy() {
+    document.removeEventListener("mousemove", this.mousemove);
+    document.removeEventListener("mouseup", this.mouseup);
   },
   methods: {
     toggleSelect() {

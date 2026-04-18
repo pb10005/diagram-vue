@@ -48,12 +48,15 @@ export default {
       }
     }
   },
-  computed: {
-    newLink: {
-      get() {
-        return this.link.content;
-      }
+  watch: {
+    link(val) {
+      this.newLink = { ...val.content };
     }
+  },
+  data() {
+    return {
+      newLink: { ...this.link.content }
+    };
   },
   methods: {
     ok() {

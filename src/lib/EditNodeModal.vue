@@ -59,14 +59,13 @@ export default {
     }
   },
   watch: {
-    node() {
-      this.newWidth = parseInt(this.node.width);
-      this.newHeight = parseInt(this.node.Height);
+    node(val) {
+      this.newNode = { ...val, content: { ...val.content } };
     }
   },
   data() {
     return {
-      newNode: this.node
+      newNode: { ...this.node, content: { ...this.node.content } }
     };
   },
   methods: {
