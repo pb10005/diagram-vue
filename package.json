@@ -40,6 +40,9 @@
     "sass-loader": "^7.0.1",
     "vue-template-compiler": "^2.5.17"
   },
+  "engines": {
+    "node": "16.x"
+  },
   "keywords": [
     "vue",
     "vue-component",
