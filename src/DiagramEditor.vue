@@ -74,7 +74,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, reactive, watch } from 'vue'
+import { ref, reactive, watch, nextTick } from 'vue'
 import Diagram from './Diagram.vue'
 import EditNodeModal from '@/lib/EditNodeModal.vue'
 import EditLinkModal from '@/lib/EditLinkModal.vue'
@@ -101,8 +101,27 @@ const emit = defineEmits([
   'update:modelValue', 'nodeClicked', 'linkClicked', 'nodeRemoved', 'linkRemoved'
 ])
 
-const graphData = ref(JSON.parse(JSON.stringify(props.modelValue)))
-watch(graphData, val => emit('update:modelValue', val), { deep: true })
+const initGraph = (val) => ({
+  width: 2000, height: 1000, background: '#f8fafc', showGrid: false, nodes: [], links: [],
+  ...JSON.parse(JSON.stringify(val || {}))
+})
+
+const graphData = ref(initGraph(props.modelValue))
+
+// Sync external prop changes (e.g. initial data loaded by parent in onMounted)
+// Flag prevents echo: graphData change → emit → parent updates prop → watcher skips
+let internalUpdate = false
+
+watch(() => props.modelValue, (val) => {
+  if (internalUpdate || !val) return
+  graphData.value = initGraph(val)
+})
+
+watch(graphData, val => {
+  internalUpdate = true
+  emit('update:modelValue', val)
+  nextTick(() => { internalUpdate = false })
+}, { deep: true })
 
 const json = ref('')
 const isModalActive = ref(false)
