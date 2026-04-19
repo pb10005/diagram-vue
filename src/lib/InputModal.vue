@@ -1,12 +1,11 @@
 <template>
   <VModal :isActive="isActive" title="Import / Export JSON" @clickModal="cancel">
-    <div class="body">
-      <textarea class="editor" v-model="tmp" placeholder="Paste JSON here..."></textarea>
-      <div class="actions">
-        <VButton variant="primary" @click="ok">Import</VButton>
-        <VButton @click="cancel">Cancel</VButton>
-      </div>
-    </div>
+    <textarea class="editor" v-model="tmp" placeholder="Paste JSON here..."></textarea>
+
+    <template #footer>
+      <VButton variant="primary" @click="ok">Import</VButton>
+      <VButton @click="cancel">Cancel</VButton>
+    </template>
   </VModal>
 </template>
 <script setup lang="ts">
@@ -23,10 +22,9 @@ function ok() { emit('ok', { text: tmp.value }) }
 function cancel() { emit('cancel') }
 </script>
 <style lang="scss" scoped>
-.body { display: flex; flex-direction: column; gap: 12px; }
 .editor {
   width: 100%;
-  height: 200px;
+  height: 220px;
   padding: 10px;
   font-family: 'Courier New', monospace;
   font-size: 12px;
@@ -37,5 +35,4 @@ function cancel() { emit('cancel') }
   background: #f9fafb;
   &:focus { outline: none; border-color: #3b82f6; }
 }
-.actions { display: flex; gap: 8px; justify-content: flex-end; }
 </style>

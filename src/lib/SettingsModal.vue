@@ -23,11 +23,12 @@
           <VCkbox v-model="newSettings.showGrid">Show grid</VCkbox>
         </div>
       </section>
-      <div class="actions">
-        <VButton variant="primary" @click="ok">Save</VButton>
-        <VButton variant="danger" @click="cancel">Cancel</VButton>
-      </div>
     </div>
+
+    <template #footer>
+      <VButton variant="primary" @click="ok">Save</VButton>
+      <VButton variant="danger" @click="cancel">Cancel</VButton>
+    </template>
   </VModal>
 </template>
 <script setup lang="ts">
@@ -79,11 +80,5 @@ function cancel() { emit('cancel') }
   flex-direction: column;
   gap: 12px;
   margin-top: 12px;
-}
-.actions {
-  display: flex;
-  gap: 8px;
-  padding-top: 16px;
-  justify-content: flex-end;
 }
 </style>

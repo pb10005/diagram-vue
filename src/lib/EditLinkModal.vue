@@ -40,12 +40,12 @@
           <VInput type="number" v-model="newLink.opacity" label="Opacity (0–1)" placeholder="1" />
         </div>
       </section>
-
-      <div class="actions">
-        <VButton variant="primary" @click="ok">Save</VButton>
-        <VButton variant="danger" @click="cancel">Cancel</VButton>
-      </div>
     </div>
+
+    <template #footer>
+      <VButton variant="primary" @click="ok">Save</VButton>
+      <VButton variant="danger" @click="cancel">Cancel</VButton>
+    </template>
   </VModal>
 </template>
 <script setup lang="ts">
@@ -108,11 +108,5 @@ function cancel() { emit('cancel') }
   color: #6b7280;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-}
-.actions {
-  display: flex;
-  gap: 8px;
-  padding-top: 16px;
-  justify-content: flex-end;
 }
 </style>
