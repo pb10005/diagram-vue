@@ -12,6 +12,7 @@
           <VSelect v-model="newLink.shape" label="Line shape">
             <option value="straight">Straight</option>
             <option value="bezier">Bezier curve</option>
+            <option value="polyline">Polyline (折れ線)</option>
           </VSelect>
           <VSelect v-model="newLink.pattern" label="Line pattern">
             <option value="solid">Solid</option>
