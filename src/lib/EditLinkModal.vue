@@ -1,32 +1,51 @@
 <template>
-  <VModal :isActive="isActive" @clickModal="cancel">
-    <transition name="item">
-      <div class="form" v-if="isActive">
-        <h2>Edit link</h2>
-        <label>Color:</label>
-        <VInput v-model="newLink.color" placeholder="color" /><br />
-        <label>Shape:</label>
-        <VSelect v-model="newLink.shape" placeholder="Select line shape">
-          <option value="straight">Straight line</option>
-          <option value="bezier">Bezier curve</option>
-        </VSelect><br />
-        <label>Pattern:</label>
-        <VSelect v-model="newLink.pattern" placeholder="Select line pattern">
-          <option value="solid" selected>Solid</option>
-          <option value="dash">Dash</option>
-          <option value="dot">Dot</option>
-        </VSelect><br />
-        <label>Arrow type:</label>
-        <VSelect v-model="newLink.arrow" placeholder="Select arrow type">
-          <option value="none">none</option>
-          <option value="src">One side(source)</option>
-          <option value="dest">One side(destination)</option>
-          <option value="both">Both side</option>
-        </VSelect><br />
-        <VButton @click="ok">OK</VButton>
-        <VButton class="danger" @click="cancel">Cancel</VButton>
+  <VModal :isActive="isActive" title="Link Properties" @clickModal="cancel">
+    <div class="form">
+      <section class="section">
+        <h3 class="section-title">Label</h3>
+        <VInput v-model="newLink.label" label="Text label (optional)" placeholder="Describe this link..." />
+      </section>
+
+      <section class="section">
+        <h3 class="section-title">Line Style</h3>
+        <div class="field-row two-col">
+          <VSelect v-model="newLink.shape" label="Line shape">
+            <option value="straight">Straight</option>
+            <option value="bezier">Bezier curve</option>
+          </VSelect>
+          <VSelect v-model="newLink.pattern" label="Line pattern">
+            <option value="solid">Solid</option>
+            <option value="dash">Dashed</option>
+            <option value="dot">Dotted</option>
+          </VSelect>
+        </div>
+        <div class="field-row two-col">
+          <VInput type="number" v-model="newLink.strokeWidth" label="Stroke width" placeholder="2" />
+          <VSelect v-model="newLink.arrow" label="Arrow">
+            <option value="none">None</option>
+            <option value="dest">→ Destination</option>
+            <option value="src">← Source</option>
+            <option value="both">↔ Both</option>
+          </VSelect>
+        </div>
+      </section>
+
+      <section class="section">
+        <h3 class="section-title">Appearance</h3>
+        <div class="field-row two-col">
+          <div class="field-group">
+            <label class="field-label">Color</label>
+            <VInput type="color" v-model="newLink.color" />
+          </div>
+          <VInput type="number" v-model="newLink.opacity" label="Opacity (0–1)" placeholder="1" />
+        </div>
+      </section>
+
+      <div class="actions">
+        <VButton variant="primary" @click="ok">Save</VButton>
+        <VButton variant="danger" @click="cancel">Cancel</VButton>
       </div>
-    </transition>
+    </div>
   </VModal>
 </template>
 <script setup lang="ts">
@@ -38,7 +57,7 @@ const props = defineProps({
     type: Object,
     default: () => ({
       id: '0',
-      content: { color: '#ffeaa7', shape: 'straight', pattern: 'solid', arrow: 'none' }
+      content: { color: '#6366f1', shape: 'straight', pattern: 'solid', arrow: 'none', strokeWidth: 2, label: '', opacity: 1 }
     })
   }
 })
@@ -57,10 +76,43 @@ function ok() {
 function cancel() { emit('cancel') }
 </script>
 <style lang="scss" scoped>
-input { margin-bottom: 5px; }
-.item-enter-active { transition: all 0.8s ease; }
-.item-leave-active { transition: all 0.3s ease; }
-.item-enter-from,
-.item-leave-to { opacity: 0; }
-select { margin-bottom: 5px; }
+.form { display: flex; flex-direction: column; gap: 0; }
+.section {
+  padding: 14px 0;
+  border-bottom: 1px solid #f3f4f6;
+  &:last-of-type { border-bottom: none; }
+}
+.section-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #9ca3af;
+  margin: 0 0 10px;
+}
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  &.two-col { grid-template-columns: 1fr 1fr; }
+  & + .field-row { margin-top: 10px; }
+}
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.field-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.actions {
+  display: flex;
+  gap: 8px;
+  padding-top: 16px;
+  justify-content: flex-end;
+}
 </style>

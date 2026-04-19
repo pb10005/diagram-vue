@@ -1,14 +1,14 @@
 <template>
-  <g>
+  <g :opacity="link.opacity ?? 1">
     <path
       v-if="link.shape === 'bezier'"
       :d="`M${calcSource().x} ${calcSource().y} Q ${point.x} ${point.y} ${calcDestination().x} ${calcDestination().y}`"
-      :stroke="link.color || '#ffeaa7'"
-      stroke-width="3"
+      :stroke="link.color || '#6366f1'"
+      :stroke-width="link.strokeWidth ?? 2"
       fill="none"
       :stroke-dasharray="definePattern(link.pattern)"
-      :marker-start="link.arrow === 'src' || link.arrow === 'both' ? `url(#${link.id})` : ''"
-      :marker-end="link.arrow === 'dest' || link.arrow === 'both' ? `url(#${link.id})` : ''"
+      :marker-start="link.arrow === 'src' || link.arrow === 'both' ? `url(#arrow-${link.id})` : ''"
+      :marker-end="link.arrow === 'dest' || link.arrow === 'both' ? `url(#arrow-${link.id})` : ''"
     />
     <line
       v-else
@@ -16,35 +16,48 @@
       :y1="calcSource().y"
       :x2="calcDestination().x"
       :y2="calcDestination().y"
-      :stroke="link.color || '#ffeaa7'"
-      stroke-width="3"
+      :stroke="link.color || '#6366f1'"
+      :stroke-width="link.strokeWidth ?? 2"
       fill="none"
       :stroke-dasharray="definePattern(link.pattern)"
-      :marker-start="link.arrow === 'src' || link.arrow === 'both' ? `url(#${link.id})` : ''"
-      :marker-end="link.arrow === 'dest' || link.arrow === 'both' ? `url(#${link.id})` : ''"
+      :marker-start="link.arrow === 'src' || link.arrow === 'both' ? `url(#arrow-${link.id})` : ''"
+      :marker-end="link.arrow === 'dest' || link.arrow === 'both' ? `url(#arrow-${link.id})` : ''"
     />
-    <marker
-      :id="link.id"
-      markerUnits="userSpaceOnUse"
-      orient="auto-start-reverse"
-      markerWidth="15"
-      markerHeight="15"
-      viewBox="0 0 10 10"
-      refX="5"
-      refY="5"
-    >
-      <polygon points="0,1.5 0,8.5 10,5 " :fill="link.color || '#ffeaa7'" />
-    </marker>
+    <defs>
+      <marker
+        :id="`arrow-${link.id}`"
+        markerUnits="userSpaceOnUse"
+        orient="auto-start-reverse"
+        markerWidth="12"
+        markerHeight="12"
+        viewBox="0 0 10 10"
+        refX="5"
+        refY="5"
+      >
+        <polygon points="0,2 0,8 10,5" :fill="link.color || '#6366f1'" />
+      </marker>
+    </defs>
+
+    <text
+      v-if="link.label"
+      :x="point.x"
+      :y="point.y - 14"
+      text-anchor="middle"
+      font-family="system-ui, sans-serif"
+      font-size="12"
+      :fill="link.color || '#6366f1'"
+      style="pointer-events: none; user-select: none;"
+    >{{ link.label }}</text>
+
     <g v-if="editable">
-      <line :x1="calcSource().x" :y1="calcSource().y" :x2="point.x" :y2="point.y" stroke="lightgray" />
-      <line :x1="point.x" :y1="point.y" :x2="calcDestination().x" :y2="calcDestination().y" stroke="lightgray" />
-      <ellipse
-        :id="link.id"
+      <line :x1="calcSource().x" :y1="calcSource().y" :x2="point.x" :y2="point.y" stroke="#e5e7eb" stroke-dasharray="4" />
+      <line :x1="point.x" :y1="point.y" :x2="calcDestination().x" :y2="calcDestination().y" stroke="#e5e7eb" stroke-dasharray="4" />
+      <circle
         :cx="point.x"
         :cy="point.y"
-        rx="10"
-        ry="10"
-        fill="#ff7675"
+        r="8"
+        fill="#6366f1"
+        stroke="#fff"
         stroke-width="2"
         class="grab"
         @click="select"
@@ -56,11 +69,13 @@
         @touchend="mouseup"
       />
     </g>
-    <g>
-      <text :x="point.x - 15" :y="point.y - 20" fill="#00b894" @click="edit" v-if="selected" class="button">
+    <g v-if="selected">
+      <rect :x="point.x - 20" :y="point.y - 42" width="40" height="20" rx="4" fill="#3b82f6" class="button" @click="edit" />
+      <text :x="point.x" :y="point.y - 28" text-anchor="middle" class="button btn-text" @click="edit">
         {{ labels.edit || "Edit" }}
       </text>
-      <text :x="point.x - 15" :y="point.y + 30" fill="#ff7675" @click="remove" v-if="selected" class="button">
+      <rect :x="point.x - 24" :y="point.y + 14" width="48" height="20" rx="4" fill="#ef4444" class="button" @click="remove" />
+      <text :x="point.x" :y="point.y + 28" text-anchor="middle" class="button btn-text" @click="remove">
         {{ labels.remove || "Remove" }}
       </text>
     </g>
@@ -117,9 +132,9 @@ function mouseup() {
 }
 
 function definePattern(p) {
-  if (p === 'dash') return 10
-  if (p === 'dot') return 3
-  return 0
+  if (p === 'dash') return '10,5'
+  if (p === 'dot') return '3,3'
+  return '0'
 }
 
 function remove() { emit('remove', props.link.id) }
@@ -129,10 +144,12 @@ function edit() {
   emit('editLink', {
     id: props.link.id,
     content: {
-      color: props.link.color || '#ffeaa7',
+      color: props.link.color || '#6366f1',
       shape: props.link.shape || 'straight',
       pattern: props.link.pattern || 'solid',
-      arrow: props.link.arrow || 'none'
+      arrow: props.link.arrow || 'none',
+      strokeWidth: props.link.strokeWidth ?? 2,
+      label: props.link.label || ''
     }
   })
 }
@@ -161,5 +178,13 @@ onBeforeUnmount(() => {
 </script>
 <style scoped>
 .button { cursor: pointer; }
+.btn-text {
+  fill: #fff;
+  font-family: system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  pointer-events: none;
+  user-select: none;
+}
 .grab { cursor: grab; }
 </style>

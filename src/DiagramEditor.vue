@@ -1,16 +1,25 @@
 <template>
   <div id="editor">
-    <VButton v-if="!editable" @click="editable = true">Edit</VButton>
-    <span v-else>
-      <VButton @click="openModal">New Node</VButton>
-      <VButton @click="endEdit">End</VButton>
-    </span>
-    <VButton @click="openInputModal">Import/Export</VButton>
-    <VButton @click="downloadSVG">Download SVG</VButton>
-    <VButton @click="isAskClearDiagram = true">Clear Diagram</VButton>
-    <VButton @click="openSettingsModal">Settings</VButton>
+    <div class="toolbar">
+      <div class="toolbar-group">
+        <VButton v-if="!editable" variant="primary" @click="editable = true">✏️ Edit</VButton>
+        <template v-else>
+          <VButton variant="primary" @click="openModal">＋ New Node</VButton>
+          <VButton @click="endEdit">✓ Done</VButton>
+        </template>
+      </div>
+      <div class="toolbar-group">
+        <VButton @click="openInputModal">⬆ Import / Export</VButton>
+        <VButton @click="downloadSVG">⬇ Download SVG</VButton>
+      </div>
+      <div class="toolbar-group">
+        <VButton @click="openSettingsModal">⚙ Settings</VButton>
+        <VButton variant="danger" @click="isAskClearDiagram = true">🗑 Clear</VButton>
+      </div>
+    </div>
+
     <AskModal :isActive="isAskClearDiagram" @ok="clearDiagram" @cancel="cancel">
-      Do you wanna clear the Diagram?
+      Clear the entire diagram? This cannot be undone.
     </AskModal>
     <EditNodeModal
       :node="{ content: {} }"
@@ -47,12 +56,12 @@
       :height="graphData.height || 1000"
       :fluid="settings.isFluid"
       :scale="settings.scale"
-      :background="graphData.background || '#fafafa'"
+      :background="graphData.background || '#f8fafc'"
       :showGrid="graphData.showGrid"
       :nodes="graphData.nodes"
       :links="graphData.links"
       :editable="editable"
-      :labels="graphData.labels || { edit: 'Edit', remove: 'Remove', link: 'New Link', select: 'Select', cancel: 'Cancel', copy: 'Copy' }"
+      :labels="graphData.labels || { edit: 'Edit', remove: 'Remove', link: 'Link', select: 'Select', cancel: 'Cancel', copy: 'Copy' }"
       @editNode="openNodeEdit"
       @editLink="openLinkEdit"
       @nodeClicked="nodeClicked"
@@ -79,9 +88,9 @@ const props = defineProps({
     default: () => ({
       width: 2000,
       height: 1000,
-      background: '#fafafa',
+      background: '#f8fafc',
       showGrid: false,
-      labels: { edit: 'Edit', remove: 'Remove', link: 'New Link', select: 'Select', copy: 'Copy' },
+      labels: { edit: 'Edit', remove: 'Remove', link: 'Link', select: 'Select', copy: 'Copy' },
       nodes: [],
       links: []
     })
@@ -110,13 +119,13 @@ const settings = reactive({
 
 const tmpNode = reactive({
   id: '', shape: 'rectangle', width: 0, height: 0,
-  stroke: '', strokeWeight: 0,
-  content: { text: '', url: '', color: '' }
+  stroke: '', strokeWeight: 0, rx: 6, ry: 6, opacity: 1,
+  content: { text: '', url: '', color: '', fontColor: '', fontSize: 13, fontWeight: 'normal' }
 })
 
 const tmpLink = reactive({
   id: '',
-  content: { color: '', pattern: 'solid', arrow: 'none' }
+  content: { color: '', pattern: 'solid', arrow: 'none', shape: 'straight', strokeWidth: 2, label: '', opacity: 1 }
 })
 
 function generateID() {
@@ -143,12 +152,22 @@ function cancel() {
 function addNode(item) {
   graphData.value.nodes.push({
     id: generateID(),
-    content: { text: item.content.text, url: item.content.url, color: item.content.color },
+    content: {
+      text: item.content.text,
+      url: item.content.url,
+      color: item.content.color || '#dbeafe',
+      fontColor: item.content.fontColor || '#1e3a5f',
+      fontSize: parseInt(item.content.fontSize, 10) || 13,
+      fontWeight: item.content.fontWeight || 'normal'
+    },
     width: parseInt(item.width, 10) || 150,
     height: parseInt(item.height, 10) || 60,
-    stroke: item.stroke,
-    strokeWeight: item.strokeWeight,
-    shape: item.shape,
+    stroke: item.stroke || '#93c5fd',
+    strokeWeight: parseFloat(item.strokeWeight) || 1,
+    shape: item.shape || 'rectangle',
+    rx: parseInt(item.rx, 10) || 6,
+    ry: parseInt(item.ry, 10) || 6,
+    opacity: parseFloat(item.opacity) || 1,
     point: { x: 10, y: 100 + Math.random() * 100 }
   })
   isModalActive.value = false
@@ -161,12 +180,18 @@ function openNodeEdit(item) {
     stroke: item.stroke,
     strokeWeight: item.strokeWeight,
     width: item.width,
-    height: item.height
+    height: item.height,
+    rx: item.rx ?? 6,
+    ry: item.ry ?? 6,
+    opacity: item.opacity ?? 1
   })
   Object.assign(tmpNode.content, {
     text: item.content.text,
     url: item.content.url,
-    color: item.content.color
+    color: item.content.color,
+    fontColor: item.content.fontColor || '#1e3a5f',
+    fontSize: item.content.fontSize || 13,
+    fontWeight: item.content.fontWeight || 'normal'
   })
   isEditModalActive.value = true
 }
@@ -177,17 +202,31 @@ function editNode(item) {
   tmp.content.text = item.content.text
   tmp.content.url = item.content.url
   tmp.content.color = item.content.color
+  tmp.content.fontColor = item.content.fontColor
+  tmp.content.fontSize = parseInt(item.content.fontSize, 10) || 13
+  tmp.content.fontWeight = item.content.fontWeight
   tmp.shape = item.shape
   tmp.stroke = item.stroke
-  tmp.strokeWeight = item.strokeWeight
+  tmp.strokeWeight = parseFloat(item.strokeWeight) || 1
   tmp.width = parseInt(item.width, 10)
   tmp.height = parseInt(item.height, 10)
+  tmp.rx = parseInt(item.rx, 10) || 6
+  tmp.ry = parseInt(item.ry, 10) || 6
+  tmp.opacity = parseFloat(item.opacity) || 1
   isEditModalActive.value = false
 }
 
 function openLinkEdit(item) {
   tmpLink.id = item.id
-  Object.assign(tmpLink.content, item.content)
+  Object.assign(tmpLink.content, {
+    color: item.content.color,
+    shape: item.content.shape,
+    pattern: item.content.pattern,
+    arrow: item.content.arrow,
+    strokeWidth: item.content.strokeWidth ?? 2,
+    label: item.content.label || '',
+    opacity: item.content.opacity ?? 1
+  })
   isEditLinkModalActive.value = true
 }
 
@@ -198,6 +237,9 @@ function editLink(item) {
   tmp.shape = item.content.shape
   tmp.pattern = item.content.pattern
   tmp.arrow = item.content.arrow
+  tmp.strokeWidth = parseFloat(item.content.strokeWidth) || 2
+  tmp.label = item.content.label
+  tmp.opacity = parseFloat(item.content.opacity) || 1
   isEditLinkModalActive.value = false
 }
 
@@ -227,7 +269,7 @@ function handleNodeCopied(node) {
 
 function openInputModal() {
   isInputModalActive.value = true
-  json.value = JSON.stringify(graphData.value)
+  json.value = JSON.stringify(graphData.value, null, 2)
 }
 
 function importData(value) {
@@ -249,7 +291,7 @@ function downloadSVG() {
   const url = window.URL.createObjectURL(blob)
   const link = document.createElement('a')
   link.href = url
-  link.download = 'image.svg'
+  link.download = 'diagram.svg'
   link.click()
 }
 
@@ -268,3 +310,32 @@ function updateSettings(val) {
   isSettingsModalActive.value = false
 }
 </script>
+<style lang="scss" scoped>
+#editor {
+  font-family: system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  flex-wrap: wrap;
+}
+.toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  &:not(:last-child)::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 20px;
+    background: #e5e7eb;
+    margin-left: 2px;
+  }
+}
+</style>

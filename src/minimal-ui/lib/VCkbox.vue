@@ -1,14 +1,17 @@
 <template>
-  <span>
+  <label class="toggle">
     <input
-      class="ckbox"
+      class="toggle-input"
       :id="checkboxId"
       type="checkbox"
       :checked="modelValue"
       @change="handleCheckChange"
     />
-    <label :for="checkboxId"><slot /></label>
-  </span>
+    <span class="toggle-track">
+      <span class="toggle-thumb"></span>
+    </span>
+    <span class="toggle-label"><slot /></span>
+  </label>
 </template>
 <script lang="ts">
 let ckboxCounter = 0
@@ -24,16 +27,42 @@ function handleCheckChange(event: Event) {
 }
 </script>
 <style lang="scss" scoped>
-.ckbox {
-  background: #ffffff;
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   cursor: pointer;
-  border: 1px solid #eeeeee;
-  transform: scale(1.5);
-  padding: 5px;
+  user-select: none;
 }
-.ckbox:hover {
-  background: #eeeeee;
-  opacity: 0.8;
+.toggle-input { display: none; }
+.toggle-track {
+  width: 36px;
+  height: 20px;
+  background: #d1d5db;
+  border-radius: 10px;
+  position: relative;
+  transition: background 0.2s;
+  flex-shrink: 0;
 }
-label { font-size: 14px; }
+.toggle-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: left 0.2s;
+}
+.toggle-input:checked + .toggle-track {
+  background: #3b82f6;
+}
+.toggle-input:checked + .toggle-track .toggle-thumb {
+  left: 19px;
+}
+.toggle-label {
+  font-size: 13px;
+  color: #374151;
+}
 </style>
