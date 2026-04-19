@@ -9,6 +9,7 @@
     "type": "git",
     "url": "git+https://github.com/pb10005/diagram-vue.git"
   },
+  "types": "src/types.ts",
   "unpkg": "dist/diagram.umd.js",
   "browser": {
     "./sfc": "src/Diagram.vue"

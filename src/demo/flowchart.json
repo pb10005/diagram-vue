@@ -1,0 +1,196 @@
+{
+  "width": 1200,
+  "height": 800,
+  "background": "#f8fafc",
+  "showGrid": true,
+  "nodes": [
+    {
+      "id": "start",
+      "shape": "ellipse",
+      "width": 120,
+      "height": 60,
+      "stroke": "#16a34a",
+      "strokeWeight": 2,
+      "opacity": 1,
+      "content": {
+        "text": "Start",
+        "color": "#22c55e",
+        "fontColor": "#ffffff",
+        "fontSize": 14,
+        "fontWeight": "bold"
+      },
+      "point": { "x": 540, "y": 40 }
+    },
+    {
+      "id": "check",
+      "shape": "diamond",
+      "width": 180,
+      "height": 90,
+      "stroke": "#f59e0b",
+      "strokeWeight": 2,
+      "opacity": 1,
+      "content": {
+        "text": "Condition?",
+        "color": "#fbbf24",
+        "fontColor": "#78350f",
+        "fontSize": 13,
+        "fontWeight": "bold"
+      },
+      "point": { "x": 510, "y": 180 }
+    },
+    {
+      "id": "process_a",
+      "shape": "rectangle",
+      "width": 170,
+      "height": 60,
+      "rx": 8,
+      "ry": 8,
+      "stroke": "#2563eb",
+      "strokeWeight": 1,
+      "opacity": 1,
+      "content": {
+        "text": "Process A",
+        "color": "#3b82f6",
+        "fontColor": "#ffffff",
+        "fontSize": 13,
+        "fontWeight": "normal"
+      },
+      "point": { "x": 220, "y": 360 }
+    },
+    {
+      "id": "process_b",
+      "shape": "rectangle",
+      "width": 170,
+      "height": 60,
+      "rx": 8,
+      "ry": 8,
+      "stroke": "#7c3aed",
+      "strokeWeight": 1,
+      "opacity": 1,
+      "content": {
+        "text": "Process B",
+        "color": "#8b5cf6",
+        "fontColor": "#ffffff",
+        "fontSize": 13,
+        "fontWeight": "normal"
+      },
+      "point": { "x": 810, "y": 360 }
+    },
+    {
+      "id": "merge",
+      "shape": "rectangle",
+      "width": 150,
+      "height": 60,
+      "rx": 4,
+      "ry": 4,
+      "stroke": "#0891b2",
+      "strokeWeight": 1,
+      "opacity": 0.9,
+      "content": {
+        "text": "Merge",
+        "color": "#06b6d4",
+        "fontColor": "#ffffff",
+        "fontSize": 13,
+        "fontWeight": "normal"
+      },
+      "point": { "x": 525, "y": 520 }
+    },
+    {
+      "id": "end",
+      "shape": "ellipse",
+      "width": 120,
+      "height": 60,
+      "stroke": "#dc2626",
+      "strokeWeight": 2,
+      "opacity": 1,
+      "content": {
+        "text": "End",
+        "color": "#ef4444",
+        "fontColor": "#ffffff",
+        "fontSize": 14,
+        "fontWeight": "bold"
+      },
+      "point": { "x": 540, "y": 660 }
+    }
+  ],
+  "links": [
+    {
+      "id": "l_start_check",
+      "source": "start",
+      "destination": "check",
+      "color": "#6b7280",
+      "shape": "straight",
+      "pattern": "solid",
+      "arrow": "dest",
+      "strokeWidth": 2,
+      "label": "",
+      "opacity": 1,
+      "point": { "x": 600, "y": 120 }
+    },
+    {
+      "id": "l_check_a",
+      "source": "check",
+      "destination": "process_a",
+      "color": "#22c55e",
+      "shape": "bezier",
+      "pattern": "solid",
+      "arrow": "dest",
+      "strokeWidth": 2,
+      "label": "Yes",
+      "opacity": 1,
+      "point": { "x": 330, "y": 300 }
+    },
+    {
+      "id": "l_check_b",
+      "source": "check",
+      "destination": "process_b",
+      "color": "#ef4444",
+      "shape": "bezier",
+      "pattern": "dash",
+      "arrow": "dest",
+      "strokeWidth": 2,
+      "label": "No",
+      "opacity": 1,
+      "point": { "x": 870, "y": 300 }
+    },
+    {
+      "id": "l_a_merge",
+      "source": "process_a",
+      "destination": "merge",
+      "color": "#6b7280",
+      "shape": "bezier",
+      "pattern": "solid",
+      "arrow": "dest",
+      "strokeWidth": 2,
+      "label": "",
+      "opacity": 1,
+      "point": { "x": 330, "y": 490 }
+    },
+    {
+      "id": "l_b_merge",
+      "source": "process_b",
+      "destination": "merge",
+      "color": "#6b7280",
+      "shape": "bezier",
+      "pattern": "dot",
+      "arrow": "dest",
+      "strokeWidth": 2,
+      "label": "",
+      "opacity": 1,
+      "point": { "x": 870, "y": 490 }
+    },
+    {
+      "id": "l_merge_end",
+      "source": "merge",
+      "destination": "end",
+      "color": "#6b7280",
+      "shape": "straight",
+      "pattern": "solid",
+      "arrow": "dest",
+      "strokeWidth": 2,
+      "label": "",
+      "opacity": 1,
+      "point": { "x": 600, "y": 620 }
+    }
+  ]
+}

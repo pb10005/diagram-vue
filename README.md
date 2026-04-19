@@ -1,153 +1,227 @@
 # diagram-vue
-A SVG-based diagram component for Vue
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a66f2b18a900451693f7a41019abf79e)](https://app.codacy.com/app/pb10001/diagram-vue?utm_source=github.com&utm_medium=referral&utm_content=pb10001/diagram-vue&utm_campaign=Badge_Grade_Dashboard)
+A Vue 3 SVG-based diagram component library.
+
 [![npm version](https://badge.fury.io/js/diagram-vue.svg)](https://badge.fury.io/js/diagram-vue)
 ![npm](https://img.shields.io/npm/dt/diagram-vue.svg)
-![npm](https://img.shields.io/npm/dw/diagram-vue.svg)  
 
-[Demo](https://diagramvue.netlify.com/)  
-![Screen shot](https://raw.githubusercontent.com/pb10005/diagram-vue/master/img/screenshot.svg)
+[Demo](https://diagramvue.netlify.com/) | [Data Specification](./DATA_SPECIFICATION.md)
+
 ## Installation
-```sh
-npm i diagram-vue --save
-```
-## Usage
-[![Edit diagram-vue](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/q7wj02ny2w)
-### Ready-to-use editor
-#### 1. Import
-```js
-import { DiagramEditor } from "diagram-vue";
-import "diagram-vue/dist/diagram.css";
-```
-#### 2. Template
-```html
-<DiagramEditor v-model="graph"></DiagramEditor>
-```
-See [Data specification](https://github.com/pb10005/diagram-vue/blob/master/DATA_SPECIFICATION.md).
 
-### Customization
-#### 1. Import
-```js
-import Diagram from 'diagram-vue';
-import "diagram-vue/dist/diagram.css";
+```sh
+npm install diagram-vue
 ```
-#### 2. Template
-```html
-<Diagram
-    :width="2000"
-    :height="1000"
-    :fluid="false"
+
+## Quick Start
+
+### Ready-to-use Editor (DiagramEditor)
+
+The simplest way to get started. Includes toolbar, modals, import/export, and SVG download.
+
+```vue
+<template>
+  <DiagramEditor v-model="graph" />
+</template>
+
+<script setup>
+import { ref } from 'vue'
+import { DiagramEditor } from 'diagram-vue'
+import 'diagram-vue/dist/diagram.css'
+
+const graph = ref({
+  width: 1200,
+  height: 800,
+  background: '#f8fafc',
+  showGrid: false,
+  nodes: [],
+  links: []
+})
+</script>
+```
+
+#### DiagramEditor Props
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `modelValue` | `GraphData` | `{ width: 2000, height: 1000, nodes: [], links: [] }` | Graph data (use with `v-model`) |
+
+#### DiagramEditor Events
+
+| Event | Payload | Description |
+|---|---|---|
+| `update:modelValue` | `GraphData` | Emitted on any data change |
+| `nodeClicked` | `string` | Clicked node ID |
+| `linkClicked` | `string` | Clicked link ID |
+| `nodeRemoved` | `string` | Removed node ID |
+| `linkRemoved` | `string` | Removed link ID |
+
+---
+
+### Custom Implementation (Diagram)
+
+Use the `Diagram` component directly for full control over editing logic.
+
+```vue
+<template>
+  <Diagram
+    :width="1200"
+    :height="800"
+    background="#f8fafc"
+    :showGrid="false"
     scale="1"
-    background="#fafafa"
-    :nodes="nodes"
-    :links="links"
+    :fluid="false"
+    :nodes="graph.nodes"
+    :links="graph.links"
     :editable="editable"
     :labels="{
-        edit: 'Edit',
-        remove: 'Remove',
-        link: 'Link',
-        select: 'Select',
-        cancel: 'Cancel'
+      edit: 'Edit',
+      remove: 'Remove',
+      link: 'Link',
+      select: 'Select',
+      cancel: 'Cancel',
+      copy: 'Copy'
     }"
-    @editNode="editNode"
-    @editLink="editLink"
-    @nodeChanged="nodeChanged"
-    @linkChanged="linkChanged"
-    >
-</Diagram>
-```
-#### 3. Props
-```js
-props: {
-    width: Number,
-    height: Number,
-    background: String,
-    nodes: Array,
-    links: Array,
-    editable: Boolean,
-    labels: Object,
-    fluid: Boolean
-}
-```
-See [Data specification](https://github.com/pb10005/diagram-vue/blob/master/DATA_SPECIFICATION.md).
+    @editNode="handleEditNode"
+    @editLink="handleEditLink"
+    @nodeClicked="handleNodeClicked"
+    @linkClicked="handleLinkClicked"
+    @nodeRemoved="handleNodeRemoved"
+    @linkRemoved="handleLinkRemoved"
+    @linkAdded="handleLinkAdded"
+    @nodeCopied="handleNodeCopied"
+  />
+</template>
 
-#### 4. Events
-```js
-editNode(node /* selected node */) {
-    /* event handler */
-},
-editLink(link /* selected link */) {
-    /* event handler */
-},
-nodeChanged(obj /* array of nodes */) {
-    /* event handler */
-    const nodes = obj.nodes
-},
-linkChanged(obj /* array of links */) {
-    /* event handler */
-    const links = obj.links
-},
-nodeRemoved(id /*Identifier of node*/){
-    /* event handler */
-},
-linkRemoved(id /*Identifier of link*/){
-    /* event handler */
-},
-nodeClicked(id /* identifier of node */) {
-   /* event handler */
-   console.log("your clicked in node: ", id)
-},
-linkClicked(id /* identifier of link */) {
-   /* event handler */
-   console.log("your clicked in link: ", id)
+<script setup>
+import { ref } from 'vue'
+import { Diagram } from 'diagram-vue'
+import 'diagram-vue/dist/diagram.css'
+
+const editable = ref(false)
+const graph = ref({ nodes: [], links: [] })
+
+function handleEditNode(node) { /* open your edit modal */ }
+function handleEditLink(link) { /* open your edit modal */ }
+function handleNodeClicked(id) { console.log('node clicked:', id) }
+function handleLinkClicked(id) { console.log('link clicked:', id) }
+function handleNodeRemoved(id) {
+  graph.value.nodes = graph.value.nodes.filter(n => n.id !== id)
 }
+function handleLinkRemoved(id) {
+  graph.value.links = graph.value.links.filter(l => l.id !== id)
+}
+function handleLinkAdded(link) { graph.value.links.push(link) }
+function handleNodeCopied(node) { graph.value.nodes.push(node) }
+</script>
 ```
 
-#### 5. Get SVG as String
-Use plain JavaScript.
-```js
-document.getElementById('svg-diagram-show-area').innerHTML; // <svg ...>...</svg>
+#### Diagram Props
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `width` | `Number` | — | Canvas width in pixels |
+| `height` | `Number` | — | Canvas height in pixels |
+| `scale` | `String` | `'1'` | Display scale (`'0.5'` / `'1'` / `'1.5'` / `'2'`) |
+| `background` | `String` | — | Background color (hex or CSS color) |
+| `showGrid` | `Boolean` | `false` | Show dot grid |
+| `nodes` | `DiagramNode[]` | — | Array of node objects |
+| `links` | `DiagramLink[]` | — | Array of link objects |
+| `editable` | `Boolean` | `false` | Enable edit mode (drag, add links, etc.) |
+| `labels` | `DiagramLabels` | — | Button label strings |
+| `fluid` | `Boolean` | `false` | Stretch to fill container width |
+
+#### Diagram Events
+
+| Event | Payload | Description |
+|---|---|---|
+| `editNode` | `DiagramNode` | Edit button clicked on a node |
+| `editLink` | `DiagramLink` | Edit button clicked on a link |
+| `nodeClicked` | `string` | Node was clicked |
+| `linkClicked` | `string` | Link was clicked |
+| `nodeRemoved` | `string` | Node was deleted |
+| `linkRemoved` | `string` | Link was deleted |
+| `linkAdded` | `{ id, source, destination, point }` | New link created between nodes |
+| `nodeCopied` | `DiagramNode` | Node was duplicated |
+
+---
+
+## TypeScript Support
+
+Type definitions are included. Import from the package source:
+
+```ts
+import type { GraphData, DiagramNode, DiagramLink, DiagramLabels } from 'diagram-vue/src/types'
 ```
+
+See [src/types.ts](./src/types.ts) for the full interface definitions.
+
+---
+
+## AI Agent Usage
+
+AI agents can generate diagram data programmatically as JSON and pass it to `DiagramEditor` or `Diagram`.
+
+### Minimal valid graph
+
+```json
+{
+  "width": 1200,
+  "height": 800,
+  "background": "#f8fafc",
+  "showGrid": false,
+  "nodes": [
+    {
+      "id": "node1",
+      "shape": "rectangle",
+      "width": 150,
+      "height": 60,
+      "rx": 6,
+      "ry": 6,
+      "stroke": "#93c5fd",
+      "strokeWeight": 1,
+      "opacity": 1,
+      "content": {
+        "text": "Hello",
+        "color": "#dbeafe",
+        "fontColor": "#1e3a5f",
+        "fontSize": 13,
+        "fontWeight": "normal"
+      },
+      "point": { "x": 100, "y": 100 }
+    }
+  ],
+  "links": []
+}
+```
+
+### Generating unique IDs
+
+Node and link IDs must be unique strings. A simple approach:
+
+```js
+const id = Date.now().toString(16) + Math.floor(Math.random() * 1e6).toString(16)
+```
+
+See [DATA_SPECIFICATION.md](./DATA_SPECIFICATION.md) for the complete JSON schema.
+
+---
+
+## Get SVG as String
+
+```js
+const svg = document.getElementById('svg-diagram-show-area').innerHTML
+```
+
+---
 
 ## Development
-### Development Environment
-See [diagram-vue-dev-env](https://github.com/pb10005/diagram-vue-dev-env)
 
-## Project setup
+```sh
+npm install
+npm run dev          # Start demo app (Vite dev server)
+npm run build        # Build library to dist/
+npm run build:app    # Build demo app
+npm run test:unit    # Run unit tests
+npm run lint         # Lint source files
 ```
-yarn install
-```
-
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
-
-### Compiles and minifies for production
-```
-yarn run build
-```
-
-### Run your tests
-```
-yarn run test
-```
-
-### Lints and fixes files
-```
-yarn run lint
-```
-
-### Run your end-to-end tests
-```
-yarn run test:e2e
-```
-
-### Run your unit tests
-```
-yarn run test:unit
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
