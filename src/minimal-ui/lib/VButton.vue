@@ -1,9 +1,10 @@
 <template>
-  <button :class="['btn', variant]"><slot /></button>
+  <button :class="['btn', variant]" @click="emit('click', $event)"><slot /></button>
 </template>
 <script setup lang="ts">
 defineOptions({ name: 'VButton' })
 defineProps({ variant: { type: String, default: 'default' } })
+const emit = defineEmits(['click'])
 </script>
 <style lang="scss" scoped>
 .btn {
