@@ -31,7 +31,7 @@
         markerWidth="12"
         markerHeight="12"
         viewBox="0 0 10 10"
-        refX="5"
+        refX="10"
         refY="5"
       >
         <polygon points="0,2 0,8 10,5" :fill="link.color || '#6366f1'" />
