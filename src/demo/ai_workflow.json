@@ -1,0 +1,273 @@
+{
+  "width": 1400,
+  "height": 900,
+  "background": "#0f172a",
+  "showGrid": false,
+  "nodes": [
+    {
+      "id": "user",
+      "shape": "ellipse",
+      "width": 130,
+      "height": 65,
+      "stroke": "#38bdf8",
+      "strokeWeight": 2,
+      "opacity": 1,
+      "content": {
+        "text": "User",
+        "color": "#0ea5e9",
+        "fontColor": "#ffffff",
+        "fontSize": 14,
+        "fontWeight": "bold"
+      },
+      "point": { "x": 635, "y": 30 }
+    },
+    {
+      "id": "orchestrator",
+      "shape": "rectangle",
+      "width": 200,
+      "height": 70,
+      "rx": 10,
+      "ry": 10,
+      "stroke": "#818cf8",
+      "strokeWeight": 2,
+      "opacity": 1,
+      "content": {
+        "text": "Agent Orchestrator",
+        "color": "#4f46e5",
+        "fontColor": "#ffffff",
+        "fontSize": 13,
+        "fontWeight": "bold"
+      },
+      "point": { "x": 600, "y": 180 }
+    },
+    {
+      "id": "router",
+      "shape": "diamond",
+      "width": 180,
+      "height": 90,
+      "stroke": "#fbbf24",
+      "strokeWeight": 2,
+      "opacity": 1,
+      "content": {
+        "text": "Route?",
+        "color": "#d97706",
+        "fontColor": "#ffffff",
+        "fontSize": 13,
+        "fontWeight": "bold"
+      },
+      "point": { "x": 610, "y": 340 }
+    },
+    {
+      "id": "tool_search",
+      "shape": "rectangle",
+      "width": 160,
+      "height": 60,
+      "rx": 6,
+      "ry": 6,
+      "stroke": "#34d399",
+      "strokeWeight": 1,
+      "opacity": 1,
+      "content": {
+        "text": "Web Search",
+        "color": "#059669",
+        "fontColor": "#ffffff",
+        "fontSize": 12,
+        "fontWeight": "normal"
+      },
+      "point": { "x": 200, "y": 520 }
+    },
+    {
+      "id": "tool_code",
+      "shape": "rectangle",
+      "width": 160,
+      "height": 60,
+      "rx": 6,
+      "ry": 6,
+      "stroke": "#f472b6",
+      "strokeWeight": 1,
+      "opacity": 1,
+      "content": {
+        "text": "Code Executor",
+        "color": "#db2777",
+        "fontColor": "#ffffff",
+        "fontSize": 12,
+        "fontWeight": "normal"
+      },
+      "point": { "x": 620, "y": 520 }
+    },
+    {
+      "id": "tool_file",
+      "shape": "rectangle",
+      "width": 160,
+      "height": 60,
+      "rx": 6,
+      "ry": 6,
+      "stroke": "#fb923c",
+      "strokeWeight": 1,
+      "opacity": 1,
+      "content": {
+        "text": "File Reader",
+        "color": "#ea580c",
+        "fontColor": "#ffffff",
+        "fontSize": 12,
+        "fontWeight": "normal"
+      },
+      "point": { "x": 1040, "y": 520 }
+    },
+    {
+      "id": "llm",
+      "shape": "rectangle",
+      "width": 200,
+      "height": 70,
+      "rx": 10,
+      "ry": 10,
+      "stroke": "#a78bfa",
+      "strokeWeight": 2,
+      "opacity": 1,
+      "content": {
+        "text": "LLM (Claude)",
+        "color": "#7c3aed",
+        "fontColor": "#ffffff",
+        "fontSize": 14,
+        "fontWeight": "bold"
+      },
+      "point": { "x": 600, "y": 680 }
+    },
+    {
+      "id": "response",
+      "shape": "ellipse",
+      "width": 140,
+      "height": 65,
+      "stroke": "#38bdf8",
+      "strokeWeight": 2,
+      "opacity": 1,
+      "content": {
+        "text": "Response",
+        "color": "#0284c7",
+        "fontColor": "#ffffff",
+        "fontSize": 14,
+        "fontWeight": "bold"
+      },
+      "point": { "x": 630, "y": 820 }
+    }
+  ],
+  "links": [
+    {
+      "id": "l_user_orch",
+      "source": "user",
+      "destination": "orchestrator",
+      "color": "#38bdf8",
+      "shape": "straight",
+      "pattern": "solid",
+      "arrow": "dest",
+      "strokeWidth": 2,
+      "label": "prompt",
+      "opacity": 1,
+      "point": { "x": 750, "y": 145 }
+    },
+    {
+      "id": "l_orch_router",
+      "source": "orchestrator",
+      "destination": "router",
+      "color": "#818cf8",
+      "shape": "straight",
+      "pattern": "solid",
+      "arrow": "dest",
+      "strokeWidth": 2,
+      "label": "",
+      "opacity": 1,
+      "point": { "x": 750, "y": 310 }
+    },
+    {
+      "id": "l_router_search",
+      "source": "router",
+      "destination": "tool_search",
+      "color": "#34d399",
+      "shape": "bezier",
+      "pattern": "solid",
+      "arrow": "dest",
+      "strokeWidth": 2,
+      "label": "search",
+      "opacity": 1,
+      "point": { "x": 360, "y": 460 }
+    },
+    {
+      "id": "l_router_code",
+      "source": "router",
+      "destination": "tool_code",
+      "color": "#f472b6",
+      "shape": "straight",
+      "pattern": "solid",
+      "arrow": "dest",
+      "strokeWidth": 2,
+      "label": "execute",
+      "opacity": 1,
+      "point": { "x": 720, "y": 460 }
+    },
+    {
+      "id": "l_router_file",
+      "source": "router",
+      "destination": "tool_file",
+      "color": "#fb923c",
+      "shape": "bezier",
+      "pattern": "solid",
+      "arrow": "dest",
+      "strokeWidth": 2,
+      "label": "read",
+      "opacity": 1,
+      "point": { "x": 980, "y": 460 }
+    },
+    {
+      "id": "l_search_llm",
+      "source": "tool_search",
+      "destination": "llm",
+      "color": "#34d399",
+      "shape": "bezier",
+      "pattern": "dash",
+      "arrow": "dest",
+      "strokeWidth": 2,
+      "label": "results",
+      "opacity": 0.8,
+      "point": { "x": 360, "y": 660 }
+    },
+    {
+      "id": "l_code_llm",
+      "source": "tool_code",
+      "destination": "llm",
+      "color": "#f472b6",
+      "shape": "straight",
+      "pattern": "dash",
+      "arrow": "dest",
+      "strokeWidth": 2,
+      "label": "output",
+      "opacity": 0.8,
+      "point": { "x": 720, "y": 660 }
+    },
+    {
+      "id": "l_file_llm",
+      "source": "tool_file",
+      "destination": "llm",
+      "color": "#fb923c",
+      "shape": "bezier",
+      "pattern": "dash",
+      "arrow": "dest",
+      "strokeWidth": 2,
+      "label": "content",
+      "opacity": 0.8,
+      "point": { "x": 980, "y": 660 }
+    },
+    {
+      "id": "l_llm_response",
+      "source": "llm",
+      "destination": "response",
+      "color": "#a78bfa",
+      "shape": "straight",
+      "pattern": "solid",
+      "arrow": "dest",
+      "strokeWidth": 2,
+      "label": "",
+      "opacity": 1,
+      "point": { "x": 750, "y": 790 }
+    }
+  ]
+}
