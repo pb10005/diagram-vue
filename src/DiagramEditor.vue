@@ -216,6 +216,7 @@ function openNodeEdit(item) {
 }
 
 function editNode(item) {
+  isEditModalActive.value = false
   const tmp = graphData.value.nodes.find(x => x.id === item.id)
   if (!tmp) return
   tmp.content.text = item.content.text
@@ -250,6 +251,7 @@ function openLinkEdit(item) {
 }
 
 function editLink(item) {
+  isEditLinkModalActive.value = false
   const tmp = graphData.value.links.find(x => x.id === item.id)
   if (!tmp) return
   tmp.color = item.content.color
