@@ -1,52 +1,69 @@
 <template>
-  <div>
-    <div class="modal" :class="{ 'is-open': isActive }" @click="$emit('clickModal')"></div>
-    <div class="item" :class="{ 'is-open': isActive }"><slot></slot></div>
-  </div>
+  <transition name="modal">
+    <div v-if="isActive" class="overlay" @click.self="$emit('clickModal')">
+      <div class="card">
+        <div v-if="title" class="card-header">
+          <span class="card-title">{{ title }}</span>
+          <button class="close-btn" @click="$emit('clickModal')">✕</button>
+        </div>
+        <div class="card-body">
+          <slot></slot>
+        </div>
+      </div>
+    </div>
+  </transition>
 </template>
 <script setup lang="ts">
 defineOptions({ name: 'VModal' })
-defineProps({ isActive: Boolean })
+defineProps({ isActive: Boolean, title: String })
 defineEmits(['clickModal'])
 </script>
 <style lang="scss" scoped>
-.modal {
+.overlay {
   position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9998;
+}
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  width: min(520px, 92vw);
+  max-height: 88vh;
   overflow-y: auto;
-  visibility: hidden;
-  opacity: 0;
-  z-index: -9999;
-  &.is-open {
-    background: gray;
-    visibility: visible;
-    opacity: 0.8;
-    z-index: 9998;
-  }
+  z-index: 9999;
 }
-.item {
-  width: 70vw;
-  padding: 10px;
-  position: fixed;
-  background: white;
-  visibility: hidden;
-  opacity: 1;
-  z-index: -9999;
-  top: 25vh;
-  left: 15vw;
-  &.is-open {
-    z-index: 9999;
-    visibility: visible;
-  }
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #f3f4f6;
 }
-@media screen and (max-width: 900px) {
-  .item {
-    width: 100vw;
-    left: 0;
-    top: 10px;
-  }
+.card-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
 }
+.close-btn {
+  background: none;
+  border: none;
+  color: #9ca3af;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  &:hover { background: #f3f4f6; color: #374151; }
+}
+.card-body {
+  padding: 20px;
+}
+.modal-enter-active,
+.modal-leave-active { transition: opacity 0.2s ease; }
+.modal-enter-from,
+.modal-leave-to { opacity: 0; }
 </style>

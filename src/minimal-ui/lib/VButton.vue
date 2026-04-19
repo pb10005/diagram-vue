@@ -1,26 +1,36 @@
 <template>
-  <button><slot /></button>
+  <button :class="['btn', variant]"><slot /></button>
 </template>
 <script setup lang="ts">
 defineOptions({ name: 'VButton' })
+defineProps({ variant: { type: String, default: 'default' } })
 </script>
 <style lang="scss" scoped>
-button {
-  background: #ffffff;
-  border: 1px solid #eeeeee;
-  padding: 5px 10px;
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  color: #374151;
+  font-size: 13px;
+  font-weight: 500;
   cursor: pointer;
-  &.danger {
-    border: 1px solid #ff0000;
-    color: #ff0000;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  white-space: nowrap;
+  &:hover { background: #f3f4f6; }
+  &.primary {
+    background: #3b82f6;
+    border-color: #3b82f6;
+    color: #fff;
+    &:hover { background: #2563eb; border-color: #2563eb; }
   }
-}
-button:hover {
-  background: #eeeeee;
-  opacity: 0.8;
   &.danger {
-    background: #ff0000;
-    color: #ffffff;
+    border-color: #ef4444;
+    color: #ef4444;
+    &:hover { background: #ef4444; color: #fff; }
   }
 }
 </style>

@@ -2,15 +2,21 @@ export interface NodeContent {
   text: string
   url?: string
   color?: string
+  fontColor?: string
+  fontSize?: number
+  fontWeight?: 'normal' | 'bold'
 }
 
 export interface DiagramNode {
   id: string
   width: number
   height: number
-  shape?: 'rectangle' | 'ellipse'
+  shape?: 'rectangle' | 'ellipse' | 'diamond'
   stroke?: string
   strokeWeight?: number
+  rx?: number
+  ry?: number
+  opacity?: number
   content: NodeContent
   point: { x: number; y: number }
 }
@@ -24,6 +30,9 @@ export interface DiagramLink {
   shape?: string
   pattern?: string
   arrow?: string
+  strokeWidth?: number
+  label?: string
+  opacity?: number
 }
 
 export interface DiagramLabels {
