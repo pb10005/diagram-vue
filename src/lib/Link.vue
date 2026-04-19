@@ -10,6 +10,16 @@
       :marker-start="link.arrow === 'src' || link.arrow === 'both' ? `url(#arrow-${link.id})` : ''"
       :marker-end="link.arrow === 'dest' || link.arrow === 'both' ? `url(#arrow-${link.id})` : ''"
     />
+    <path
+      v-else-if="link.shape === 'polyline'"
+      :d="calcPolylinePath()"
+      :stroke="link.color || '#6366f1'"
+      :stroke-width="link.strokeWidth ?? 2"
+      fill="none"
+      :stroke-dasharray="definePattern(link.pattern)"
+      :marker-start="link.arrow === 'src' || link.arrow === 'both' ? `url(#arrow-${link.id})` : ''"
+      :marker-end="link.arrow === 'dest' || link.arrow === 'both' ? `url(#arrow-${link.id})` : ''"
+    />
     <line
       v-else
       :x1="calcSource().x"
@@ -40,8 +50,8 @@
 
     <text
       v-if="link.label"
-      :x="point.x"
-      :y="point.y - 14"
+      :x="labelPos().x"
+      :y="labelPos().y - 14"
       text-anchor="middle"
       font-family="system-ui, sans-serif"
       font-size="12"
@@ -170,6 +180,30 @@ function calcEdge(node, toPoint) {
 
 function calcSource() { return calcEdge(props.source, point.value) }
 function calcDestination() { return calcEdge(props.destination, point.value) }
+
+function calcPolylinePath() {
+  const src = calcSource()
+  const dst = calcDestination()
+  const srcCy = props.source.point.y + props.source.height / 2
+  // If source exits from left/right edge (horizontal exit), route H→V→H
+  const exitHorizontal = Math.abs(src.y - srcCy) < 1
+  if (exitHorizontal) {
+    const midX = (src.x + dst.x) / 2
+    return `M${src.x},${src.y} L${midX},${src.y} L${midX},${dst.y} L${dst.x},${dst.y}`
+  } else {
+    const midY = (src.y + dst.y) / 2
+    return `M${src.x},${src.y} L${src.x},${midY} L${dst.x},${midY} L${dst.x},${dst.y}`
+  }
+}
+
+function labelPos() {
+  if (props.link.shape === 'polyline') {
+    const src = calcSource()
+    const dst = calcDestination()
+    return { x: (src.x + dst.x) / 2, y: (src.y + dst.y) / 2 }
+  }
+  return point.value
+}
 
 onBeforeUnmount(() => {
   document.removeEventListener('mousemove', mousemove)
