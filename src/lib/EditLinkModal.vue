@@ -68,7 +68,7 @@ const newLink = ref({ ...props.link.content })
 
 watch(() => props.link, val => {
   newLink.value = { ...val.content }
-})
+}, { deep: true })
 
 function ok() {
   emit('ok', { id: props.link.id, content: { ...newLink.value } })

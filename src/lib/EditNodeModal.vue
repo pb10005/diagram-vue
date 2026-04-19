@@ -96,7 +96,7 @@ const newNode = ref({ ...props.node, content: { ...props.node.content } })
 
 watch(() => props.node, val => {
   newNode.value = { ...val, content: { ...val.content } }
-})
+}, { deep: true })
 
 function ok() { emit('ok', newNode.value) }
 function cancel() { emit('cancel') }
