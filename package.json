@@ -1,6 +1,6 @@
 {
   "name": "diagram-vue",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "main": "dist/diagram.cjs.js",
   "module": "dist/diagram.es.js",
   "author": "pb10005",
@@ -11,6 +11,10 @@
   },
   "types": "src/types.ts",
   "unpkg": "dist/diagram.umd.js",
+  "files": [
+    "dist",
+    "src/types.ts"
+  ],
   "browser": {
     "./sfc": "src/Diagram.vue"
   },
@@ -23,10 +27,11 @@
     "test:unit": "vitest run",
     "test:unit:watch": "vitest"
   },
-  "dependencies": {
+  "peerDependencies": {
     "vue": "^3.4.0"
   },
   "devDependencies": {
+    "vue": "^3.4.0",
     "@typescript-eslint/parser": "^6.0.0",
     "typescript": "^5.0.0",
     "@vitejs/plugin-vue": "^5.0.0",
