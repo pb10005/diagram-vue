@@ -68,6 +68,7 @@
               <option value="default">Daily Routine</option>
               <option value="flowchart">Flowchart (all shapes &amp; styles)</option>
               <option value="ai_workflow">AI Agent Workflow</option>
+              <option value="event_driven">Event-Driven Architecture (polyline)</option>
               <option value="readonly">Read-only Diagram</option>
             </VSelect>
           </div>
@@ -192,6 +193,7 @@ import { ref, computed, onMounted } from 'vue'
 import defaultData from './data.json'
 import flowchartData from './flowchart.json'
 import aiWorkflowData from './ai_workflow.json'
+import eventDrivenData from './event_driven.json'
 import { DiagramEditor, Diagram } from '../index.js'
 import VSelect from '../minimal-ui/lib/VSelect.vue'
 import VButton from '../minimal-ui/lib/VButton.vue'
@@ -242,6 +244,7 @@ function loadDemo() {
     default: defaultData,
     flowchart: flowchartData,
     ai_workflow: aiWorkflowData,
+    event_driven: eventDrivenData,
     readonly: flowchartData
   }
   graph.value = JSON.parse(JSON.stringify(map[demoScenario.value] || defaultData))

@@ -59,7 +59,7 @@
       style="pointer-events: none; user-select: none;"
     >{{ link.label }}</text>
 
-    <g v-if="editable">
+    <g v-if="editable && link.shape !== 'polyline'">
       <line :x1="calcSource().x" :y1="calcSource().y" :x2="point.x" :y2="point.y" stroke="#e5e7eb" stroke-dasharray="4" />
       <line :x1="point.x" :y1="point.y" :x2="calcDestination().x" :y2="calcDestination().y" stroke="#e5e7eb" stroke-dasharray="4" />
       <circle
@@ -79,13 +79,44 @@
         @touchend="mouseup"
       />
     </g>
+    <!-- Polyline: invisible wide hit area for selection (no draggable dot) -->
+    <path
+      v-if="editable && link.shape === 'polyline'"
+      :d="calcPolylinePath()"
+      stroke="transparent"
+      stroke-width="12"
+      fill="none"
+      style="cursor: pointer"
+      @mousedown="polylineClick"
+    />
     <g v-if="selected">
-      <rect :x="point.x - 20" :y="point.y - 42" width="40" height="20" rx="4" fill="#3b82f6" class="button" @click="edit" />
-      <text :x="point.x" :y="point.y - 28" text-anchor="middle" class="button btn-text" @click="edit">
+      <!-- Shape switcher — anchored to anchorPos() so it follows the link -->
+      <rect :x="anchorPos().x - 42" :y="anchorPos().y - 70" width="84" height="22" rx="5" fill="#0f172a" />
+      <!-- straight -->
+      <rect :x="anchorPos().x - 41" :y="anchorPos().y - 69" width="26" height="20" rx="3"
+        :fill="(link.shape === 'straight' || !link.shape) ? '#3b82f6' : '#1e293b'"
+        class="button" @click="changeShape('straight')" />
+      <line :x1="anchorPos().x - 35" :y1="anchorPos().y - 59" :x2="anchorPos().x - 19" :y2="anchorPos().y - 59"
+        stroke="#fff" stroke-width="2" style="pointer-events:none" />
+      <!-- bezier -->
+      <rect :x="anchorPos().x - 13" :y="anchorPos().y - 69" width="26" height="20" rx="3"
+        :fill="link.shape === 'bezier' ? '#3b82f6' : '#1e293b'"
+        class="button" @click="changeShape('bezier')" />
+      <path :d="`M${anchorPos().x-8},${anchorPos().y-55} Q${anchorPos().x},${anchorPos().y-67} ${anchorPos().x+8},${anchorPos().y-55}`"
+        fill="none" stroke="#fff" stroke-width="2" style="pointer-events:none" />
+      <!-- polyline -->
+      <rect :x="anchorPos().x + 15" :y="anchorPos().y - 69" width="26" height="20" rx="3"
+        :fill="link.shape === 'polyline' ? '#3b82f6' : '#1e293b'"
+        class="button" @click="changeShape('polyline')" />
+      <path :d="`M${anchorPos().x+19},${anchorPos().y-55} L${anchorPos().x+19},${anchorPos().y-63} L${anchorPos().x+37},${anchorPos().y-63}`"
+        fill="none" stroke="#fff" stroke-width="2" style="pointer-events:none" />
+      <!-- edit / remove -->
+      <rect :x="anchorPos().x - 20" :y="anchorPos().y - 42" width="40" height="20" rx="4" fill="#3b82f6" class="button" @click="edit" />
+      <text :x="anchorPos().x" :y="anchorPos().y - 28" text-anchor="middle" class="button btn-text" @click="edit">
         {{ labels.edit || "Edit" }}
       </text>
-      <rect :x="point.x - 24" :y="point.y + 14" width="48" height="20" rx="4" fill="#ef4444" class="button" @click="remove" />
-      <text :x="point.x" :y="point.y + 28" text-anchor="middle" class="button btn-text" @click="remove">
+      <rect :x="anchorPos().x - 24" :y="anchorPos().y + 14" width="48" height="20" rx="4" fill="#ef4444" class="button" @click="remove" />
+      <text :x="anchorPos().x" :y="anchorPos().y + 28" text-anchor="middle" class="button btn-text" @click="remove">
         {{ labels.remove || "Remove" }}
       </text>
     </g>
@@ -107,7 +138,7 @@ const props = defineProps({
   rHeight: Number
 })
 
-const emit = defineEmits(['click', 'select', 'updateLocation', 'remove', 'editLink'])
+const emit = defineEmits(['click', 'select', 'updateLocation', 'remove', 'editLink', 'changeShape'])
 
 const { getLocation } = useMouseLocation()
 
@@ -149,6 +180,12 @@ function definePattern(p) {
 
 function remove() { emit('remove', props.link.id) }
 function select() { emit('select', props.link.id) }
+function changeShape(shape: string) { emit('changeShape', { id: props.link.id, shape }) }
+function polylineClick(e) { emit('click', props.link.id); select() }
+
+function anchorPos() {
+  return props.link.shape === 'polyline' ? labelPos() : point.value
+}
 
 function edit() {
   emit('editLink', {
@@ -182,25 +219,68 @@ function calcSource() { return calcEdge(props.source, point.value) }
 function calcDestination() { return calcEdge(props.destination, point.value) }
 
 function calcPolylinePath() {
-  const src = calcSource()
-  const dst = calcDestination()
+  const srcCx = props.source.point.x + props.source.width / 2
   const srcCy = props.source.point.y + props.source.height / 2
-  // If source exits from left/right edge (horizontal exit), route H→V→H
-  const exitHorizontal = Math.abs(src.y - srcCy) < 1
-  if (exitHorizontal) {
+  const dstCx = props.destination.point.x + props.destination.width / 2
+  const dstCy = props.destination.point.y + props.destination.height / 2
+
+  const dx = dstCx - srcCx
+  const dy = dstCy - srcCy
+  const absDx = Math.abs(dx)
+  const absDy = Math.abs(dy)
+
+  const goRight  = dx >= 0
+  const goDown   = dy >= 0
+
+  // Nearly same row (|dy| tiny) → straight or H→V→H with tiny V
+  if (absDy < 10) {
+    const src = { x: goRight ? props.source.point.x + props.source.width : props.source.point.x, y: srcCy }
+    const dst = { x: goRight ? props.destination.point.x : props.destination.point.x + props.destination.width, y: dstCy }
+    if (Math.abs(src.y - dst.y) < 2) return `M${src.x},${src.y} L${dst.x},${dst.y}`
     const midX = (src.x + dst.x) / 2
     return `M${src.x},${src.y} L${midX},${src.y} L${midX},${dst.y} L${dst.x},${dst.y}`
-  } else {
+  }
+
+  // Nearly same column (|dx| tiny) → straight or V→H→V with tiny H
+  if (absDx < 10) {
+    const src = { x: srcCx, y: goDown ? props.source.point.y + props.source.height : props.source.point.y }
+    const dst = { x: dstCx, y: goDown ? props.destination.point.y : props.destination.point.y + props.destination.height }
+    if (Math.abs(src.x - dst.x) < 2) return `M${src.x},${src.y} L${dst.x},${dst.y}`
     const midY = (src.y + dst.y) / 2
     return `M${src.x},${src.y} L${src.x},${midY} L${dst.x},${midY} L${dst.x},${dst.y}`
   }
+
+  const ratio = absDy / absDx
+
+  if (ratio <= 0.5) {
+    // Mostly horizontal → H→V→H (2 bends)
+    const src = { x: goRight ? props.source.point.x + props.source.width : props.source.point.x, y: srcCy }
+    const dst = { x: goRight ? props.destination.point.x : props.destination.point.x + props.destination.width, y: dstCy }
+    const midX = (src.x + dst.x) / 2
+    return `M${src.x},${src.y} L${midX},${src.y} L${midX},${dst.y} L${dst.x},${dst.y}`
+  }
+
+  if (ratio >= 2.0) {
+    // Mostly vertical → V→H→V (2 bends)
+    const src = { x: srcCx, y: goDown ? props.source.point.y + props.source.height : props.source.point.y }
+    const dst = { x: dstCx, y: goDown ? props.destination.point.y : props.destination.point.y + props.destination.height }
+    const midY = (src.y + dst.y) / 2
+    return `M${src.x},${src.y} L${src.x},${midY} L${dst.x},${midY} L${dst.x},${dst.y}`
+  }
+
+  // Diagonal (0.5 < ratio < 2.0) → L-shape (1 bend)
+  // Exit horizontally from source, enter vertically into destination
+  const src = { x: goRight ? props.source.point.x + props.source.width : props.source.point.x, y: srcCy }
+  const dst = { x: dstCx, y: goDown ? props.destination.point.y : props.destination.point.y + props.destination.height }
+  return `M${src.x},${src.y} L${dst.x},${src.y} L${dst.x},${dst.y}`
 }
 
 function labelPos() {
   if (props.link.shape === 'polyline') {
-    const src = calcSource()
-    const dst = calcDestination()
-    return { x: (src.x + dst.x) / 2, y: (src.y + dst.y) / 2 }
+    return {
+      x: (props.source.point.x + props.source.width / 2 + props.destination.point.x + props.destination.width / 2) / 2,
+      y: (props.source.point.y + props.source.height / 2 + props.destination.point.y + props.destination.height / 2) / 2
+    }
   }
   return point.value
 }
