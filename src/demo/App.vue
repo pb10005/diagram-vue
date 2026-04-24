@@ -622,6 +622,7 @@ a { color: inherit; text-decoration: none; }
   display: flex;
   flex-direction: column;
   gap: 20px;
+  min-width: 0;
 }
 .code-block {
   border-radius: 10px;
@@ -643,6 +644,7 @@ a { color: inherit; text-decoration: none; }
   padding: 16px;
   background: rgba(255,255,255,0.03);
   overflow-x: auto;
+  min-width: 0;
 }
 .code-block code {
   font-family: 'Courier New', monospace;
