@@ -59,7 +59,7 @@
       style="pointer-events: none; user-select: none;"
     >{{ link.label }}</text>
 
-    <g v-if="editable">
+    <g v-if="editable && link.shape !== 'polyline'">
       <line :x1="calcSource().x" :y1="calcSource().y" :x2="point.x" :y2="point.y" stroke="#e5e7eb" stroke-dasharray="4" />
       <line :x1="point.x" :y1="point.y" :x2="calcDestination().x" :y2="calcDestination().y" stroke="#e5e7eb" stroke-dasharray="4" />
       <circle
@@ -77,6 +77,18 @@
         @touchmove="mousemove"
         @mouseup="mouseup"
         @touchend="mouseup"
+      />
+    </g>
+    <g v-if="editable && link.shape === 'polyline'">
+      <circle
+        :cx="labelPos().x"
+        :cy="labelPos().y"
+        r="5"
+        fill="#6366f1"
+        stroke="#fff"
+        stroke-width="2"
+        class="grab"
+        @click="select"
       />
     </g>
     <g v-if="selected">
@@ -204,25 +216,68 @@ function calcSource() { return calcEdge(props.source, point.value) }
 function calcDestination() { return calcEdge(props.destination, point.value) }
 
 function calcPolylinePath() {
-  const src = calcSource()
-  const dst = calcDestination()
+  const srcCx = props.source.point.x + props.source.width / 2
   const srcCy = props.source.point.y + props.source.height / 2
-  // If source exits from left/right edge (horizontal exit), route H→V→H
-  const exitHorizontal = Math.abs(src.y - srcCy) < 1
-  if (exitHorizontal) {
+  const dstCx = props.destination.point.x + props.destination.width / 2
+  const dstCy = props.destination.point.y + props.destination.height / 2
+
+  const dx = dstCx - srcCx
+  const dy = dstCy - srcCy
+  const absDx = Math.abs(dx)
+  const absDy = Math.abs(dy)
+
+  const goRight  = dx >= 0
+  const goDown   = dy >= 0
+
+  // Nearly same row (|dy| tiny) → straight or H→V→H with tiny V
+  if (absDy < 10) {
+    const src = { x: goRight ? props.source.point.x + props.source.width : props.source.point.x, y: srcCy }
+    const dst = { x: goRight ? props.destination.point.x : props.destination.point.x + props.destination.width, y: dstCy }
+    if (Math.abs(src.y - dst.y) < 2) return `M${src.x},${src.y} L${dst.x},${dst.y}`
     const midX = (src.x + dst.x) / 2
     return `M${src.x},${src.y} L${midX},${src.y} L${midX},${dst.y} L${dst.x},${dst.y}`
-  } else {
+  }
+
+  // Nearly same column (|dx| tiny) → straight or V→H→V with tiny H
+  if (absDx < 10) {
+    const src = { x: srcCx, y: goDown ? props.source.point.y + props.source.height : props.source.point.y }
+    const dst = { x: dstCx, y: goDown ? props.destination.point.y : props.destination.point.y + props.destination.height }
+    if (Math.abs(src.x - dst.x) < 2) return `M${src.x},${src.y} L${dst.x},${dst.y}`
     const midY = (src.y + dst.y) / 2
     return `M${src.x},${src.y} L${src.x},${midY} L${dst.x},${midY} L${dst.x},${dst.y}`
   }
+
+  const ratio = absDy / absDx
+
+  if (ratio <= 0.5) {
+    // Mostly horizontal → H→V→H (2 bends)
+    const src = { x: goRight ? props.source.point.x + props.source.width : props.source.point.x, y: srcCy }
+    const dst = { x: goRight ? props.destination.point.x : props.destination.point.x + props.destination.width, y: dstCy }
+    const midX = (src.x + dst.x) / 2
+    return `M${src.x},${src.y} L${midX},${src.y} L${midX},${dst.y} L${dst.x},${dst.y}`
+  }
+
+  if (ratio >= 2.0) {
+    // Mostly vertical → V→H→V (2 bends)
+    const src = { x: srcCx, y: goDown ? props.source.point.y + props.source.height : props.source.point.y }
+    const dst = { x: dstCx, y: goDown ? props.destination.point.y : props.destination.point.y + props.destination.height }
+    const midY = (src.y + dst.y) / 2
+    return `M${src.x},${src.y} L${src.x},${midY} L${dst.x},${midY} L${dst.x},${dst.y}`
+  }
+
+  // Diagonal (0.5 < ratio < 2.0) → L-shape (1 bend)
+  // Exit horizontally from source, enter vertically into destination
+  const src = { x: goRight ? props.source.point.x + props.source.width : props.source.point.x, y: srcCy }
+  const dst = { x: dstCx, y: goDown ? props.destination.point.y : props.destination.point.y + props.destination.height }
+  return `M${src.x},${src.y} L${dst.x},${src.y} L${dst.x},${dst.y}`
 }
 
 function labelPos() {
   if (props.link.shape === 'polyline') {
-    const src = calcSource()
-    const dst = calcDestination()
-    return { x: (src.x + dst.x) / 2, y: (src.y + dst.y) / 2 }
+    return {
+      x: (props.source.point.x + props.source.width / 2 + props.destination.point.x + props.destination.width / 2) / 2,
+      y: (props.source.point.y + props.source.height / 2 + props.destination.point.y + props.destination.height / 2) / 2
+    }
   }
   return point.value
 }
