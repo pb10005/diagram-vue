@@ -58,6 +58,7 @@
           @click="clickLink"
           @select="selectLink"
           @updateLocation="updateLinkLocation"
+          @changeShape="changeLinkShape"
           @remove="removeLink"
         />
       </g>
@@ -140,6 +141,12 @@ function updateLinkLocation(obj) {
   if (!item) return
   item.point.x = obj.x
   item.point.y = obj.y
+}
+
+function changeLinkShape(obj) {
+  const item = props.links.find(x => x.id === obj.id)
+  if (!item) return
+  item.shape = obj.shape
 }
 
 function clickNode(id) { emit('nodeClicked', id) }

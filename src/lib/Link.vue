@@ -80,6 +80,27 @@
       />
     </g>
     <g v-if="selected">
+      <!-- Shape switcher -->
+      <rect :x="point.x - 42" :y="point.y - 70" width="84" height="22" rx="5" fill="#0f172a" />
+      <!-- straight -->
+      <rect :x="point.x - 41" :y="point.y - 69" width="26" height="20" rx="3"
+        :fill="(link.shape === 'straight' || !link.shape) ? '#3b82f6' : '#1e293b'"
+        class="button" @click="changeShape('straight')" />
+      <line :x1="point.x - 35" :y1="point.y - 59" :x2="point.x - 19" :y2="point.y - 59"
+        stroke="#fff" stroke-width="2" style="pointer-events:none" />
+      <!-- bezier -->
+      <rect :x="point.x - 13" :y="point.y - 69" width="26" height="20" rx="3"
+        :fill="link.shape === 'bezier' ? '#3b82f6' : '#1e293b'"
+        class="button" @click="changeShape('bezier')" />
+      <path :d="`M${point.x-8},${point.y-55} Q${point.x},${point.y-67} ${point.x+8},${point.y-55}`"
+        fill="none" stroke="#fff" stroke-width="2" style="pointer-events:none" />
+      <!-- polyline -->
+      <rect :x="point.x + 15" :y="point.y - 69" width="26" height="20" rx="3"
+        :fill="link.shape === 'polyline' ? '#3b82f6' : '#1e293b'"
+        class="button" @click="changeShape('polyline')" />
+      <path :d="`M${point.x+19},${point.y-55} L${point.x+19},${point.y-63} L${point.x+37},${point.y-63}`"
+        fill="none" stroke="#fff" stroke-width="2" style="pointer-events:none" />
+      <!-- edit / remove -->
       <rect :x="point.x - 20" :y="point.y - 42" width="40" height="20" rx="4" fill="#3b82f6" class="button" @click="edit" />
       <text :x="point.x" :y="point.y - 28" text-anchor="middle" class="button btn-text" @click="edit">
         {{ labels.edit || "Edit" }}
@@ -107,7 +128,7 @@ const props = defineProps({
   rHeight: Number
 })
 
-const emit = defineEmits(['click', 'select', 'updateLocation', 'remove', 'editLink'])
+const emit = defineEmits(['click', 'select', 'updateLocation', 'remove', 'editLink', 'changeShape'])
 
 const { getLocation } = useMouseLocation()
 
@@ -149,6 +170,7 @@ function definePattern(p) {
 
 function remove() { emit('remove', props.link.id) }
 function select() { emit('select', props.link.id) }
+function changeShape(shape: string) { emit('changeShape', { id: props.link.id, shape }) }
 
 function edit() {
   emit('editLink', {
